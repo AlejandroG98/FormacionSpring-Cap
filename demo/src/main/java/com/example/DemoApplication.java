@@ -56,8 +56,10 @@ public class DemoApplication implements CommandLineRunner {
 //		srvLocal.add("Este es el local");
 //		System.out.println(rango.toString());
 //		System.out.println(rango.getMin() + rango.getMax());
-		System.out.println(tonteria != null ? tonteria.dimeAlgo() : "Tonteria nula");
-		System.out.println(config);
+//		System.out.println(tonteria != null ? tonteria.dimeAlgo() : "Tonteria nula");
+//		System.out.println(config);
+	
+		
 	}
 
 }
