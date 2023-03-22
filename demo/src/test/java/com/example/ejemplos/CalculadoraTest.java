@@ -24,4 +24,11 @@ class CalculadoraTest {
 		var rslt = calc.suma(2, -1);
 		assertEquals(1,rslt);
 	}
+	
+	@Test
+	void testSumaNegativoPositivo() {
+		var calc = new Calculadora();
+		var rslt = calc.suma(-1, 2);
+		assertEquals(1,rslt);
+	}
 }
