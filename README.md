@@ -1,2 +1,2 @@
 # Curso
-Otra prueba
+Esto es una prueba del curso en eclipse
