@@ -29,6 +29,8 @@ public class PersonaTest {
 	}
 
 	// Test con repetidor
+	// Poner las mismas propiedades de los atributos tanto en var
+	// como en assert
 	@RepeatedTest(value = 5, name = "{displayName}{currentRepetition}/{totalRepetitions}")
 	void repeatedTest(RepetitionInfo repetitionInfo) {
 		var p = Persona.builder()
