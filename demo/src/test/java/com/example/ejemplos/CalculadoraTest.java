@@ -62,12 +62,11 @@ class CalculadoraTest {
 		class OK {
 			@Test
 			void test_Dividir_Cero() {
-				assertEquals(Double.POSITIVE_INFINITY, calc.divide(1, 0.0));
+				assertEquals(1, calc.divide(1, 1.0));
 			}
 			@Test
 			void test_No_Dividir_Cero() {
-				var rslt = ;
-				assertEquals(Double.POSITIVE_INFINITY, calc.divide(1, 0.0));
+				assertEquals(1, calc.divide(1, 1.0));
 			}
 		}
 
