@@ -28,6 +28,7 @@ public class PersonaTest {
 				() -> assertEquals("Grillo", p.getApellidos(), "getApellidos"));
 	}
 
+	// Test con repetidor
 	@RepeatedTest(value = 5, name = "{displayName}{currentRepetition}/{totalRepetitions}")
 	void repeatedTest(RepetitionInfo repetitionInfo) {
 		var p = Persona.builder()
