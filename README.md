@@ -1,2 +1,2 @@
 # Curso
-Esto es una prueba del curso en demo
+Esto es una prueba del curso en eclipse
