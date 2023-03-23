@@ -1,34 +1,84 @@
 package com.example.ejemplos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class CalculadoraTest {
 
+	Calculadora calc;
+
 	@BeforeEach
 	void setUp() throws Exception {
+		calc = new Calculadora();
 	}
 
-	@Test
-	void testSuma() {
-		var calc = new Calculadora();
-		var rslt = calc.suma(2, 2);
-		assertEquals(4,rslt);
+	// Para saber que esta clase son pruebas @Nested
+	// @DisplayName = nombre
+	@Nested
+	@DisplayName("Pruebas de suma")
+	@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+	class Suma {
+
+		@Nested
+		class OK {
+			@Test
+			void test_Suma_Positivo_Positivo() {
+				var rslt = calc.suma(2, 2);
+				assertEquals(4, rslt);
+			}
+
+			@Test
+			void test_Suma_Positivo_Negativo() {
+				var rslt = calc.suma(2, -1);
+				assertEquals(1, rslt);
+			}
+
+			@Test
+			void test_Suma_Negativo_Positivo() {
+				var rslt = calc.suma(-1, 2);
+
+				assertEquals(1, rslt);
+			}
+		}
+
+		@Nested
+		class KO {
+
+		}
 	}
-	
-	@Test
-	void testSumaPositivoNegativo() {
-		var calc = new Calculadora();
-		var rslt = calc.suma(2, -1);
-		assertEquals(1,rslt);
-	}
-	
-	@Test
-	void testSumaNegativoPositivo() {
-		var calc = new Calculadora();
-		var rslt = calc.suma(-1, 2);
-		assertEquals(1,rslt);
+
+	@Nested
+	@DisplayName("Pruebas de división")
+	@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+	class Divide {
+
+		@Nested
+		class OK {
+			@Test
+			void test_Dividir_Cero() {
+				var rslt = calc.divide(1, 0.0);
+				assertEquals(Double.POSITIVE_INFINITY, rslt);
+			}
+			@Test
+			void test_No_Dividir_Cero() {
+				var rslt = calc.divide(1, 0.0);
+				assertEquals(Double.POSITIVE_INFINITY, rslt);
+			}
+		}
+
+		@Nested
+		class KO {
+			@Test
+			void test_Dividir_Cero() {
+				assertThrows(ArithmeticException.class, () -> calc.divide(1, 0.0));
+			}
+		}
 	}
 }
