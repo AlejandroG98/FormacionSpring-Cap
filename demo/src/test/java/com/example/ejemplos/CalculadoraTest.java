@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class CalculadoraTest {
 
@@ -42,9 +44,19 @@ class CalculadoraTest {
 
 			@Test
 			void test_Suma_Negativo_Positivo() {
-
 				assertEquals(1, calc.suma(-1, 2));
 			}
+			
+			// {0} Operando 1
+			// {1} Operando 2
+			// = Resultado
+			@ParameterizedTest(name = "{displayName}->{0}+{1} = {2}")
+			// Tengo dos cadenas: op1 op2 y resultado
+			@CsvSource(value = {"1,1,2","0.1,0.2,0.3"})
+			void test_Suma_Parametrizada(double op1, double op2, double rslt) {
+				assertEquals(Math.floor(rslt), Math.floor(calc.suma(op1, op2)));
+			}
+			
 		}
 
 		@Nested
