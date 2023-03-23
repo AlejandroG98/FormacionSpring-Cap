@@ -1,3 +1,2 @@
 # Curso
-Esto es una prueba del curso
-Parte 2
+Esto es una prueba del curso en demo
