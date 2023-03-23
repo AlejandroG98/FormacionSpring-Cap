@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class PersonaTest {
@@ -17,6 +18,8 @@ public class PersonaTest {
 	}
 
 	@Test
+	// @Smoke -> Para filtrar durante la ejecución
+	@Smoke
 	void testCreate() {
 		var p = Persona.builder().id(1).nombre("Pepito").apellidos("Grillo").build();
 
@@ -32,6 +35,8 @@ public class PersonaTest {
 	// Poner las mismas propiedades de los atributos tanto en var
 	// como en assert
 	@RepeatedTest(value = 5, name = "{displayName}{currentRepetition}/{totalRepetitions}")
+	// Con repetidoTest podemos filtrar para que se utilize (o no)
+	@Tag("repetidoTest")
 	void repeatedTest(RepetitionInfo repetitionInfo) {
 		var p = Persona.builder()
 				.id(repetitionInfo.getCurrentRepetition())

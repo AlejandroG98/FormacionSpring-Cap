@@ -8,11 +8,15 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+// Ordena los test por nombre si no hay espacios
+@TestMethodOrder(value = MethodOrderer.DisplayName.class)
 class CalculadoraTest {
 
 	Calculadora calc;
@@ -60,12 +64,10 @@ class CalculadoraTest {
 			void test_Suma_Parametrizada(double op1, double op2, double rslt) {
 				assertEquals(Math.floor(rslt), Math.floor(calc.suma(op1, op2)));
 			}
-			
 		}
 
 		@Nested
 		class KO {
-
 		}
 	}
 
