@@ -18,7 +18,7 @@ public class PersonaTest {
 	}
 
 	@Test
-	// @Smoke -> Para filtrar durante la ejecución
+	// @Smoke -> Para filtrar para la ejecución
 	@Smoke
 	void testCreate() {
 		var p = Persona.builder().id(1).nombre("Pepito").apellidos("Grillo").build();
