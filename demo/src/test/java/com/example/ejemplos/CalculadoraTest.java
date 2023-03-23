@@ -42,9 +42,8 @@ class CalculadoraTest {
 
 			@Test
 			void test_Suma_Negativo_Positivo() {
-				var rslt = calc.suma(-1, 2);
 
-				assertEquals(1, rslt);
+				assertEquals(1, calc.suma(-1, 2));
 			}
 		}
 
@@ -63,13 +62,12 @@ class CalculadoraTest {
 		class OK {
 			@Test
 			void test_Dividir_Cero() {
-				var rslt = calc.divide(1, 0.0);
-				assertEquals(Double.POSITIVE_INFINITY, rslt);
+				assertEquals(Double.POSITIVE_INFINITY, calc.divide(1, 0.0));
 			}
 			@Test
 			void test_No_Dividir_Cero() {
-				var rslt = calc.divide(1, 0.0);
-				assertEquals(Double.POSITIVE_INFINITY, rslt);
+				var rslt = ;
+				assertEquals(Double.POSITIVE_INFINITY, calc.divide(1, 0.0));
 			}
 		}
 
