@@ -52,7 +52,7 @@ class CalculadoraTest {
 			// = Resultado
 			@ParameterizedTest(name = "{displayName}->{0}+{1} = {2}")
 			// Tengo dos cadenas: op1 op2 y resultado
-			@CsvSource(value = {"1,1,2","0.1,0.2,0.3"})
+			@CsvSource(value = {"1,1,2","0.1,0.2,0.3","1,2,3","0,0,0","-1,-1,-2"})
 			void test_Suma_Parametrizada(double op1, double op2, double rslt) {
 				assertEquals(Math.floor(rslt), Math.floor(calc.suma(op1, op2)));
 			}
