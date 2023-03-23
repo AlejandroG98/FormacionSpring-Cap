@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -42,6 +43,9 @@ class CalculadoraTest {
 				assertEquals(1, rslt);
 			}
 
+			// Con @Disabled hago que no funcione este test
+			// Por eso aparece skipped
+			@Disabled
 			@Test
 			void test_Suma_Negativo_Positivo() {
 				assertEquals(1, calc.suma(-1, 2));
