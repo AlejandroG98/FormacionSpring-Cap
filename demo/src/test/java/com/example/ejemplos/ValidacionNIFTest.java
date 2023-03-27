@@ -20,7 +20,7 @@ class ValidacionNIFTest {
 	class isNIF {
 
 		@ParameterizedTest
-		@ValueSource(strings = {"12345678A", "12345679F"})
+		@ValueSource(strings = {"12345678A", "12345678a"})
 		void casosValidos(String NIF) {
 			assertAll("Validar propiedades", 
 					() -> assertNotNull(nif.NIFcheck(NIF)),
