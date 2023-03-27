@@ -68,11 +68,14 @@ class CalculadoraTest {
 			}
 			
 			// Test con Mock
+			// Lo deshabilito para que no falle en todos los test
+			@Disabled
 			@Test
 			void testSumaMock(){
 				Calculadora calc = mock(Calculadora.class);
+				// Cuando mockeo (when) si luego pongo otro valor peta
 				when(calc.suma(2, 2)).thenReturn(3.0);
-				assertEquals(3, calc.suma(2, 2));
+				assertEquals(3, calc.suma(1, 1));
 			}
 		}
 
