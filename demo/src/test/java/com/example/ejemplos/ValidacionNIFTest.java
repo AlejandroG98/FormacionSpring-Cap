@@ -15,7 +15,7 @@ class ValidacionNIFTest {
 	}
 
 	@Nested
-	@DisplayName("Pruebas para saber si es valido o no un NIF")
+	@DisplayName("Pruebas para saber si un NIF es valido/invalido")
 	@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 	class isNIF {
 
