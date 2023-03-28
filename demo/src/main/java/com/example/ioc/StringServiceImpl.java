@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.example.exceptions.InvalidDataException;
-import com.example.exceptions.NotFoundExceptions;
+import com.example.exceptions.NotFoundException;
 
 @Service
 @Qualifier("Local")
@@ -22,12 +22,12 @@ public class StringServiceImpl implements StringService {
 	}
 
 	@Override
-	public void add(String item) throws NotFoundExceptions {
+	public void add(String item) throws NotFoundException {
 		
 		try {
 			dao.save(item);
 		} catch (InvalidDataException ex) {
-			throw new NotFoundExceptions("No encontrado", ex);
+			throw new NotFoundException("No encontrado", ex);
 		}
 	}
 

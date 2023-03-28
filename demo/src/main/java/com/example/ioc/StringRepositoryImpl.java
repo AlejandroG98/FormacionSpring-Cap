@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.example.exceptions.ArgumentoInvalidException;
+import com.example.exceptions.ArgumentoInvalidoException;
 import com.example.exceptions.InvalidDataException;
 
 @Repository
