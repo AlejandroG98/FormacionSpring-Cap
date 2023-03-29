@@ -51,8 +51,7 @@ public class DemoApplication implements CommandLineRunner {
 		if(item.isPresent()) {
 			var actor = item.get();
 			System.out.println(actor);
-			actor.getFilmActors()
-			.forEach(o -> System.out.println(o.getFilm().getTitle()));
+			actor.getFilmActors().forEach(o -> System.out.println(o.getFilm().getTitle()));
 		} else {
 			System.out.println("Actor no encontrado");
 		}
