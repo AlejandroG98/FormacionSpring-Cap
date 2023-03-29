@@ -86,7 +86,7 @@ public class DemoApplication implements CommandLineRunner {
 		//rslt.getContent().stream().map(item -> ActorDTO.from(item)).forEach(System.out::println);
 		//dao.findByActorIdNotNull().forEach(item->System.out.println(item.getActorId()+" "+item.getNombre()));
 		//dao.findAllBy(ActorShort.class).forEach(item->System.out.println(item.getActorId()+" "+item.getNombre()));
-		ObjectMapper objectMapper = new ObjectMapper();
+/*		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonText = objectMapper.writeValueAsString(dao);
 		dao.findAllBy(ActorDTO.class).stream().map(
 				item->
@@ -97,6 +97,6 @@ public class DemoApplication implements CommandLineRunner {
 						return "";
 					}
 				}).forEach(System.out::println);
-	
+*/
 	}
 }
