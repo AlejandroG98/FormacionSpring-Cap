@@ -1,42 +1,40 @@
 package com.example.domains.core.validations;
 
+
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.provider.*;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EmptySource;
-import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.params.provider.ValueSource;
+class ValidacionNIFTest  {
 
-import com.example.core.test.SpaceCamelCase;
+	ValidacionNIF nif;
 
-class CadenasValidatorTest {
+	@BeforeEach
+	void setUp() throws Exception {
+		nif = new ValidacionNIF();
+	}
 
 	@Nested
-	@DisplayName("Pruebas del método IsNIF")
-	@DisplayNameGeneration(SpaceCamelCase.class)
-	class IsNIF {
+	@DisplayName("Pruebas para saber si es valido o no un NIF")
+	@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+	class isNIF {
 
-		@ParameterizedTest(name = "Caso: {0}")
-		@ValueSource(strings = { "12345678z", "12345678Z", "4g" })
-		@NullSource
-		void casosValidos(String caso) {
-			assertTrue(CadenasValidator.isNIF(caso));
+		@ParameterizedTest
+		@ValueSource(strings = {"12345678A", "12345679F"})
+		void casosValidos(String NIF) {
+			assertAll("Validar propiedades", 
+					() -> assertNotNull(nif.NIFcheck(NIF)),
+					() -> assertTrue(nif.NIFcheck(NIF))
+					);
 		}
 
-		@ParameterizedTest(name = "Caso: {0}")
-		@ValueSource(strings = { "12345678", "Z12345678", "kk", "0T" })
-		@EmptySource
-		void casosInvalidos(String caso) {
-			assertFalse(CadenasValidator.isNIF(caso));
-		}
-
-		@Test
-		void testIsNotNIF() {
-			assertTrue(CadenasValidator.isNotNIF(""));
+		@ParameterizedTest
+		@ValueSource(strings = {"12345678", "1234567A","12345678AA","1234567AA"})
+		void casosInvalidos(String NIF) {
+			assertAll("Validar propiedades", 
+					() -> assertNotNull(nif.NIFcheck(NIF)), 
+					() -> assertFalse(nif.NIFcheck(NIF)));
 		}
 	}
 }
