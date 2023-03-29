@@ -1,7 +1,6 @@
 package com.example.domains.core.services.contracts;
 
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

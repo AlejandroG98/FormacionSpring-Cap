@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
@@ -18,8 +17,6 @@ import com.example.exceptions.NotFoundException;
 
 @Service
 public class ActorServiceImpl implements ActorService{
-
-	//Autowires :)
 	
 	@Autowired
 	ActorRepository dao;

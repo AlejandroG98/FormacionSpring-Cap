@@ -1,21 +1,10 @@
 package com.example;
 
-import java.util.stream.Stream;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-
 import com.example.domains.contracts.repositories.ActorRepository;
-import com.example.domains.contracts.repositories.ActorShort;
-import com.example.domains.entities.Actor;
-import com.example.domains.entities.dtos.ActorDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jakarta.transaction.Transactional;
 
 @SpringBootApplication
