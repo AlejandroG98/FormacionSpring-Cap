@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.ActorRepository;
+import com.example.domains.contracts.repositories.ActorShort;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.dtos.ActorDTO;
 
@@ -81,6 +82,9 @@ public class DemoApplication implements CommandLineRunner {
 		}*/
 		//var rslt = dao.findAll(PageRequest.of(1, 20, Sort.by("actorId")));
 		//rslt.getContent().stream().map(item -> ActorDTO.from(item)).forEach(System.out::println);
-		dao.findByActorIdNotNull().forEach(item->System.out.println(item.getActorId()+" "+item.getNombre()));
+		//dao.findByActorIdNotNull().forEach(item->System.out.println(item.getActorId()+" "+item.getNombre()));
+		dao.findAllBy(ActorShort.class).forEach(item->System.out.println(item.getActorId()+" "+item.getNombre()));
+		
+	
 	}
 }

@@ -19,6 +19,8 @@ public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpeci
 	
 	List<ActorShort> findByActorIdNotNull();
 
+	<T> List<T> findAllBy(Class<T> type);
+	
 	@Query("SELECT a FROM Actor a WHERE a.actorId < :id")
 	List<Actor> findConJPQL(@Param("id") int actorId);
 	@Query(name = "Actor.findAll")
