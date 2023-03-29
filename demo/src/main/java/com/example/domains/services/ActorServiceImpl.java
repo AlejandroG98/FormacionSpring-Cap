@@ -20,56 +20,44 @@ public class ActorServiceImpl implements ActorService{
 	
 	@Autowired
 	ActorRepository dao;
-	
-	public ActorServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	public <T> List<T> getByProjection(Class<T> type) {
-		// TODO Auto-generated method stub
 		return dao.findAllBy(type);
 	}
 
 	@Override
 	public <T> Iterable<T> getByProjection(Sort sort, Class<T> type) {
-		// TODO Auto-generated method stub
 		return dao.findAllBy(sort,type);
 	}
 	
 	@Override
 	public <T> Page<T> getByProjection(Pageable pageable, Class<T> type) {
-		// TODO Auto-generated method stub
 		return dao.findAllBy(pageable, type);
 	}
 
 	@Override
 	public Iterable<Actor> getAll(Sort sort) {
-		// TODO Auto-generated method stub
 		return dao.findAll(sort);
 	}
 
 	@Override
 	public Page<Actor> getAll(Pageable pageable) {
-		// TODO Auto-generated method stub
 		return dao.findAll(pageable);
 	}
 
 	@Override
 	public List<Actor> getAll() {
-		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 
 	@Override
 	public Optional<Actor> getOne(Integer id) {
-		// TODO Auto-generated method stub
 		return dao.findById(id);
 	}
 
 	@Override
 	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
-		// TODO Auto-generated method stub
 		if(item == null)
 		{
 			throw new InvalidDataException("[ERROR] El item no puede ser nulo");

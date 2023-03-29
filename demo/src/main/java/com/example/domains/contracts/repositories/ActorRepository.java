@@ -9,8 +9,11 @@ import org.springframework.data.repository.query.Param;
 import com.example.domains.core.repositories.contracts.RepositoryWithProjections;
 import com.example.domains.entities.Actor;
 
+// Repositorio de la entidad de dominio
+// Extiendo por todos los lados
+// Solo accede su servicio de dominio
 public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>, RepositoryWithProjections{
-	//<T> List<T> findAllBy(Class<T> type);
+	<T> List<T> findAllBy(Class<T> type);
 	
 	@Query("SELECT a FROM Actor a WHERE a.actorId < :id")
 	List<Actor> findConJPQL(@Param("id") int actorId);

@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.example.domains.contracts.repositories.ActorRepository;
+import com.example.domains.contracts.services.ActorService;
+import com.example.domains.entities.Actor;
+
 import jakarta.transaction.Transactional;
 
 @SpringBootApplication
@@ -14,8 +16,11 @@ public class DemoApplication implements CommandLineRunner {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+	//@Autowired
+	//ActorRepository dao;
+	
 	@Autowired
-	ActorRepository dao;
+	ActorService srv;
 
 	@Override
 	@Transactional
@@ -87,5 +92,10 @@ public class DemoApplication implements CommandLineRunner {
 					}
 				}).forEach(System.out::println);
 */
+		
+		// ERROR Porque la id=1 ya existe
+		srv.add(new Actor(1, "KK", "KKK"));
+		
+		//srv.add(new Actor(202, "4", "d"));
 	}
 }

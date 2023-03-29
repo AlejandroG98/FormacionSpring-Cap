@@ -2,6 +2,8 @@ package com.example.domains.contracts.repositories;
 
 import org.springframework.beans.factory.annotation.Value;
 
+// Cojo los atributos "simples" del Actor 
+// Sin Timestamp o cosas raras
 public interface ActorShort {
 
 	int getActorId();
