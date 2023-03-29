@@ -6,11 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
-
 import jakarta.transaction.Transactional;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import lombok.experimental.var;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -61,11 +57,19 @@ public class DemoApplication implements CommandLineRunner {
 // 			System.out.println("Actor no encontrado");
 // 		}
 		var actor = new Actor(0, "", "grillo");
-		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+		
+		/*Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		var err = validator.validate(actor);
 		if (err.size() > 0) {
 			err.forEach(e->System.out.println(e.getPropertyPath()+": "+e.getMessage()));
 		}else {
+			dao.save(actor);
+		}*/
+		
+		if(actor.isInvalid())
+		{
+			System.out.println(actor.getErrorsMessage());
+		} else {
 			dao.save(actor);
 		}
 	}
