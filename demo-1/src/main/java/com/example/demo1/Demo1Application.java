@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import com.example.demo1.domains.contracts.services.CategoryService;
 import com.example.demo1.domains.contracts.services.LanguageService;
+import com.example.demo1.domains.entities.Category;
 import com.example.demo1.domains.entities.Film;
 import com.example.demo1.domains.entities.FilmCategory;
 import com.example.demo1.domains.entities.Language;
@@ -41,6 +42,7 @@ public class Demo1Application implements CommandLineRunner {
 		// SI AÑADE A LA DB
 		//List<FilmCategory> listaCategorias = (List<FilmCategory>) auxFilmCat.getCategory();
 		//srvCat.add(new Category(0, "Españolisima", listaCategorias));
+		// Si quiero forzar el error: 0 -> 17
 		
 		// COMPROBAR TODA LA PARTE DE LA ENTITY @Language
 		// SI AÑADE A LA DB
@@ -48,6 +50,7 @@ public class Demo1Application implements CommandLineRunner {
 		//List<Film> peliOriginal = (List<Film>) auxFilm.getLanguage();
 		//List<Film> peliSubtituladaFilms = (List<Film>) auxFilm.getLanguageVO();
 		//srvLang.add(new Language(0, "Patuno", peliOriginal, peliSubtituladaFilms));
+		// Si quiero forzar el error: 0 -> 7
 			
 
 	}
