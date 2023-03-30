@@ -4,6 +4,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 import com.example.demo1.domains.core.entities.EntityBase;
 
@@ -37,20 +38,48 @@ public class Language extends EntityBase<Language> implements Serializable {
 	@OneToMany(mappedBy="languageVO")
 	private List<Film> filmsVO;
 
-	
-	
 	public Language() {
 		super();
 	}
+	
+	
 
-	public Language(int languageId, String name, List<Film> films, List<Film> filmsVO) {
+
+	public Language(int languageId) {
+		super();
+		this.languageId = languageId;
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(languageId);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Language other = (Language) obj;
+		return languageId == other.languageId;
+	}
+
+
+
+
+	public Language(int languageId, String name) {
 		super();
 		this.languageId = languageId;
 		this.name = name;
-		this.films = films;
-		this.filmsVO = filmsVO;
 	}
-	
+
+
+
 
 	public int getLanguageId() {
 		return this.languageId;

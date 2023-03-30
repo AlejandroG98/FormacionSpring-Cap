@@ -1,7 +1,5 @@
 package com.example.demo1;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,10 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import com.example.demo1.domains.contracts.services.CategoryService;
 import com.example.demo1.domains.contracts.services.LanguageService;
-import com.example.demo1.domains.entities.Category;
 import com.example.demo1.domains.entities.Film;
 import com.example.demo1.domains.entities.FilmCategory;
-import com.example.demo1.domains.entities.Language;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.example.demo1", "com.example.demo1.domains.entities" })

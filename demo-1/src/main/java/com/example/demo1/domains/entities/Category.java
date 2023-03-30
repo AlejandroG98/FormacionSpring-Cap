@@ -47,6 +47,11 @@ public class Category extends EntityBase<Category> implements Serializable {
 		this.filmCategories = filmCategories;
 	}
 
+	public Category(Integer item) {
+		super();
+		this.categoryId=item;
+	}
+
 	public int getCategoryId() {
 		return this.categoryId;
 	}

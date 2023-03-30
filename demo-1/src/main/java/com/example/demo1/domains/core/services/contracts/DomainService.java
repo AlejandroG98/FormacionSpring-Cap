@@ -11,7 +11,7 @@ public interface DomainService<E, K> {
 	
 	Optional<E> getOne(K id);
 	
-	E add(E item) throws DuplicateKeyException, InvalidDataException;
+	E add(E item) throws InvalidDataException, DuplicateKeyException;
 	
 	E modify(E item) throws NotFoundException, InvalidDataException;
 	
