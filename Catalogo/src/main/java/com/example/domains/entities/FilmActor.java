@@ -2,9 +2,8 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.sql.Timestamp;
 
-import com.example.domains.core.entities.EntityBase;
+import java.sql.Timestamp;
 
 
 /**
@@ -14,42 +13,34 @@ import com.example.domains.core.entities.EntityBase;
 @Entity
 @Table(name="film_actor")
 @NamedQuery(name="FilmActor.findAll", query="SELECT f FROM FilmActor f")
-public class FilmActor extends EntityBase<FilmActor> implements Serializable {
+public class FilmActor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private FilmActorPK id;
 
-	@Column(name="last_update", nullable=false)
+	@Column(name="last_update", insertable = false, updatable = false)
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Actor
 	@ManyToOne
-	@JoinColumn(name="actor_id", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="actor_id", insertable=false, updatable=false)
 	private Actor actor;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
-	@JoinColumn(name="film_id", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="film_id", insertable=false, updatable=false)
 	private Film film;
 
-	
 	public FilmActor() {
-		super();
 	}
 
 	public FilmActor(Film film, Actor actor) {
 		super();
-		this.actor = actor;
 		this.film = film;
+		this.actor = actor;
+		setId(new FilmActorPK(film.getFilmId(), actor.getActorId()));
 	}
-	
-	public FilmActor(FilmActorPK id, Actor actor, Film film) {
-		super();
-		this.id = id;
-		this.actor = actor;
-		this.film = film;
-	}	
 
 	public FilmActorPK getId() {
 		return this.id;

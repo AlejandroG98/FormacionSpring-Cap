@@ -1,5 +1,5 @@
 package com.example.domains.entities;
- 
+
 import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.stereotype.Component;
-
 
 /**
  * The persistent class for the film database table.
  * 
  */
 @Entity
-@Component
 @Table(name="film")
 @NamedQuery(name="Film.findAll", query="SELECT f FROM Film f")
 public class Film extends EntityBase<Film> implements Serializable {
@@ -166,6 +163,12 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.languageVO = languageVO;
 	}
 
+	public Film(@NotBlank @Size(max = 128) String title, @NotNull Language language) {
+		super();
+		this.title = title;
+		this.language = language;
+	}
+
 	public int getFilmId() {
 		return this.filmId;
 	}
@@ -270,6 +273,9 @@ public class Film extends EntityBase<Film> implements Serializable {
 	public List<Actor> getActors() {
 		return this.filmActors.stream().map(item -> item.getActor()).toList();
 	}
+	public void clearActors() {
+		filmActors = new ArrayList<FilmActor>() ;
+	}
 	public void addActor(Actor actor) {
 		FilmActor filmActor = new FilmActor(this, actor);
 		getFilmActors().add(filmActor);
@@ -301,7 +307,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 	}
 	public FilmActor addFilmActor(Actor actor) {
 		FilmActor filmActor = new FilmActor(this, actor);
-		getFilmActors().add(filmActor);
+		filmActors.add(filmActor);
 		return filmActor;
 	}
 
@@ -310,6 +316,26 @@ public class Film extends EntityBase<Film> implements Serializable {
 		filmActor.setFilm(null);
 
 		return filmActor;
+	}
+
+	public List<Category> getCategories() {
+		return this.filmCategories.stream().map(item -> item.getCategory()).toList();
+	}
+	public void clearCategories() {
+		filmCategories = new ArrayList<FilmCategory>() ;
+	}
+	public void addCategory(Category item) {
+		FilmCategory filmCategory = new FilmCategory(this, item);
+		filmCategories.add(filmCategory);
+	}
+	public void addCategory(int id) {
+		addCategory(new Category(id));
+	}
+	public void removeCategory(Category ele) {
+		var filmCategory = filmCategories.stream().filter(item -> item.getCategory().equals(ele)).findFirst();
+		if(filmCategory.isEmpty())
+			return;
+		filmCategories.remove(filmCategory.get());
 	}
 
 	public List<FilmCategory> getFilmCategories() {

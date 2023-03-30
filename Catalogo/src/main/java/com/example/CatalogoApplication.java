@@ -1,5 +1,7 @@
 package com.example;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -7,12 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.example.domains.contracts.services.CategoryService;
+import com.example.domains.contracts.services.FilmService;
 import com.example.domains.contracts.services.LanguageService;
+import com.example.domains.entities.Actor;
 import com.example.domains.entities.Film;
+import com.example.domains.entities.Film.Rating;
 import com.example.domains.entities.FilmCategory;
+import com.example.domains.entities.Language;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.example.demo1", "com.example.demo1.domains.entities" })
 public class CatalogoApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
@@ -20,36 +27,32 @@ public class CatalogoApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	CategoryService srvCat;
-
-	@Autowired(required = true)
-	FilmCategory auxFilmCat;
-	
-	@Autowired
-	LanguageService srvLang;
-	
-	@Autowired(required = true)
-	Film auxFilm;
+	FilmService srv;
 	
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
-		System.out.println("Arrancando aplicación...");
-
-		// COMPROBAR TODA LA PARTE DE LA ENTITY @Category
-		// SI AÑADE A LA DB
-		//List<FilmCategory> listaCategorias = (List<FilmCategory>) auxFilmCat.getCategory();
-		//srvCat.add(new Category(0, "Españolisima", listaCategorias));
-		// Si quiero forzar el error: 0 -> 17
-		
-		// COMPROBAR TODA LA PARTE DE LA ENTITY @Language
-		// SI AÑADE A LA DB
-		// int languageId, String name, List<Film> films, List<Film> filmsVO
-		//List<Film> peliOriginal = (List<Film>) auxFilm.getLanguage();
-		//List<Film> peliSubtituladaFilms = (List<Film>) auxFilm.getLanguageVO();
-		//srvLang.add(new Language(0, "Patuno", peliOriginal, peliSubtituladaFilms));
-		// Si quiero forzar el error: 0 -> 7
-			
-
+		System.out.println("------------------> Aplicacion iniciada");
+		var peli = new Film("Hola mundo", new Language(2));
+		peli.setRentalDuration((byte)3);
+		peli.setRating(Rating.ADULTS_ONLY);
+		peli.setLength(10);
+		peli.setRentalRate(new BigDecimal(10.0));
+		peli.setReplacementCost(new BigDecimal(10.0));
+		peli.addActor(1);
+		peli.addActor(2);
+		peli.addActor(3);
+		peli.addCategory(2);
+		peli.addCategory(4);
+//		srv.add(peli);
+		peli = srv.getOne(1008).get();
+		peli.removeActor(new Actor(1));
+		peli.removeActor(new Actor(2));
+		peli.addActor(4);
+		peli.removeCategory(peli.getCategories().get(0));
+		peli.addCategory(1);
+		peli.setTitle("Adios mundo");
+//		srv.modify(peli);
 	}
 
 }

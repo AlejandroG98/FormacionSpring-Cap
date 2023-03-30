@@ -2,11 +2,18 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import com.example.domains.core.entities.EntityBase;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
-
-import com.example.domains.core.entities.EntityBase;
 
 
 /**
@@ -18,68 +25,50 @@ import com.example.domains.core.entities.EntityBase;
 @NamedQuery(name="Language.findAll", query="SELECT l FROM Language l")
 public class Language extends EntityBase<Language> implements Serializable {
 	private static final long serialVersionUID = 1L;
+    public static class Partial {}
+    public static class Complete extends Partial {}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="language_id", unique=true, nullable=false)
+	@Column(name="language_id")
+	@JsonProperty("id")
+	@JsonView(Language.Partial.class)
 	private int languageId;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
-	private Timestamp lastUpdate;
-
-	@Column(nullable=false, length=20)
+	@NotBlank
+	@Size(max=20)
+	@JsonProperty("idioma")
+	@JsonView(Language.Partial.class)
 	private String name;
+
+	@Column(name="last_update", insertable = false, updatable = false)
+	@JsonView(Language.Complete.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+	@JsonProperty("ultimaModificacion")
+	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Film
 	@OneToMany(mappedBy="language")
+	@JsonIgnore
 	private List<Film> films;
 
 	//bi-directional many-to-one association to Film
 	@OneToMany(mappedBy="languageVO")
+	@JsonIgnore
 	private List<Film> filmsVO;
 
 	public Language() {
-		super();
 	}
-	
-	
-
 
 	public Language(int languageId) {
-		super();
 		this.languageId = languageId;
 	}
 
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(languageId);
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Language other = (Language) obj;
-		return languageId == other.languageId;
-	}
-
-
-
-
-	public Language(int languageId, String name) {
+	public Language(int languageId, @NotBlank @Size(max = 20) String name) {
 		super();
 		this.languageId = languageId;
 		this.name = name;
 	}
-
-
-
 
 	public int getLanguageId() {
 		return this.languageId;
@@ -147,6 +136,28 @@ public class Language extends EntityBase<Language> implements Serializable {
 		filmsVO.setLanguageVO(null);
 
 		return filmsVO;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(languageId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Language other = (Language) obj;
+		return languageId == other.languageId;
+	}
+	
+	@Override
+	public String toString() {
+		return "Language [languageId=" + languageId + ", name=" + name + "]";
 	}
 
 }

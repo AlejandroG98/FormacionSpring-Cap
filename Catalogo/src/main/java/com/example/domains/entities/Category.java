@@ -2,12 +2,17 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
+
+import com.example.domains.core.entities.EntityBase;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
 import java.util.List;
-
-import com.example.domains.core.entities.EntityBase;
+import java.util.Objects;
 
 
 /**
@@ -22,34 +27,38 @@ public class Category extends EntityBase<Category> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="category_id", unique=true, nullable=false)
-	@Max(255)
+	@Column(name="category_id")
+	@JsonProperty("id")
 	private int categoryId;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	@Column(name="last_update", insertable = false, updatable = false)
+	@PastOrPresent
+	@JsonIgnore
 	private Timestamp lastUpdate;
 
-	@Column(nullable=false, length=25)
+	@NotBlank
+	@Size(max=25)
+	@JsonProperty("categoria")
 	private String name;
 
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="category")
+	@JsonIgnore
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
-		super();
 	}
-	
-	public Category(int categoryId, String name, List<FilmCategory> filmCategories) {
+
+	public Category(int categoryId) {
+		super();
+		this.categoryId = categoryId;
+	}
+
+	public Category(int categoryId, @NotBlank @Size(max = 25) String name, List<FilmCategory> filmCategories) {
 		super();
 		this.categoryId = categoryId;
 		this.name = name;
 		this.filmCategories = filmCategories;
-	}
-
-	public Category(Integer item) {
-		super();
-		this.categoryId=item;
 	}
 
 	public int getCategoryId() {
@@ -96,6 +105,28 @@ public class Category extends EntityBase<Category> implements Serializable {
 		filmCategory.setCategory(null);
 
 		return filmCategory;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoryId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		return categoryId == other.categoryId;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", name=" + name + ", lastUpdate=" + lastUpdate + "]";
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.example.domains.entities.dtos;
 
-
 import com.example.domains.entities.Film;
 
 import lombok.Value;
