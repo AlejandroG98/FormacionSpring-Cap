@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.example.demo1.domains.core.entities.EntityBase;
 
 
@@ -14,6 +16,7 @@ import com.example.demo1.domains.core.entities.EntityBase;
  * 
  */
 @Entity
+@Component
 @Table(name="film")
 @NamedQuery(name="Film.findAll", query="SELECT f FROM Film f")
 public class Film extends EntityBase<Actor> implements Serializable {
