@@ -14,11 +14,14 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.stereotype.Component;
+
 
 /**
  * The persistent class for the category database table.
  * 
  */
+@Component
 @Entity
 @Table(name="category")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")

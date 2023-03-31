@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.stereotype.Component;
+
 import com.example.domains.core.entities.EntityBase;
 
 import jakarta.persistence.*;
@@ -19,6 +21,7 @@ import jakarta.validation.constraints.Size;
  * The persistent class for the actor database table.
  * 
  */
+@Component
 @Entity
 @Table(name="actor")
 @NamedQuery(name="Actor.findAll", query="SELECT a FROM Actor a")

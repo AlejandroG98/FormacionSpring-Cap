@@ -12,15 +12,5 @@ import com.example.domains.entities.Category;
 // Extiendo por todos los lados
 // Solo accede su servicio de dominio
 public interface CategoryRepository extends JpaRepository<Category, Integer>, JpaSpecificationExecutor<Category>, RepositoryWithProjections{
-	//<T> List<T> findAllBy(Class<T> type);
 	List<Category> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
-	/*
-	@Query("SELECT a FROM Category a WHERE a.categoryId < :id")
-	List<Category> findConJPQL(@Param("id") int categoryId);
-	
-	@Query(name = "Category.findAll")
-	List<Category> findConJPQL();
-	
-	@Query(value = "SELECT * from Category WHERE category_id < ?1", nativeQuery = true)
-	List<Category> findConSQL(int categoryId);*/
 }

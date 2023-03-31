@@ -16,8 +16,8 @@ public class DemoApplication implements CommandLineRunner {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 	
-	@Autowired
-	ActorService srv;
+	/*@Autowired
+	ActorService srv;*/
 
 	@Override
 	@Transactional
@@ -25,7 +25,7 @@ public class DemoApplication implements CommandLineRunner {
 		System.out.println("Aplicación arrancada");
 	
 		// ERROR Porque la id=1 ya existe
-		srv.add(new Actor(1, "KK", "KKK"));
+		//srv.add(new Actor(1, "KK", "KKK"));
 		
 		//srv.add(new Actor(202, "4", "d"));
 	}

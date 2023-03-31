@@ -6,11 +6,14 @@ import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 
+import org.springframework.stereotype.Component;
+
 
 /**
  * The persistent class for the film_category database table.
  * 
  */
+@Component
 @Entity
 @Table(name="film_category")
 @NamedQuery(name="FilmCategory.findAll", query="SELECT f FROM FilmCategory f")
