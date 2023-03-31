@@ -26,7 +26,7 @@ import java.util.Objects;
 public class Film extends EntityBase<Film> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static enum Rating {
-	    GENERAL_AUDIENCES("G"),
+	    GENERAL_AUDIENCES("G"), 
 	    PARENTAL_GUIDANCE_SUGGESTED("PG"),
 	    PARENTS_STRONGLY_CAUTIONED("PG-13"),
 	    RESTRICTED("R"),

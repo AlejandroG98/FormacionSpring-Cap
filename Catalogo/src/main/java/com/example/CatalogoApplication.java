@@ -27,7 +27,7 @@ public class CatalogoApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	FilmService srv;
+	FilmService srv; 
 	
 	@Override
 	@Transactional
