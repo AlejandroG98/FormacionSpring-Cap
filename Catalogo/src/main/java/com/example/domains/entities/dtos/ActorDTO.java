@@ -23,5 +23,12 @@ public class ActorDTO {
 		return new Actor(target.getActorId(), target.getFirstName(), target.getLastName());
 	}
 
+	public Actor to() {
+	    return new Actor(actorId, firstName, lastName);
+	}
+
+
+	 
+
 	
 }

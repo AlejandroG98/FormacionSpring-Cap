@@ -215,7 +215,7 @@ class FilmTest {
 			@ParameterizedTest
 			@CsvSource(value = { "' ','ERRORES: must not be blank.'", "'','ERRORES: must not be blank.'",
 					"'  ','ERRORES: must not be blank.'",
-					"12345678901234567890123456789012345678901234567890,'ERRORES: name: size must be between 0 and 20.'" })
+					"12345678901234567890123456789012345678901234567890,'ERRORES: size must be between 0 and 20.'" })
 			void testFirstLanguage(String language) {
 				var langAux = new Language(0, language);
 				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, langAux,
@@ -248,7 +248,7 @@ class FilmTest {
 			@ParameterizedTest
 			@CsvSource(value = { "' ','ERRORES: must not be blank.'", "'','ERRORES: must not be blank.'",
 					"'  ','ERRORES: must not be blank.'",
-					"12345678901234567890123456789012345678901234567890,'ERRORES: name: size must be between 0 and 20.'" })
+					"12345678901234567890123456789012345678901234567890,'ERRORES: size must be between 0 and 20.'" })
 			void testFirstLanguage(String language) {
 				var langAux = new Language(0, language);
 				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, new Language(0),

@@ -17,21 +17,6 @@ class LanguageTest {
 		assertTrue(fixture.isValid());
 	}
 
-//	@DisplayName("El nombre no puede estar en blanco")
-//	@ParameterizedTest(name = "Name: {0}, Error: {1}")
-//	@CsvSource(value = { 
-//		"'','ERRORES: name: must not be blank.'",
-//		"' ','ERRORES: name: must not be blank.'",
-//		"'   ','ERRORES: name: must not be blank.'", 
-//		"12345678901234567890123456789012345678901234567890,'ERRORES: name: size must be between 0 and 20.'" 
-//		})
-//	void testNameIsInvalid(String valor, String error) {
-//		var fixture = new Language(0, valor);
-//		assertNotNull(fixture);
-//		assertTrue(fixture.isInvalid());
-//		assertEquals(error, fixture.getErrorsMessage());
-//	}
-	
 	@Nested
 	class Name {
 		@Nested

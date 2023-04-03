@@ -21,7 +21,7 @@ import com.example.exceptions.NotFoundException;
 public class CategoryServiceImpl implements CategoryService{
 	
 	@Autowired
-	CategoryRepository dao;
+	private CategoryRepository dao;
 
 	@Override
 	public <T> List<T> getByProjection(Class<T> type) {
