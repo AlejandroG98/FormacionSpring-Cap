@@ -48,9 +48,7 @@ class FilmTest {
 		@Nested
 		class OK {
 			@ParameterizedTest
-			@CsvSource(value = { "'1999','ERRORES: releaseYear: must be greater than or equal'",
-					"'2020','ERRORES: releaseYear: must be greater than or equal'",
-					"'2001','ERRORES: releaseYear: must be greater than or equal'" })
+			@CsvSource(value = { "'1999'", "'2020'", "'2001'" })
 			void testReleaseYear(Short releaseYear) {
 				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", releaseYear, new Language(0),
 						new Language(1), (byte) 3, BigDecimal.valueOf(2.99), 142, BigDecimal.valueOf(20.99),
@@ -81,9 +79,7 @@ class FilmTest {
 		@Nested
 		class OK {
 			@ParameterizedTest
-			@CsvSource(value = { "'1','ERRORES: rentalDuration: must be greater than 0.'",
-					"'5','ERRORES: rentalDuration: must be greater than 0.'",
-					"'10','ERRORES: rentalDuration: must be greater than 0.'" })
+			@CsvSource(value = { "'1'", "'5'", "'10'" })
 			void testRentalDuration(Byte rentalDuration) {
 				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, new Language(0),
 						new Language(1), rentalDuration, BigDecimal.valueOf(2.99), 142, BigDecimal.valueOf(20.99),
@@ -114,9 +110,7 @@ class FilmTest {
 		@Nested
 		class OK {
 			@ParameterizedTest
-			@CsvSource(value = { "'0.01','ERRORES: rentalRate: must be greater than 0.00.'",
-					"'0.99','ERRORES: rentalRate: must be greater than 0.00.'",
-					"'1.99','ERRORES: rentalRate: must be greater than 0.00.'", })
+			@CsvSource(value = { "'0.01'", "'0.99'", "'1.99'", })
 			void testRentalRate(BigDecimal rentalRate) {
 				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, new Language(0),
 						new Language(1), (byte) 3, rentalRate, 142, BigDecimal.valueOf(20.99), Rating.ADULTS_ONLY);
@@ -145,9 +139,7 @@ class FilmTest {
 		@Nested
 		class OK {
 			@ParameterizedTest
-			@CsvSource(value = { "'1','ERRORES: length: must be greater than 0.'",
-					"'50','ERRORES: length: must be greater than 0.'",
-					"'200','ERRORES: length: must be greater than 0.'" })
+			@CsvSource(value = { "'1'", "'50'", "'200'" })
 			void testLength(Integer length) {
 				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, new Language(0),
 						new Language(1), (byte) 3, BigDecimal.valueOf(2.99), length, BigDecimal.valueOf(20.99),
@@ -178,9 +170,7 @@ class FilmTest {
 		@Nested
 		class OK {
 			@ParameterizedTest
-			@CsvSource(value = { "'0.01','ERRORES: replacementCost: must be greater than 0.00.'",
-					"'1.10','ERRORES: replacementCost: must be greater than 0.00.'",
-					"'20.99','ERRORES: replacementCost: must be greater than 0.00.'" })
+			@CsvSource(value = { "'0.01'", "'1.10'", "'20.99'" })
 			void testReplacementCost(BigDecimal replacementCost) {
 				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, new Language(0),
 						new Language(1), (byte) 3, BigDecimal.valueOf(2.99), 142, replacementCost, Rating.ADULTS_ONLY);
@@ -209,8 +199,7 @@ class FilmTest {
 		@Nested
 		class OK {
 			@ParameterizedTest
-			@CsvSource(value = { "'Español','ERRORES: must not be blank.'", "'Inglés','ERRORES: must not be blank.'",
-					"'Catalán','ERRORES: must not be blank.'" })
+			@CsvSource(value = { "'Español'", "'Inglés'", "'Catalán'" })
 			void testFirstLanguage(String language) {
 				var langAux = new Language(0, language);
 				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, langAux,
@@ -243,13 +232,12 @@ class FilmTest {
 		@Nested
 		class OK {
 			@ParameterizedTest
-			@CsvSource(value = { "'Español','ERRORES: must not be blank.'",
-					"'Inglés','ERRORES: must not be blank.'",
-					"'Catalán','ERRORES: must not be blank.'" })
+			@CsvSource(value = { "'Español'", "'Inglés'", "'Catalán'" })
 			void testFirstLanguage(String language) {
-				var langAux = new Language(0,language);
-				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994,
-						langAux,new Language(1),(byte) 3, BigDecimal.valueOf(2.99), 142, BigDecimal.valueOf(20.99), Rating.ADULTS_ONLY);
+				var langAux = new Language(0, language);
+				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, langAux,
+						new Language(1), (byte) 3, BigDecimal.valueOf(2.99), 142, BigDecimal.valueOf(20.99),
+						Rating.ADULTS_ONLY);
 				assertNotNull(item);
 				assertTrue(item.isValid());
 			}
@@ -268,6 +256,31 @@ class FilmTest {
 						Rating.ADULTS_ONLY);
 				assertNotNull(item);
 				assertTrue(item.isValid());
+			}
+		}
+	}
+
+	@Nested
+	class Ratings {
+		@Nested
+		class OK {
+			@ParameterizedTest
+			@CsvSource(value = { "'G'", "'PG'", "'PG-13'" })
+			void testRating(String ratingString) {
+				Film.Rating rating = Film.Rating.getEnum(ratingString);
+				var item = new Film(0, "Este es el nombre", "Y esta es la descripción.", (short) 1994, new Language(0),
+						new Language(1), (byte) 3, BigDecimal.valueOf(2.99), 142, BigDecimal.valueOf(20.99), rating);
+				assertNotNull(item);
+				assertTrue(item.isValid());
+			}
+		}
+
+		@Nested
+		class KO {
+			@ParameterizedTest
+			@CsvSource(value = { "'G1'", "'PG2'", "'PG-133'" })
+			void testInvalidRating(String ratingString) {
+				assertThrows(IllegalArgumentException.class, () -> Film.Rating.getEnum(ratingString));
 			}
 		}
 	}

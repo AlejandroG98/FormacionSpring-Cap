@@ -23,17 +23,17 @@ public class CatalogoApplication implements CommandLineRunner {
 //	@Autowired
 //	FilmService srv; 
 	
-	@Autowired
-	CategoryService srvCat;
-
-	@Autowired(required = true)
-	FilmCategory auxFilmCat;
-
-	@Autowired
-	LanguageService srvLang;
-
-	@Autowired(required = true)
-	Film auxFilm;
+//	@Autowired
+//	CategoryService srvCat;
+//
+//	@Autowired(required = true)
+//	FilmCategory auxFilmCat;
+//
+//	@Autowired
+//	LanguageService srvLang;
+//
+//	@Autowired(required = true)
+//	Film auxFilm;
 
 	@Override
 	@Transactional
