@@ -38,12 +38,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import com.example.model.Persona;
 import com.example.model.PersonaDTO;
+import com.example.batch.PersonasBatchConfiguration;
 
 @Component
 public class PersonasJobListener implements JobExecutionListener {
 	private static final Logger log = LoggerFactory.getLogger(PersonasJobListener.class);
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	JobRepository jobRepository;
+	
+	@Autowired
+	PlatformTransactionManager transactionManager;
 
 	@Override
 	public void afterJob(JobExecution jobExecution) {
@@ -75,5 +83,18 @@ public class PersonasJobListener implements JobExecutionListener {
 		return new JdbcBatchItemWriterBuilder<Persona>()
 				.itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
 				.sql("INSERT INTO personas VALUES (:id,:nombre,:correo,:ip)").dataSource(dataSource).build();
+	}
+
+	@Bean
+	public Step importCSV2DBStep1(JdbcBatchItemWriter<Persona> personaDBItemWriter) {
+		return new StepBuilder("importCSV2DBStep1", jobRepository).<PersonaDTO, Persona>chunk(10, transactionManager)
+				.reader(personaCSVItemReader("personas-1.csv")).processor(personaItemProcessor)
+				.writer(personaDBItemWriter).build();
+	}
+
+	@Bean
+	public Job personasJob(PersonasJobListener listener, Step importCSV2DBStep1) {
+		return new JobBuilder("personasJob", jobRepository).incrementer(new RunIdIncrementer()).listener(listener)
+				.start(importCSV2DBStep1).build();
 	}
 }
