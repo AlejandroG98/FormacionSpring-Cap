@@ -38,8 +38,7 @@ public class CatalogoServiceImpl {
 				filmSrv.novedades(fecha).stream().map(item->FilmEditDTO.from(item)).toList(),
 				actorSrv.novedades(fecha).stream().map(item->ActorDTO.from(item)).toList(),
 				catSrv.novedades(fecha),
-				langSrv.novedades(fecha)
-				);
+				langSrv.novedades(fecha));
 	}
 
 }
