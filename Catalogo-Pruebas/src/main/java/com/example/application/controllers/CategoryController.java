@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domains.contracts.services.CategoryService;
-import com.example.domains.entities.Actor;
 import com.example.domains.entities.Category;
 import com.example.domains.entities.dtos.CategoryDTO;
 import com.example.domains.entities.dtos.CategoryShort;
