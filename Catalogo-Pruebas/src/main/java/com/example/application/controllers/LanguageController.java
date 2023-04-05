@@ -51,11 +51,21 @@ public class LanguageController {
 		return LanguageDTO.from(item.get());
 	}
 
-	// http://localhost:8001/idiomas/peliculasDelIdioma/2
+	// http://localhost:8001/idiomas/peliculasDelIdioma/1
 	@GetMapping(path = "/peliculasDelIdioma/{id}")
 	public List<ElementoDto<Integer, String>> getPeliculasFromIdioma(@PathVariable int id) throws NotFoundException {
-		return langService.getOne(id).orElseThrow(() -> new NotFoundException("Idioma no encontrado")).getFilms()
-				.stream().map(f -> new ElementoDto<>(f.getFilmId(), f.getTitle())).toList();
+		return langService.getOne(id)
+				.orElseThrow(() -> new NotFoundException("Idioma no encontrado"))
+				.getFilms()
+				.stream()
+				.map(f -> new ElementoDto<>(f.getFilmId(), f.getTitle())).toList();
+	}
+
+	// http://localhost:8001/idiomas/peliculasDelIdiomaVO/3
+	@GetMapping(path = "/peliculasDelIdiomaVO/{id}")
+	public List<ElementoDto<Integer,String>> getPeliculasFromIdiomaVO(@PathVariable int id) throws NotFoundException {
+		return langService.getOne(id).get().getFilmsVO().stream()
+				.map(f -> new ElementoDto<>(f.getFilmId(), f.getTitle())).toList();
 	}
 
 	// http://localhost:8001/idiomas/addLanguage?name=Italiana
