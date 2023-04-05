@@ -1,38 +1,25 @@
 package com.example.application.controllers;
 
-import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
 import com.example.domains.entities.dtos.ElementoDto;
-import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
-import jakarta.validation.Valid;
 
 // Ejemplo en: demo-web -> com.example.application.resources -> ActorResource
 @RestController
@@ -42,7 +29,7 @@ public class ActorController {
 
 	@Autowired
 	ActorService actService;
-
+	
 	@GetMapping("")
 	public String index() {
 		return "Hola esto es Actor Controller";
@@ -75,19 +62,35 @@ public class ActorController {
 	@PostMapping(path = "/addActor")
 	public @ResponseBody Actor addNewActor(@RequestParam String firstname, @RequestParam String lastname)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
-		
+
 		var actorAux = new Actor();
 		actorAux.setActorId(0);
 		actorAux.setFirstName(firstname.toUpperCase());
 		actorAux.setLastName(lastname.toUpperCase());
-		
+
 		try {
 			return actService.add(actorAux);
 		} catch (InvalidDataException ex) {
 			throw new InvalidDataException("ERROR. El nombre y apellido no puede ser menor a 2 o mayor a 45");
 		}
 	}
-
 	
+	// http://localhost:8001/actores/delete?id=202
+	@DeleteMapping("/delete")
+	public void delete(@RequestParam int id) {
+		actService.deleteById(id);
+	}
+
+//	@PutMapping(path = "/update")
+//	@ResponseStatus(HttpStatus.NO_CONTENT)
+//	public void update(@RequestParam String firstname, @RequestParam String lastname) throws BadRequestException, NotFoundException, InvalidDataException {
+//
+//		var actorAux = new Actor();
+//		actorAux.setFirstName(firstname);
+//		actorAux.setLastName(lastname);
+//		
+//		actService.modify(actorAux);
+//	}
+
 
 }

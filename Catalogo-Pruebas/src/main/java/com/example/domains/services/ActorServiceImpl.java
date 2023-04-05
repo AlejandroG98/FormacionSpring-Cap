@@ -17,6 +17,7 @@ import com.example.domains.entities.Actor;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 
 @Service
@@ -99,6 +100,19 @@ public class ActorServiceImpl implements ActorService{
 	@Override
 	public List<Actor> novedades(@NonNull Timestamp fecha) {
 		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
+	}
+	
+	@Transactional
+	public String updateActor(Integer id,String firstname,String lastname){
+		Actor act=dao.getReferenceById(id);
+		if(dao.existsById(id)) {
+			act.setFirstName(firstname.toUpperCase());
+			act.setLastName(lastname.toUpperCase());
+			dao.save(act);
+			return "Actualización éxitosa";
+		}else {
+			return "Actualizacion sin éxito";
+		}
 	}
 	
 }

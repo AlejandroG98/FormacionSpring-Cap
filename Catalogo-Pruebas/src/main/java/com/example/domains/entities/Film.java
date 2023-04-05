@@ -319,7 +319,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 			return;
 		filmActors.remove(filmActor.get());
 	}
-
+	
 	// Gestión de categorias
 
 	public List<Category> getCategories() {

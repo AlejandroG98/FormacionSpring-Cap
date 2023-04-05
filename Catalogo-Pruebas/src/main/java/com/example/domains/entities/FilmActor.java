@@ -5,11 +5,14 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
+import org.springframework.stereotype.Component;
+
 
 /**
  * The persistent class for the film_actor database table.
  * 
  */
+@Component
 @Entity
 @Table(name="film_actor")
 @NamedQuery(name="FilmActor.findAll", query="SELECT f FROM FilmActor f")
