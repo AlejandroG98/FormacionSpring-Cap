@@ -3,10 +3,12 @@ package com.example.domains.entities.dtos;
 import com.example.domains.entities.Actor;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 //@Data @AllArgsConstructor @NoArgsConstructor
-@Value
+@Value @NoArgsConstructor @AllArgsConstructor
 public class ActorDTO {
 	@JsonProperty("id")
 	private int actorId;
@@ -26,9 +28,5 @@ public class ActorDTO {
 	public Actor to() {
 	    return new Actor(actorId, firstName, lastName);
 	}
-
-
-	 
-
 	
 }
