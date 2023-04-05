@@ -31,7 +31,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="category_id")
-	@JsonProperty("id")
+	@JsonProperty("categoryId")
 	private int categoryId;
 
 	@Column(name="last_update", insertable = false, updatable = false)
@@ -41,7 +41,6 @@ public class Category extends EntityBase<Category> implements Serializable {
 
 	@NotBlank
 	@Size(max=25)
-	@JsonProperty("categoria")
 	private String name;
 
 	//bi-directional many-to-one association to FilmCategory
