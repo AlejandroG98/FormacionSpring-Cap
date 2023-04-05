@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
-import com.example.domains.core.validations.NIF;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
@@ -38,11 +36,12 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	private String firstName;
 
 	@Column(name="last_name", nullable=false, length=45)
+	@NotBlank
 	@Size(max=45, min=2)
 	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayusculas")
 	private String lastName;
 
-	@Column(name="last_update", insertable=true, updatable=false, nullable=true)
+	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	@PastOrPresent
 	private Timestamp lastUpdate;
 

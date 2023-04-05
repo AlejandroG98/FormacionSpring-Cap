@@ -1,27 +1,29 @@
 package com.example.exceptions;
 
 public class NotFoundException extends Exception {
-	private static final long serialVersionUID = 1L;
-	private final static String MESSAGE_STRING = "Not found";
-	
+
 	public NotFoundException() {
-		this(MESSAGE_STRING);
+		// TODO Auto-generated constructor stub
 	}
 
 	public NotFoundException(String message) {
 		super(message);
+		// TODO Auto-generated constructor stub
 	}
 
 	public NotFoundException(Throwable cause) {
-		this(MESSAGE_STRING, cause);
+		super(cause);
+		// TODO Auto-generated constructor stub
 	}
 
 	public NotFoundException(String message, Throwable cause) {
 		super(message, cause);
+		// TODO Auto-generated constructor stub
 	}
 
-	public NotFoundException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
+	public NotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
+		// TODO Auto-generated constructor stub
 	}
+
 }
