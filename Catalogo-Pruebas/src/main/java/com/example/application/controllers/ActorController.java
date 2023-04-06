@@ -2,24 +2,29 @@ package com.example.application.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
 import com.example.domains.entities.dtos.ElementoDto;
+import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import jakarta.validation.Valid;
 
 // Ejemplo en: demo-web -> com.example.application.resources -> ActorResource
 @RestController
@@ -29,7 +34,7 @@ public class ActorController {
 
 	@Autowired
 	ActorService actService;
-	
+
 	@GetMapping("")
 	public String index() {
 		return "Hola esto es Actor Controller";
@@ -37,7 +42,9 @@ public class ActorController {
 
 	// http://localhost:8001/actores/get
 	@GetMapping(path = "/get")
-	public @ResponseBody List<ActorShort> getActors() throws JsonProcessingException {
+	public @ResponseBody List<ActorShort> getActors(@RequestParam(required = false)String sort) throws JsonProcessingException {
+		if(sort != null)	
+			return (List<ActorShort>) actService.getByProjection(Sort.by(sort),ActorShort.class);
 		return actService.getByProjection(ActorShort.class);
 	}
 
@@ -74,23 +81,28 @@ public class ActorController {
 			throw new InvalidDataException("ERROR. El nombre y apellido no puede ser menor a 2 o mayor a 45");
 		}
 	}
-	
+
 	// http://localhost:8001/actores/delete?id=202
 	@DeleteMapping("/delete")
 	public void delete(@RequestParam int id) {
 		actService.deleteById(id);
 	}
 
-//	@PutMapping(path = "/update")
-//	@ResponseStatus(HttpStatus.NO_CONTENT)
-//	public void update(@RequestParam String firstname, @RequestParam String lastname) throws BadRequestException, NotFoundException, InvalidDataException {
-//
-//		var actorAux = new Actor();
-//		actorAux.setFirstName(firstname);
-//		actorAux.setLastName(lastname);
-//		
-//		actService.modify(actorAux);
-//	}
+	// FALLA: ENTRA AL IF (ID != ITEM.GetActorID)
+	// POSTMAN: {"id":21,"firstName":"John","lastName":"Doe"}
+ 	// http://localhost:8001/actores/update/201
+	@PutMapping(path = "/update/{id}")
+	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
+		if(id != item.getActorId())
+			throw new BadRequestException("No coinciden los identificadores");
+		actService.modify(ActorDTO.from(item));
+	}
 
+ 	// Funciona con Params
+ 	// localhost:8001/actores/put?id=20&firstname=Manolo&lastname=Bombo
+	@PutMapping(path = "/put")
+	public @ResponseBody String putActor(@RequestParam int id,@RequestParam String firstname,@RequestParam String lastname){
+		return actService.updateActor(id,firstname,lastname);
+	}
 
 }
