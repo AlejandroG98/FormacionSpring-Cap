@@ -95,7 +95,7 @@ public class CategoryController {
 	// http://localhost:8001/categorias/17
 	//{"id":17,"name":"Españolisima"}
 	@DeleteMapping(path = "/{id}")
-	public void delete(@RequestParam int id) {
+	public void delete(@PathVariable int id) {
 		catService.deleteById(id);
 	}
 

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
@@ -28,6 +29,9 @@ import org.springframework.stereotype.Component;
 @NamedQuery(name="Film.findAll", query="SELECT f FROM Film f")
 public class Film extends EntityBase<Film> implements Serializable {
 	private static final long serialVersionUID = 1L;
+		
+	@Size(min = 1, max = 5, message = "Rating must be between two-five characters")
+	@Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$", message = "Rating must match \"^(G|PG|PG-13|R|NC-17)$\"")
 	public static enum Rating {
 	    GENERAL_AUDIENCES("G"), 
 	    PARENTAL_GUIDANCE_SUGGESTED("PG"),
@@ -44,6 +48,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 	    public String getValue() {
 	        return value;
 	    }
+	    @JsonIgnore
 		public static Rating getEnum(String value) {
 			switch (value) {
 			case "G": return Rating.GENERAL_AUDIENCES;
@@ -55,8 +60,10 @@ public class Film extends EntityBase<Film> implements Serializable {
 				throw new IllegalArgumentException("Unexpected value: " + value);
 			}
 		}
+		@JsonIgnore
 		public static final String[] VALUES = {"G", "PG", "PG-13", "R", "NC-17"};
 	}
+	
 	@Converter
 	private static class RatingConverter implements AttributeConverter<Rating, String> {
 	    @Override
@@ -121,23 +128,24 @@ public class Film extends EntityBase<Film> implements Serializable {
 
 	//bi-directional many-to-one association to Language
 	@ManyToOne
-	@JoinColumn(name="language_id")
+	@JoinColumn(name="language_id",nullable = false)
 	@NotNull
 	private Language language;
 
 	//bi-directional many-to-one association to Language
 	@ManyToOne
-	@JoinColumn(name="original_language_id")
+	@NotNull
+	@JoinColumn(name="original_language_id", nullable = false)
 	private Language languageVO;
 
 	//bi-directional many-to-one association to FilmActor
-	@OneToMany(mappedBy="film", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
+	@OneToMany(mappedBy="film", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FilmActor> filmActors = new ArrayList<FilmActor>();
 
 	//bi-directional many-to-one association to FilmCategory
-	@OneToMany(mappedBy="film", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
+	@OneToMany(mappedBy="film", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FilmCategory> filmCategories = new ArrayList<FilmCategory>();
 
 	public Film() {
@@ -148,7 +156,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 	}
 
 	public Film(int filmId, @NotBlank @Size(max = 128) String title, String description, @Min(1895) Short releaseYear,
-			@NotNull Language language, Language languageVO, @Positive Byte rentalDuration,
+			@NotNull Language language, @NotNull Language languageVO, @Positive Byte rentalDuration,
 			@Positive @DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 2, fraction = 2) BigDecimal rentalRate,
 			@Positive Integer length,
 			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) BigDecimal replacementCost,
@@ -182,7 +190,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.replacementCost = replacementCost;
 	}
 
-	public Film(String title, Language language) {
+	public Film(String title, @NotNull Language language) {
 		this.title = title;
 		this.language = language;
 	}
@@ -392,4 +400,5 @@ public class Film extends EntityBase<Film> implements Serializable {
 			.forEach(item -> target.addCategory(item));
 		return target;
 	}
+
 }

@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Size;
 import com.example.domains.entities.Film;
 import com.example.domains.entities.Language;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,8 @@ public class FilmEditDTO {
 	private int filmId;
 	private String description;
 	private int length;
-	@Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$")
+	@Size(min = 1, max = 5, message = "Rating must be between two-five characters")
+	@Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$", message = "Rating must match \"^(G|PG|PG-13|R|NC-17)$\"")
 	private String rating;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy")
 	private Short releaseYear;
@@ -36,7 +38,9 @@ public class FilmEditDTO {
 	@NotNull
 	private Integer languageId;
 	private Integer languageVOId;
+	@JsonIgnore
 	private List<Integer> actors = new ArrayList<Integer>();
+	@JsonIgnore
 	private List<Integer> categories = new ArrayList<Integer>();
 
  	public static FilmEditDTO from(Film source) {
