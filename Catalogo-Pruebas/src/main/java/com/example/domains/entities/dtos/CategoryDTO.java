@@ -14,7 +14,7 @@ import lombok.Value;
 //@AllArgsConstructor @NoArgsConstructor
 @Value 
 public class CategoryDTO {
-	@JsonProperty("id")
+	@JsonProperty("categoryId")
 	private int categoryId;
 	
 	@JsonProperty("nombre")

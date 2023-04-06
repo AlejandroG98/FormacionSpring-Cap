@@ -89,9 +89,9 @@ public class LanguageServiceImpl implements LanguageService{
 			throw new InvalidDataException(item.getErrorsMessage());
 		}
 		
-		if(dao.existsById(item.getLanguageId()))
+		if(!dao.existsById(item.getLanguageId()))
 		{
-			throw new DuplicateKeyException(item.getErrorsMessage());
+			throw new NotFoundException();
 		}
 		return dao.save(item);
 	}

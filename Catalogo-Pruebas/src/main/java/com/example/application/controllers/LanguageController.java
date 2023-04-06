@@ -3,6 +3,7 @@ package com.example.application.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domains.contracts.services.LanguageService;
@@ -28,7 +30,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 
 @RestController
-@ResponseBody
 @RequestMapping("/idiomas")
 public class LanguageController {
 
@@ -86,18 +87,21 @@ public class LanguageController {
 		}
 	}
 
-	// http://localhost:8001/idiomas/delete?id=2
-	@DeleteMapping("/delete")
-	public void delete(@RequestParam int id) {
+	//  http://localhost:8001/idiomas/9
+	// {"id":9,"name":"Marronera"}
+	@DeleteMapping(path = "/{id}")
+	public void delete(@PathVariable int id) {
 		langService.deleteById(id);
 	}
 	
 	// NO FUNCIONA
-	// http://localhost:8001/idiomas/update/1
-	@PutMapping(path = "/update/{id}")
-	public void update(@PathVariable int id, @Valid @RequestBody LanguageDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-		if(id != item.getLanguageId())
-			throw new BadRequestException("No coinciden los identificadores");
+	// http://localhost:8001/idiomas/1
+	@PutMapping(path = "/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void update(@PathVariable int id, @Valid @RequestBody LanguageDTO item)
+			throws BadRequestException, NotFoundException, InvalidDataException {
+		if (id != item.getLanguageId())
+			throw new BadRequestException("Nooooooo coinciden los identificadores");
 		langService.modify(LanguageDTO.from(item));
 	}
 

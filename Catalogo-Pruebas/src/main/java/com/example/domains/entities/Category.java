@@ -41,6 +41,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 
 	@NotBlank
 	@Size(max=25)
+	@JsonProperty("name")
 	private String name;
 
 	//bi-directional many-to-one association to FilmCategory

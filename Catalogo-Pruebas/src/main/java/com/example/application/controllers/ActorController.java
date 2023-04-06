@@ -43,9 +43,10 @@ public class ActorController {
 
 	// http://localhost:8001/actores/get
 	@GetMapping(path = "/get")
-	public @ResponseBody List<ActorShort> getActors(@RequestParam(required = false)String sort) throws JsonProcessingException {
-		if(sort != null)	
-			return (List<ActorShort>) actService.getByProjection(Sort.by(sort),ActorShort.class);
+	public @ResponseBody List<ActorShort> getActors(@RequestParam(required = false) String sort)
+			throws JsonProcessingException {
+		if (sort != null)
+			return (List<ActorShort>) actService.getByProjection(Sort.by(sort), ActorShort.class);
 		return actService.getByProjection(ActorShort.class);
 	}
 
@@ -83,27 +84,22 @@ public class ActorController {
 		}
 	}
 
-	// http://localhost:8001/actores/delete?id=202
-	@DeleteMapping("/{id}")
+	// http://localhost:8001/actores/201
+	// {"id":201,"nombre":"KK","apellidos": "KKK"}
+	@DeleteMapping(path = "/{id}")
 	public void delete(@PathVariable int id) {
 		actService.deleteById(id);
 	}
 
- 	// http://localhost:8001/actores/1
+	// http://localhost:8001/actores/1
 	// CUIDADO: El nombre de las variables vienen predeterminadas por el DTO
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-		if(id != item.getActorId())
+	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item)
+			throws BadRequestException, NotFoundException, InvalidDataException {
+		if (id != item.getActorId())
 			throw new BadRequestException("Nooooooo coinciden los identificadores");
 		actService.modify(ActorDTO.from(item));
 	}
-
- 	// Funciona con Params
- 	// localhost:8001/actores/put?id=20&firstname=Manolo&lastname=Bombo
-//	@PutMapping(path = "/put")
-//	public @ResponseBody String putActor(@RequestParam int id,@RequestParam String firstname,@RequestParam String lastname){
-//		return actService.updateActor(id,firstname,lastname);
-//	}
 
 }

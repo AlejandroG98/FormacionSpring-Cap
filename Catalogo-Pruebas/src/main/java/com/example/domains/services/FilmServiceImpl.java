@@ -84,10 +84,10 @@ public class FilmServiceImpl implements FilmService {
 			throw new InvalidDataException("No puede ser nulo");
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage());
-		var leido = dao.findById(item.getFilmId());
-		if(leido.isEmpty())
+		if(!dao.existsById(item.getFilmId()))
 			throw new NotFoundException();
-		return dao.save(item.merge(leido.get()));
+		
+		return dao.save(item);
 	}
 
 	@Override

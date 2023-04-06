@@ -4,20 +4,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
+import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
 @Service
 public class ActorServiceImpl implements ActorService {
-
 	@Autowired
 	ActorRepository dao;
 
@@ -58,42 +58,32 @@ public class ActorServiceImpl implements ActorService {
 
 	@Override
 	public Actor add(Actor item) throws DuplicateKeyException, InvalidDataException {
-		if (item == null) {
-			throw new InvalidDataException("[ERROR] El item no puede ser nulo");
-		}
-
-		if (item.isInvalid()) {
-			throw new InvalidDataException(item.getErrorsMessage());
-		}
-
-		if (dao.existsById(item.getActorId())) {
+		if(item == null)
+			throw new InvalidDataException("No puede ser nulo");
+		if(item.isInvalid())
+			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
+		if(dao.existsById(item.getActorId()))
 			throw new DuplicateKeyException(item.getErrorsMessage());
-		}
+		
 		return dao.save(item);
 	}
 
 	@Override
 	public Actor modify(Actor item) throws NotFoundException, InvalidDataException {
-		if (item == null) {
-			throw new InvalidDataException("[ERROR] El item no puede ser nulo");
-		}
-
-		if (item.isInvalid()) {
-			throw new InvalidDataException(item.getErrorsMessage());
-		}
-
-		if (!dao.existsById(item.getActorId())) {
+		if(item == null)
+			throw new InvalidDataException("No puede ser nulo");
+		if(item.isInvalid())
+			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
+		if(!dao.existsById(item.getActorId()))
 			throw new NotFoundException();
-		}
+		
 		return dao.save(item);
 	}
 
 	@Override
 	public void delete(Actor item) throws InvalidDataException {
-		if (item == null) {
-			throw new InvalidDataException("[ERROR] El item no puede ser nulo");
-		}
-
+		if(item == null)
+			throw new InvalidDataException("No puede ser nulo");
 		deleteById(item.getActorId());
 	}
 
