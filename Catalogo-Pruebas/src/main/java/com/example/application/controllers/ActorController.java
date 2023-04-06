@@ -3,6 +3,7 @@ package com.example.application.controllers;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
@@ -28,7 +30,6 @@ import jakarta.validation.Valid;
 
 // Ejemplo en: demo-web -> com.example.application.resources -> ActorResource
 @RestController
-@ResponseBody
 @RequestMapping("/actores")
 public class ActorController {
 
@@ -66,7 +67,7 @@ public class ActorController {
 	}
 
 	// http://localhost:8001/actores/addActor?firstname=Alex&lastname=Gar
-	@PostMapping(path = "/addActor")
+	@PostMapping
 	public @ResponseBody Actor addNewActor(@RequestParam String firstname, @RequestParam String lastname)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
 
@@ -83,26 +84,26 @@ public class ActorController {
 	}
 
 	// http://localhost:8001/actores/delete?id=202
-	@DeleteMapping("/delete")
-	public void delete(@RequestParam int id) {
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable int id) {
 		actService.deleteById(id);
 	}
 
-	// FALLA: ENTRA AL IF (ID != ITEM.GetActorID)
-	// POSTMAN: {"id":21,"firstName":"John","lastName":"Doe"}
- 	// http://localhost:8001/actores/update/201
-	@PutMapping(path = "/update/{id}")
+ 	// http://localhost:8001/actores/1
+	// CUIDADO: El nombre de las variables vienen predeterminadas por el DTO
+	@PutMapping(path = "/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
 		if(id != item.getActorId())
-			throw new BadRequestException("No coinciden los identificadores");
+			throw new BadRequestException("Nooooooo coinciden los identificadores");
 		actService.modify(ActorDTO.from(item));
 	}
 
  	// Funciona con Params
  	// localhost:8001/actores/put?id=20&firstname=Manolo&lastname=Bombo
-	@PutMapping(path = "/put")
-	public @ResponseBody String putActor(@RequestParam int id,@RequestParam String firstname,@RequestParam String lastname){
-		return actService.updateActor(id,firstname,lastname);
-	}
+//	@PutMapping(path = "/put")
+//	public @ResponseBody String putActor(@RequestParam int id,@RequestParam String firstname,@RequestParam String lastname){
+//		return actService.updateActor(id,firstname,lastname);
+//	}
 
 }

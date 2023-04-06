@@ -92,6 +92,8 @@ public class LanguageController {
 		langService.deleteById(id);
 	}
 	
+	// NO FUNCIONA
+	// http://localhost:8001/idiomas/update/1
 	@PutMapping(path = "/update/{id}")
 	public void update(@PathVariable int id, @Valid @RequestBody LanguageDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
 		if(id != item.getLanguageId())
