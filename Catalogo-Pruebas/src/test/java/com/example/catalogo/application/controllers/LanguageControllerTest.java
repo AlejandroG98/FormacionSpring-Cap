@@ -2,11 +2,15 @@ package com.example.catalogo.application.controllers;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +56,35 @@ public class LanguageControllerTest {
 	static class LanguageShortMock implements LanguageShort {
 		int languageId;
 		String name;
+	}
+	
+	@Nested
+	class GetOne404 {
+		@Nested
+		class OK {
+			@ParameterizedTest
+			@CsvSource({ "1", "2", "3" })
+			void testGetOne404(int id) throws Exception {
+				when(srv.getOne(id)).thenReturn(Optional.empty());
+				mockMvc.perform(get("/idiomas/get/{id}", id))
+					.andExpect(status().isNotFound())
+					.andExpect(jsonPath("$.title").value("Not Found"))
+			        .andDo(print());
+			}
+		}
+
+		@Nested
+		class KO {
+			@ParameterizedTest
+			@CsvSource({ "-1", "-2", "-3" })
+			void testGetOne404(int id) throws Exception {
+				when(srv.getOne(id)).thenReturn(Optional.empty());
+				mockMvc.perform(get("/idiomas/get/{id}", id))
+					.andExpect(status().isNotFound())
+					.andExpect(jsonPath("$.title").value("Not Found"))
+			        .andDo(print());
+			}
+		}
 	}
 	
 	@Nested
