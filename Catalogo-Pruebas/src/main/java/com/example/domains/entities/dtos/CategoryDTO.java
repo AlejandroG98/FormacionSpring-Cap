@@ -2,6 +2,8 @@ package com.example.domains.entities.dtos;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.example.domains.entities.Category;
 import com.example.domains.entities.FilmCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,6 +20,7 @@ public class CategoryDTO {
 	private int categoryId;
 	
 	@JsonProperty("nombre")
+	@Length(min=2,max=25)
 	private String name;
 	
 	@JsonProperty("categoriaPeliculas")

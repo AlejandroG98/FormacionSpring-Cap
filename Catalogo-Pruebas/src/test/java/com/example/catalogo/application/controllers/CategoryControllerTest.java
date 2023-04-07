@@ -66,6 +66,43 @@ class CategoryControllerTest {
 		String name;
 		List<FilmCategory> filmCategories;
 	}
+	
+	@Nested
+	class addCategory {
+		@Nested
+		class OK {
+			@ParameterizedTest
+			@CsvSource({ "1,Guerra", "2,Muerte", "3,Destrucción" })
+			void testAddCategory(int id, String nombre) throws Exception {
+			    var ele = new Category(id, nombre);
+			    when(srv.add(ele)).thenReturn(ele);
+			    mockMvc.perform(post("/categorias/addCategory")
+			            .contentType(MediaType.APPLICATION_JSON)
+			            .content(objectMapper.writeValueAsString(CategoryDTO.from(ele)))
+			            .param("id", String.valueOf(ele.getCategoryId())) 
+			            .param("name", ele.getName()))
+			            .andExpect(status().isOk())
+			            .andDo(print());
+			}
+		}
+
+		@Nested
+		class KO {
+			@ParameterizedTest
+			@CsvSource({ "1,-A", "-2,", "3,ABCDEFGHIJKLMNOPQRaASDSSTUVWXYZabcdefghiASDjklmnopqrstuvwxyz0123456789" })
+			void testAddCategory(int id, String nombre) throws Exception {
+			    var ele = new Category(id, nombre);
+			    when(srv.add(ele)).thenReturn(ele);
+			    mockMvc.perform(post("/categorias/addCategory")
+			            .contentType(MediaType.APPLICATION_JSON)
+			            .content(objectMapper.writeValueAsString(CategoryDTO.from(ele)))
+			            .param("id", String.valueOf(ele.getCategoryId())) 
+			            .param("nombre", ele.getName()))
+			            .andExpect(status().is4xxClientError())
+			            .andDo(print());
+			}
+		}
+	}
 
 	@Nested
 	class updateCategory {
@@ -73,7 +110,7 @@ class CategoryControllerTest {
 		class OK {
 			@ParameterizedTest
 			@CsvSource({ "1,Guerra", "2,Muerte", "3,Destrucción" })
-			void testUpdateActor(int categoryId, String nombre) throws Exception {
+			void testUpdateCategory(int categoryId, String nombre) throws Exception {
 				Category category = new Category(categoryId, nombre);
 				mockMvc.perform(put("/categorias/{id}", categoryId).contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(category))).andExpect(status().is2xxSuccessful())
@@ -85,7 +122,7 @@ class CategoryControllerTest {
 		@Nested
 		class KO {
 			@ParameterizedTest
-			@CsvSource({ "1,G", "-2,M", "-3,Des" })
+			@CsvSource({ "1,-A", "-2,", "-3,Des" })
 			void testUpdateCategory(int categoryId, String name) throws Exception {
 			    Category category = new Category(categoryId, name);
 			    when(srv.modify(category)).thenReturn(category);

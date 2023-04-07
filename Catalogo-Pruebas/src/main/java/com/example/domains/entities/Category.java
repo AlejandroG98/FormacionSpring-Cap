@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
 
@@ -40,7 +41,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 	private Timestamp lastUpdate;
 
 	@NotBlank
-	@Size(max=25)
+	@Size(min = 2,max = 25)
 	@JsonProperty("name")
 	private String name;
 
