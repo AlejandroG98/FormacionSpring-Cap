@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,6 +21,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.application.controllers.LanguageController;
@@ -60,9 +62,10 @@ public class LanguageControllerTest {
 		int languageId;
 		String name;
 	}
-	
+
 	// NOTA MENTAL:
-	// ERROR No value at JSON path "$.nombre" -> Solución: cambiar por el nombre que esta en su DTO
+	// ERROR No value at JSON path "$.nombre" -> Solución: cambiar por el nombre que
+	// esta en su DTO
 	@Nested
 	class oneLanguage {
 		@Nested
@@ -75,8 +78,7 @@ public class LanguageControllerTest {
 				when(srv.getOne(id)).thenReturn(Optional.of(language));
 				mockMvc.perform(get("/idiomas/get/{id}", id)).andExpect(status().isOk())
 						.andExpect(jsonPath("$.id").value(languageDTO.getLanguageId()))
-						.andExpect(jsonPath("$.name").value(languageDTO.getName()))
-						.andDo(print());
+						.andExpect(jsonPath("$.name").value(languageDTO.getName())).andDo(print());
 			}
 		}
 
@@ -90,12 +92,11 @@ public class LanguageControllerTest {
 				when(srv.getOne(id)).thenReturn(Optional.of(language));
 				mockMvc.perform(get("/idiomas/get/{id}", id)).andExpect(status().isOk())
 						.andExpect(jsonPath("$.id").value(languageDTO.getLanguageId()))
-						.andExpect(jsonPath("$.name").value(languageDTO.getName()))
-						.andDo(print());
+						.andExpect(jsonPath("$.name").value(languageDTO.getName())).andDo(print());
 			}
 		}
 	}
-	
+
 	@Nested
 	class GetOne404 {
 		@Nested
@@ -124,7 +125,38 @@ public class LanguageControllerTest {
 			}
 		}
 	}
-	
+
+	@Nested
+	class addLanguage {
+		@Nested
+		class OK {
+			@ParameterizedTest
+			@CsvSource({ "1,Guerra", "2,Muerte", "3,Destrucción" })
+			void testAddLanguage(int id, String nombre) throws Exception {
+				var ele = new Language(id, nombre);
+				when(srv.add(ele)).thenReturn(ele);
+				mockMvc.perform(post("/idiomas/addLanguage").contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(LanguageDTO.from(ele)))
+						.param("id", String.valueOf(ele.getLanguageId())).param("name", ele.getName()))
+						.andExpect(status().isOk()).andDo(print());
+			}
+		}
+
+		@Nested
+		class KO {
+			@ParameterizedTest
+			@CsvSource({ "-1, ", "-2,", "3,  " })
+			void testAddLanguage(int id, String nombre) throws Exception {
+				var ele = new Language(id, nombre);
+				when(srv.add(ele)).thenReturn(ele);
+				mockMvc.perform(post("/idiomas/addLanguage").contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(LanguageDTO.from(ele)))
+						.param("id", String.valueOf(ele.getLanguageId())).param("name", ele.getName()))
+						.andExpect(status().is4xxClientError()).andDo(print());
+			}
+		}
+	}
+
 	@Nested
 	class deleteLanguage {
 		@Nested
