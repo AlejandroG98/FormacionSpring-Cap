@@ -28,8 +28,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.example.application.controllers.CategoryController;
 import com.example.catalogo.application.controllers.ActorControllerTest.ActorShortMock;
 import com.example.domains.contracts.services.CategoryService;
+import com.example.domains.entities.Actor;
 import com.example.domains.entities.Category;
 import com.example.domains.entities.FilmCategory;
+import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
 import com.example.domains.entities.dtos.CategoryDTO;
 import com.example.domains.entities.dtos.CategoryShort;
@@ -66,6 +68,39 @@ class CategoryControllerTest {
 	}
 
 	@Nested
+	class updateCategory {
+		@Nested
+		class OK {
+			@ParameterizedTest
+			@CsvSource({ "1,Guerra", "2,Muerte", "3,Destrucción" })
+			void testUpdateActor(int categoryId, String nombre) throws Exception {
+				Category category = new Category(categoryId, nombre);
+				mockMvc.perform(put("/categorias/{id}", categoryId).contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(category))).andExpect(status().is2xxSuccessful())
+						.andDo(print());
+				verify(srv, times(1)).modify(category);
+			}
+		}
+
+		@Nested
+		class KO {
+			@ParameterizedTest
+			@CsvSource({ "1,G", "-2,M", "-3,Des" })
+			void testUpdateCategory(int categoryId, String name) throws Exception {
+			    Category category = new Category(categoryId, name);
+			    when(srv.modify(category)).thenReturn(category);
+			    mockMvc.perform(put("/categorias/{id}", categoryId)
+			            .contentType(MediaType.APPLICATION_JSON)
+			            .content(objectMapper.writeValueAsString(category)))
+			            .andExpect(status().is2xxSuccessful())
+			            .andExpect(content().string(""))
+			            .andDo(print()); 
+			    verify(srv, times(1)).modify(category);
+			}
+		}
+	}
+	
+	@Nested
 	class deleteCategory {
 		@Nested
 		class OK {
@@ -87,5 +122,4 @@ class CategoryControllerTest {
 			}
 		}
 	}
-
 }
