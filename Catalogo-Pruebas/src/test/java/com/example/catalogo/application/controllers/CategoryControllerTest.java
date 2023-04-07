@@ -68,6 +68,35 @@ class CategoryControllerTest {
 	}
 	
 	@Nested
+	class GetOne404 {
+		@Nested
+		class OK {
+			@ParameterizedTest
+			@CsvSource({ "1", "2", "3" })
+			void testGetOne404(int id) throws Exception {
+				when(srv.getOne(id)).thenReturn(Optional.empty());
+				mockMvc.perform(get("/categorias/get/{id}", id))
+					.andExpect(status().isNotFound())
+					.andExpect(jsonPath("$.title").value("Not Found"))
+			        .andDo(print());
+			}
+		}
+
+		@Nested
+		class KO {
+			@ParameterizedTest
+			@CsvSource({ "-1", "-2", "-3" })
+			void testGetOne404(int id) throws Exception {
+				when(srv.getOne(id)).thenReturn(Optional.empty());
+				mockMvc.perform(get("/categorias/get/{id}", id))
+					.andExpect(status().isNotFound())
+					.andExpect(jsonPath("$.title").value("Not Found"))
+			        .andDo(print());
+			}
+		}
+	}
+	
+	@Nested
 	class addCategory {
 		@Nested
 		class OK {
