@@ -3,6 +3,7 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
@@ -17,36 +18,37 @@ import java.util.Objects;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
-
 /**
  * The persistent class for the category database table.
  * 
  */
 @Component
 @Entity
-@Table(name="category")
-@NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
+@Table(name = "category")
+@NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
 public class Category extends EntityBase<Category> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank
+	@NotNull
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="category_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "category_id")
 	@JsonProperty("categoryId")
 	private int categoryId;
 
-	@Column(name="last_update", insertable = false, updatable = false)
+	@Column(name = "last_update", insertable = false, updatable = false)
 	@PastOrPresent
 	@JsonIgnore
 	private Timestamp lastUpdate;
 
 	@NotBlank
-	@Size(min = 2,max = 25)
+	@Size(min = 2, max = 25)
 	@JsonProperty("name")
 	private String name;
 
-	//bi-directional many-to-one association to FilmCategory
-	@OneToMany(mappedBy="category")
+	// bi-directional many-to-one association to FilmCategory
+	@OneToMany(mappedBy = "category")
 	@JsonIgnore
 	private List<FilmCategory> filmCategories;
 
