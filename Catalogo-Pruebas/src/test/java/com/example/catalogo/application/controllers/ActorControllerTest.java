@@ -9,20 +9,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.api.Nested;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -30,11 +24,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.example.application.controllers.ActorController;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
-import com.example.domains.entities.Film;
-import com.example.domains.entities.FilmActor;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
-import com.example.domains.entities.dtos.ElementoDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Value;
@@ -62,17 +53,33 @@ class ActorControllerTest {
 	static class ActorShortMock implements ActorShort {
 		int actorId;
 		String nombre;
+		String apellido;
 	}
 
-//	@Test
-//	void testGetAllString() throws Exception {
-//		List<ActorShort> lista = new ArrayList<>(Arrays.asList(new ActorShortMock(1, "Pepito Grillo"),
-//				new ActorShortMock(2, "Carmelo Coton"), new ActorShortMock(3, "Capitan Tan")));
-//		when(srv.getByProjection(ActorShort.class)).thenReturn(lista);
-//		mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON)).andExpectAll(status().isOk(),
-//				content().contentType("application/json"), jsonPath("$.size()").value(3));
-//	}
-	
+	@Nested
+	class getAll {
+		@Nested
+		class OK {
+			@ParameterizedTest
+			@CsvSource({ "1,Manolo,Garcia", "2,Benito,Fontanero", "3,Manuel,Jamon" })
+			void testGetAll(int id, String nombre, String apellido) throws Exception {
+				List<ActorShort> lista = new ArrayList<>(Arrays.asList(new ActorShortMock(id, nombre, apellido)));
+				when(srv.getByProjection(ActorShort.class)).thenReturn(lista);
+				mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON)).andExpectAll(status().isOk());
+			}
+		}
+
+		@Nested
+		class KO {
+			@ParameterizedTest
+			@CsvSource({ "1,M,Garcia", "2,Benito,F", "3, ,Jamon" })
+			void testGetAll(int id, String nombre, String apellido) throws Exception {
+				List<ActorShort> lista = new ArrayList<>(Arrays.asList(new ActorShortMock(id, nombre, apellido)));
+				when(srv.getByProjection(ActorShort.class)).thenReturn(lista);
+				mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+			}
+		}
+	}
 
 	@Nested
 	class oneActor {
@@ -189,7 +196,7 @@ class ActorControllerTest {
 			void testUpdateActor(int actorId, String nombre, String apellido) throws Exception {
 				ActorDTO actorDto = new ActorDTO(actorId, nombre, apellido);
 				Actor actor = ActorDTO.from(actorDto);
-				MvcResult result = mockMvc.perform(put("/actores/{id}", actorId).contentType(MediaType.APPLICATION_JSON)
+				mockMvc.perform(put("/actores/{id}", actorId).contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(actor))).andReturn();
 				verify(srv, times(1)).modify(actor);
 			}
