@@ -68,7 +68,7 @@ public class ActorController {
 	}
 
 	// http://localhost:8001/actores/addActor?firstname=Alex&lastname=Gar
-	@PostMapping
+	@PostMapping(path = "/addActor")
 	public @ResponseBody Actor addNewActor(@RequestParam String firstname, @RequestParam String lastname)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
 
