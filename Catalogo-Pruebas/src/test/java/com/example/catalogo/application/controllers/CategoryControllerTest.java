@@ -68,6 +68,39 @@ class CategoryControllerTest {
 	}
 	
 	@Nested
+	class oneCategory {
+		@Nested
+		class OK {
+			@ParameterizedTest
+			@CsvSource({ "1,Accion", "2,Violencia", "3,Muerte" })
+			void testGetOneCategory(int id, String nombre) throws Exception {
+				var category = new Category(id, nombre);
+				var categoryDTO = CategoryDTO.from(category);
+				when(srv.getOne(id)).thenReturn(Optional.of(category));
+				mockMvc.perform(get("/categorias/get/{id}", id)).andExpect(status().isOk())
+						.andExpect(jsonPath("$.categoryId").value(categoryDTO.getCategoryId()))
+						.andExpect(jsonPath("$.nombre").value(categoryDTO.getName()))
+						.andDo(print());
+			}
+		}
+
+		@Nested
+		class KO {
+			@ParameterizedTest
+			@CsvSource({ "1,A", "-2,", "-3,Muerteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" })
+			void testGetOneCategory(int id, String nombre) throws Exception {
+				var category = new Category(id, nombre);
+				var categoryDTO = CategoryDTO.from(category);
+				when(srv.getOne(id)).thenReturn(Optional.of(category));
+				mockMvc.perform(get("/categorias/get/{id}", id)).andExpect(status().is2xxSuccessful())
+						.andExpect(jsonPath("$.categoryId").value(categoryDTO.getCategoryId()))
+						.andExpect(jsonPath("$.nombre").value(categoryDTO.getName()))
+						.andDo(print());
+			}
+		}
+	}
+	
+	@Nested
 	class GetOne404 {
 		@Nested
 		class OK {
