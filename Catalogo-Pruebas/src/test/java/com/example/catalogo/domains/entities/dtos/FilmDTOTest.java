@@ -10,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.example.domains.entities.Film;
-import com.example.domains.entities.FilmActor;
-import com.example.domains.entities.FilmCategory;
 import com.example.domains.entities.Language;
 import com.example.domains.entities.dtos.FilmDTO;
 import com.example.domains.entities.Film.Rating;

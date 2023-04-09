@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Catalogo</title>
+<link rel="stylesheet" type="text/css" href="css/estilos.css">
+</head>
+<body>
+	<h1>Catalogo de Controladores</h1>
+</body>
+<footer>
+	<div id="footer"></div>
+</footer>
+<script>
+  const footerContainer = document.getElementById('footer');
+  const xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      footerContainer.innerHTML = xhr.responseText;
+    }
+  }
+
+  xhr.open('GET', 'footer.html');
+  xhr.send();
+</script>
+</html>

@@ -50,7 +50,7 @@ public class CategoryController {
 
 	// http://localhost:8001/categorias/get/2
 	@GetMapping(path = "/get/{id}")
-	public CategoryDTO getOneCategoryDTO(@PathVariable int id) throws NotFoundException {
+	public CategoryDTO getOneCategoryDTO(@PathVariable int id) throws Exception {
 		var item = catService.getOne(id);
 		if (item.isEmpty()) {
 			throw new NotFoundException();
@@ -60,7 +60,7 @@ public class CategoryController {
 
 	// http://localhost:8001/categorias/peliculasDeLaCategoria/2
 	@GetMapping(path = "/peliculasDeLaCategoria/{id}")
-	public List<ElementoDto<Integer, String>> getPeliculasFromCategory(@PathVariable int id) throws NotFoundException {
+	public List<ElementoDto<Integer, String>> getPeliculasFromCategory(@PathVariable int id) throws Exception {
 		return catService.getOne(id).get().getFilmCategories().stream()
 				.map(f -> new ElementoDto<>(f.getFilm().getFilmId(), f.getFilm().getTitle())).toList();
 	}
@@ -95,7 +95,7 @@ public class CategoryController {
 	// http://localhost:8001/categorias/17
 	//{"id":17,"name":"Españolisima"}
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) {
+	public void delete(@PathVariable int id) throws InvalidDataException {
 		catService.deleteById(id);
 	}
 

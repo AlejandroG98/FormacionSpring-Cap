@@ -49,7 +49,7 @@ public class LanguageController {
 
 	// http://localhost:8001/idiomas/get/2
 	@GetMapping(path = "/get/{id}")
-	public LanguageDTO getOneLanguageDTO(@PathVariable int id) throws NotFoundException {
+	public LanguageDTO getOneLanguageDTO(@PathVariable int id) throws Exception {
 		var item = langService.getOne(id);
 		if (item.isEmpty()) {
 			throw new NotFoundException();
@@ -59,14 +59,14 @@ public class LanguageController {
 
 	// http://localhost:8001/idiomas/peliculasDelIdioma/1
 	@GetMapping(path = "/peliculasDelIdioma/{id}")
-	public List<ElementoDto<Integer, String>> getPeliculasFromIdioma(@PathVariable int id) throws NotFoundException {
+	public List<ElementoDto<Integer, String>> getPeliculasFromIdioma(@PathVariable int id) throws Exception {
 		return langService.getOne(id).orElseThrow(() -> new NotFoundException("Idioma no encontrado")).getFilms()
 				.stream().map(f -> new ElementoDto<>(f.getFilmId(), f.getTitle())).toList();
 	}
 
 	// http://localhost:8001/idiomas/peliculasDelIdiomaVO/3
 	@GetMapping(path = "/peliculasDelIdiomaVO/{id}")
-	public List<ElementoDto<Integer, String>> getPeliculasFromIdiomaVO(@PathVariable int id) throws NotFoundException {
+	public List<ElementoDto<Integer, String>> getPeliculasFromIdiomaVO(@PathVariable int id) throws Exception {
 		return langService.getOne(id).get().getFilmsVO().stream()
 				.map(f -> new ElementoDto<>(f.getFilmId(), f.getTitle())).toList();
 	}
@@ -87,14 +87,6 @@ public class LanguageController {
 		}
 	}
 
-	//  http://localhost:8001/idiomas/9
-	// {"id":9,"name":"Marronera"}
-	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) {
-		langService.deleteById(id);
-	}
-	
-	// NO FUNCIONA
 	// http://localhost:8001/idiomas/1
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -103,6 +95,13 @@ public class LanguageController {
 		if (id != item.getLanguageId())
 			throw new BadRequestException("Nooooooo coinciden los identificadores");
 		langService.modify(LanguageDTO.from(item));
+	}
+
+	//  http://localhost:8001/idiomas/9
+	// {"id":9,"name":"Marronera"}
+	@DeleteMapping(path = "/{id}")
+	public void delete(@PathVariable int id) throws InvalidDataException {
+		langService.deleteById(id);
 	}
 
 }

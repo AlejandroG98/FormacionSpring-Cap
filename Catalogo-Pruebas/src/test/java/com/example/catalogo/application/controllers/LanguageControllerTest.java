@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -26,9 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.application.controllers.LanguageController;
 import com.example.domains.contracts.services.LanguageService;
-import com.example.domains.entities.Category;
 import com.example.domains.entities.Language;
-import com.example.domains.entities.dtos.CategoryDTO;
 import com.example.domains.entities.dtos.LanguageDTO;
 import com.example.domains.entities.dtos.LanguageShort;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,8 +40,6 @@ public class LanguageControllerTest {
 
 	@MockBean
 	private LanguageService srv;
-
-	private final LanguageController controller = new LanguageController();
 
 	@Autowired
 	ObjectMapper objectMapper;

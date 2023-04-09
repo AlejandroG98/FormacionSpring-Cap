@@ -103,7 +103,7 @@ public class FilmController {
 	// http://localhost:8001/peliculas/1
 	// {"id":1,"name":"ACADEMY DINOSAUR"}
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) {
+	public void delete(@PathVariable int id) throws InvalidDataException {
 		filmService.deleteById(id);
 	}
 

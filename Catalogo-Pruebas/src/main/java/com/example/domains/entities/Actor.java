@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
 import com.example.domains.core.entities.EntityBase;
@@ -29,8 +30,6 @@ import jakarta.validation.constraints.Size;
 public class Actor extends EntityBase<Actor> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank
-	@NotNull
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "actor_id", unique = true, nullable = false)
@@ -38,12 +37,12 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 
 	@Column(name = "first_name", nullable = false, length = 45)
 	@NotBlank
-	@Size(max = 45, min = 2)
+	@Length(max = 45)
 //	@NIF
 	private String firstName;
 
 	@Column(name = "last_name", nullable = false, length = 45)
-	@Size(max = 45, min = 2)
+	@Length(max = 45)
 	@Pattern(regexp = "[A-Z]+", message = "Tiene que estar en mayusculas")
 	private String lastName;
 
