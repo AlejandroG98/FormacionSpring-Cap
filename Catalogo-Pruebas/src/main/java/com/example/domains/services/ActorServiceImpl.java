@@ -95,7 +95,7 @@ public class ActorServiceImpl implements ActorService {
 	public void delete(Actor item) throws InvalidDataException {
 		try {
 			if (item == null)
-				throw new InvalidDataException("No puede ser nulo");
+				throw new InvalidDataException("ERROR. No puede ser nulo");
 			deleteById(item.getActorId());
 		} catch (Exception e) {
 			throw new InvalidDataException(e.getMessage());

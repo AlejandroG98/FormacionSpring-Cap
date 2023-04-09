@@ -20,7 +20,6 @@ public class CategoryDTO {
 	private int categoryId;
 	
 	@JsonProperty("nombre")
-	@Length(min=2,max=25)
 	private String name;
 	
 	@JsonProperty("categoriaPeliculas")

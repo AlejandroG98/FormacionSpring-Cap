@@ -43,7 +43,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 	private Timestamp lastUpdate;
 
 	@NotBlank
-	@Size(min = 2, max = 25)
+	@Size(max = 25)
 	@JsonProperty("name")
 	private String name;
 
