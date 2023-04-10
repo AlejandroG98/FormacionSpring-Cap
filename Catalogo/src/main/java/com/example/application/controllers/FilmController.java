@@ -50,6 +50,34 @@ public class FilmController {
 		return filmRepository.findById(id).orElse(null);
 	}
 
+	// http://localhost:8001/peliculas/225
+	/*
+	 * { "filmId": 0, "description": "Pato", "lastUpdate":
+	 * "2023-04-05T15:41:26.000+00:00", "length": 81, "rating": "GENERAL_AUDIENCES",
+	 * "releaseYear": "2006", "rentalDuration": 7, "rentalRate": 4.99,
+	 * "replacementCost": 29.99, "title": "ACADEMY DINOSAUR", "language": { "id": 4,
+	 * "idioma": "Mandarin", "ultimaModificacion": "2006-02-15 04:02:19" },
+	 * "languageVO": { "id": 3, "idioma": "Japanese", "ultimaModificacion":
+	 * "2006-02-15 04:02:19" }, "actors": [ { "actorId": 77, "firstName": "CARY",
+	 * "lastName": "MCCONAUGHEY", "lastUpdate": "2006-02-15T03:34:33.000+00:00" }, {
+	 * "actorId": 117, "firstName": "RENEE", "lastName": "TRACY", "lastUpdate":
+	 * "2006-02-15T03:34:33.000+00:00" }, { "actorId": 137, "firstName": "MORGAN",
+	 * "lastName": "WILLIAMS", "lastUpdate": "2006-02-15T03:34:33.000+00:00" }, {
+	 * "actorId": 187, "firstName": "RENEE", "lastName": "BALL", "lastUpdate":
+	 * "2006-02-15T03:34:33.000+00:00" } ], "categories": [ { "categoryId": 16,
+	 * "name": "Travel" } ] }
+	 */
+	@PostMapping(path = "/{id}")
+	public @ResponseBody Film postFilm(@PathVariable Integer id, @Valid @RequestBody Film film)
+			throws NotFoundException, InvalidDataException {
+		Film existingFilm = filmRepository.getById(id);
+		existingFilm.setTitle(film.getTitle());
+		existingFilm.setDescription(film.getDescription());
+		if (existingFilm == null)
+			throw new InvalidDataException("ERROR. Está vacio de datos...");
+		return filmService.modify(existingFilm);
+	}
+
 	// http://localhost:8001/peliculas/1
 	/*
 	 * { "id": 1, "title": "ACADEMY DINOSAUR", "descripcion":
@@ -71,39 +99,11 @@ public class FilmController {
 		return filmService.modify(existingFilm);
 	}
 
-	// http://localhost:8001/peliculas/225
-	/*
-	  { "filmId": 0, "description": "Pato", "lastUpdate":
-	  "2023-04-05T15:41:26.000+00:00", "length": 81, "rating": "GENERAL_AUDIENCES",
-	  "releaseYear": "2006", "rentalDuration": 7, "rentalRate": 4.99,
-	  "replacementCost": 29.99, "title": "ACADEMY DINOSAUR", "language": { "id": 4,
-	  "idioma": "Mandarin", "ultimaModificacion": "2006-02-15 04:02:19" },
-	  "languageVO": { "id": 3, "idioma": "Japanese", "ultimaModificacion":
-	  "2006-02-15 04:02:19" }, "actors": [ { "actorId": 77, "firstName": "CARY",
-	  "lastName": "MCCONAUGHEY", "lastUpdate": "2006-02-15T03:34:33.000+00:00" }, {
-	  "actorId": 117, "firstName": "RENEE", "lastName": "TRACY", "lastUpdate":
-	  "2006-02-15T03:34:33.000+00:00" }, { "actorId": 137, "firstName": "MORGAN",
-	  "lastName": "WILLIAMS", "lastUpdate": "2006-02-15T03:34:33.000+00:00" }, {
-	  "actorId": 187, "firstName": "RENEE", "lastName": "BALL", "lastUpdate":
-	  "2006-02-15T03:34:33.000+00:00" } ], "categories": [ { "categoryId": 16,
-	  "name": "Travel" } ] }
-	 */
-	@PostMapping(path = "/{id}")
-	public @ResponseBody Film postFilm(@PathVariable Integer id, @Valid @RequestBody Film film)
-			throws NotFoundException, InvalidDataException {
-		Film existingFilm = filmRepository.getById(id);
-		existingFilm.setTitle(film.getTitle());
-		existingFilm.setDescription(film.getDescription());
-		if (existingFilm == null)
-			throw new InvalidDataException("ERROR. Está vacio de datos...");
-		return filmService.modify(existingFilm);
-	}
-
 	// ERROR: DataIntegrityViolationException
 	// http://localhost:8001/peliculas/1
 	// {"id":1,"name":"ACADEMY DINOSAUR"}
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) throws InvalidDataException {
+	public void delete(@PathVariable int id) {
 		filmService.deleteById(id);
 	}
 

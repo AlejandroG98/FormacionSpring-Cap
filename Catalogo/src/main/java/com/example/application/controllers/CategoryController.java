@@ -44,13 +44,13 @@ public class CategoryController {
 
 	// http://localhost:8001/categorias/get
 	@GetMapping(path = "/get")
-	public @ResponseBody List<CategoryShort> getActors() throws JsonProcessingException {
+	public @ResponseBody List<CategoryShort> getCategory() throws JsonProcessingException {
 		return catService.getByProjection(CategoryShort.class);
 	}
 
 	// http://localhost:8001/categorias/get/2
 	@GetMapping(path = "/get/{id}")
-	public CategoryDTO getOneCategoryDTO(@PathVariable int id) throws Exception {
+	public CategoryDTO getOneCategoryDTO(@PathVariable int id) throws NotFoundException {
 		var item = catService.getOne(id);
 		if (item.isEmpty()) {
 			throw new NotFoundException();
@@ -93,7 +93,7 @@ public class CategoryController {
 	}
 
 	// http://localhost:8001/categorias/17
-	//{"id":17,"name":"Españolisima"}
+	// {"id":17,"name":"Españolisima"}
 	@DeleteMapping(path = "/{id}")
 	public void delete(@PathVariable int id) throws InvalidDataException {
 		catService.deleteById(id);

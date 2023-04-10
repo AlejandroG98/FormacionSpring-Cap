@@ -31,17 +31,12 @@ public class Language extends EntityBase<Language> implements Serializable {
     public static class Complete extends Partial {}
     
     @Id
-    @Positive
-    @NotNull
-    @NotBlank
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="language_id")
 	@JsonProperty("id")
 	@JsonView(Language.Partial.class)
 	private int languageId;
 
-    @NotNull
-	@NotBlank
 	@Size(max=20, min=2)
 	@JsonProperty("idioma")
 	@JsonView(Language.Partial.class)

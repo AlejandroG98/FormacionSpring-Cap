@@ -1,0 +1,661 @@
+{
+	"info": {
+		"_postman_id": "fec49e53-16ff-49a8-bc50-a462d86e18ed",
+		"name": "Catalogo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26589715"
+	},
+	"item": [
+		{
+			"name": "Actor",
+			"item": [
+				{
+					"name": "getActors",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":9,\r\n    \"name\":\"Marronera\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/actores/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"actores",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPeliculas from Actor=2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":9,\r\n    \"name\":\"Marronera\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/actores/peliculasDelActor/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"actores",
+								"peliculasDelActor",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":9,\r\n    \"name\":\"Marronera\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/actores/201",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"actores",
+								"201"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"firstName\":\"Accion\",\r\n    \"lastName\":\"ASEGURADA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/actores/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"actores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/actores/addActor?firstname=Alex&lastname=Gar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"actores",
+								"addActor"
+							],
+							"query": [
+								{
+									"key": "firstname",
+									"value": "Alex"
+								},
+								{
+									"key": "lastname",
+									"value": "Gar"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Language",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":9,\r\n    \"name\":\"Marronera\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/idiomas/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"idiomas",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Idioma (id=1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Actualización exitosa de Categoría\", function () {\r",
+									"    var languageId = 1;\r",
+									"    var requestBody = {\r",
+									"        \"languageId\": languageId,\r",
+									"        \"name\": \"Ingles\"\r",
+									"    };\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"name\":\"Ingles\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/idiomas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"idiomas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/idiomas/addLanguage?name=Asesinaos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"idiomas",
+								"addLanguage"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Asesinaos"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll Idiomas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/idiomas/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"idiomas",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne Idioma",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/idiomas/get/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"idiomas",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Peliculas del Idioma",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/idiomas/peliculasDelIdioma/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"idiomas",
+								"peliculasDelIdioma",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Actualizar Categoria (id=1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Actualización exitosa de Categoría\", function () {\r",
+									"    var categoryId = 1;\r",
+									"    var requestBody = {\r",
+									"        \"categoryId\": categoryId,\r",
+									"        \"nombre\": \"Accion\"\r",
+									"    };\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryId\":1,\r\n    \"nombre\":\"Accion\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/categorias/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"categorias",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":17,\r\n    \"name\":\"Españolisima\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/categorias/17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"categorias",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/categorias/addCategory?name=Italiana",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"categorias",
+								"addCategory"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Italiana"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get ALGO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/categorias/get/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"categorias",
+								"get",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPeliculas de la Categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/categorias/peliculasDeLaCategoria/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"categorias",
+								"peliculasDeLaCategoria",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Film",
+			"item": [
+				{
+					"name": "Get all films",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/peliculas/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"peliculas",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one film",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/peliculas/get/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"peliculas",
+								"get",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"id\": 1, \"title\": \"ACADEMY DINOSAUR\", \"descripcion\":\r\n\t  \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\"\r\n\t  , \"duracion\": 86, \"valoracion\": \"GENERAL_AUDIENCES\", \"release_year\": 2006,\r\n\t  \"rental_duration\": 6, \"rental_rate\": 0.99, \"replacement_cost\": 20.99,\r\n\t  \"language\": { \"id\": 1, \"nombre\": \"Ingles\" }, \"languageVO\": { \"id\": 5,\r\n\t  \"nombre\": \"French\" }, \"actors\": [ { \"id\":1, \"firstName\": \"John\", \"lastName\":\r\n\t  \"Doe\" } ], \"categories\": [ { \"id\":6, \"name\":\"Documentary\" } ] }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/peliculas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"peliculas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"filmId\": 0, \"description\": \"Pato\", \"lastUpdate\":\r\n\t  \"2023-04-05T15:41:26.000+00:00\", \"length\": 81, \"rating\": \"GENERAL_AUDIENCES\",\r\n\t  \"releaseYear\": \"2006\", \"rentalDuration\": 7, \"rentalRate\": 4.99,\r\n\t  \"replacementCost\": 29.99, \"title\": \"ACADEMY DINOSAUR\", \"language\": { \"id\": 4,\r\n\t  \"idioma\": \"Mandarin\", \"ultimaModificacion\": \"2006-02-15 04:02:19\" },\r\n\t  \"languageVO\": { \"id\": 3, \"idioma\": \"Japanese\", \"ultimaModificacion\":\r\n\t  \"2006-02-15 04:02:19\" }, \"actors\": [ { \"actorId\": 77, \"firstName\": \"CARY\",\r\n\t  \"lastName\": \"MCCONAUGHEY\", \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\" }, {\r\n\t  \"actorId\": 117, \"firstName\": \"RENEE\", \"lastName\": \"TRACY\", \"lastUpdate\":\r\n\t  \"2006-02-15T03:34:33.000+00:00\" }, { \"actorId\": 137, \"firstName\": \"MORGAN\",\r\n\t  \"lastName\": \"WILLIAMS\", \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\" }, {\r\n\t  \"actorId\": 187, \"firstName\": \"RENEE\", \"lastName\": \"BALL\", \"lastUpdate\":\r\n\t  \"2006-02-15T03:34:33.000+00:00\" } ], \"categories\": [ { \"categoryId\": 16,\r\n\t  \"name\": \"Travel\" } ] }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/peliculas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"peliculas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":17,\r\n    \"name\":\"Españolisima\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/categorias/17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"categorias",
+								"17"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

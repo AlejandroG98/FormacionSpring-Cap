@@ -20,10 +20,13 @@ import com.example.domains.entities.Actor;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
 import com.example.domains.entities.dtos.ElementoDto;
+import com.example.domains.entities.dtos.FilmDTO;
+import com.example.domains.entities.dtos.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.validation.Valid;
 
@@ -43,21 +46,17 @@ public class ActorController {
 	// http://localhost:8001/actores/get
 	@GetMapping(path = "/get")
 	public @ResponseBody List<ActorShort> getActors(@RequestParam(required = false) String sort)
-			throws Exception {
+			throws JsonProcessingException {
 		if (sort != null)
 			return (List<ActorShort>) actService.getByProjection(Sort.by(sort), ActorShort.class);
-		if(sort == null)
-		{
-			throw new Exception();
-		}
 		return actService.getByProjection(ActorShort.class);
 	}
 
 	// http://localhost:8001/actores/get/2
 	@GetMapping(path = "/get/{id}")
-	public ActorDTO getOneActor(@PathVariable int id) throws Exception {
+	public ActorDTO getOneActor(@PathVariable int id) throws NotFoundException {
 		var item = actService.getOne(id);
-		if (item.isEmpty() || id <0) {
+		if (item.isEmpty()) {
 			throw new NotFoundException();
 		}
 		return ActorDTO.from(item.get());
@@ -66,8 +65,7 @@ public class ActorController {
 	// http://localhost:8001/actores/peliculasDelActor/2
 	@GetMapping(path = "/peliculasDelActor/{id}")
 	public List<ElementoDto<Integer, String>> getPeliculasFromActor(@PathVariable int id) throws Exception {
-		if(id < 0)
-		{
+		if (id < 0) {
 			throw new Exception();
 		}
 		return actService.getOne(id).get().getFilmActors().stream()
@@ -79,8 +77,7 @@ public class ActorController {
 	public @ResponseBody Actor addNewActor(@RequestParam String firstname, @RequestParam String lastname)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
 
-		if(firstname == null | lastname == null)
-		{
+		if (firstname == null | lastname == null) {
 			throw new InvalidDataException();
 		}
 		var actorAux = new Actor();

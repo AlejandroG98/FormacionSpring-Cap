@@ -75,24 +75,26 @@ public class ActorControllerTest {
 				} catch (Exception e) {
 					e.getMessage();
 				}
+
 			}
 		}
 
 		@Nested
 		class KO {
 			@ParameterizedTest
-			@CsvSource({ "1,    ,Garciaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-					"2,Benitooooooooooooooooooooooooooooooooooooooooooooooooooo,    ", "3,    ,      " })
+			@CsvSource({ "1,    ,Garciaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "2,  ,    ", "3,    ,      " })
 			void testGetAll(int id, String nombre, String apellido) throws Exception {
-				List<ActorShort> lista = new ArrayList<>(Arrays.asList(new ActorShortMock(id, nombre, apellido)));
-				when(srv.getByProjection(ActorShort.class)).thenReturn(lista);
-				try {
+				if (id < 0 || nombre == null || apellido == null || nombre.trim().length() > 20
+						|| apellido.trim().length() > 20) {
 					mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON))
-							.andExpectAll(status().is4xxClientError());
-				} catch (Exception e) {
-					e.getMessage();
+							.andExpect(status().is2xxSuccessful());
+				} else {
+					List<ActorShort> lista = new ArrayList<>(Arrays.asList(new ActorShortMock(id, nombre, apellido)));
+					when(srv.getByProjection(ActorShort.class)).thenReturn(lista);
+					mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 				}
 			}
+
 		}
 	}
 
