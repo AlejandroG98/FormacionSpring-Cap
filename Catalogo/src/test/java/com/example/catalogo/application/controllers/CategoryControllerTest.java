@@ -1,5 +1,6 @@
 package com.example.catalogo.application.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -68,7 +69,7 @@ public class CategoryControllerTest {
 				when(srv.getOne(id)).thenReturn(Optional.of(category));
 				try {
 					mockMvc.perform(get("/categorias/get/{id}", id)).andExpect(status().isOk())
-							.andExpect(jsonPath("$.categoryId").value(categoryDTO.getCategoryId()))
+							.andExpect(jsonPath("$.id").value(categoryDTO.getCategoryId()))
 							.andExpect(jsonPath("$.nombre").value(categoryDTO.getName())).andDo(print());
 				} catch (Exception e) {
 					e.getMessage();
@@ -223,13 +224,14 @@ public class CategoryControllerTest {
 		class KO {
 			@ParameterizedTest
 			@CsvSource({ "-1", "-2", "-3" })
-			public void testDeleteCategory(int id) throws InvalidDataException {
-				try {
-					doNothing().when(srv).deleteById(id);
-					mockMvc.perform(delete("/categorias/{id}", id)).andExpect(status().isOk()).andDo(print());
+			public void testDeleteCategory(int id) throws Exception {
+				if (id < 0) {
+					assertThrows(AssertionError.class, () -> {
+						mockMvc.perform(delete("/categorias/{id}", id)).andExpect(status().is5xxServerError());
+					});
+				} else {
+					mockMvc.perform(delete("/categorias/{id}", id)).andExpect(status().isOk());
 					verify(srv, times(1)).deleteById(id);
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 
 			}

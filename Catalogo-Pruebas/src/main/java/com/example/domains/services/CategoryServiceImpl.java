@@ -54,7 +54,10 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Optional<Category> getOne(Integer id) {
+	public Optional<Category> getOne(Integer id) throws Exception {
+		if (id < 0) {
+			throw new Exception("ERROR. La id no puede ser menor a 0");
+		}
 		return dao.findById(id);
 	}
 

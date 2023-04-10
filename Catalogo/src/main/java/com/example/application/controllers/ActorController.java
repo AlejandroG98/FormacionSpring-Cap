@@ -99,10 +99,6 @@ public class ActorController {
 	// {"id":201,"nombre":"KK","apellidos": "KKK"}
 	@DeleteMapping(path = "/{id}")
 	public void delete(@PathVariable int id) throws InvalidDataException {
-		if(id <0)
-		{
-			throw new InvalidDataException("ERROR. La id no puede ser menor a 0 (Controller)");
-		}
 		actService.deleteById(id);
 	}
 

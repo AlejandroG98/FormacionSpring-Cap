@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.example.domains.core.repositories.contracts.RepositoryWithProjections;
 import com.example.domains.entities.Actor;
@@ -14,6 +15,8 @@ import com.example.domains.entities.Actor;
 // Repositorio de la entidad de dominio
 // Extiendo por todos los lados
 // Solo accede su servicio de dominio
+
+@Repository
 public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>, RepositoryWithProjections{
 //	<T> List<T> findAllBy(Class<T> type);
 	
