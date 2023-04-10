@@ -18,8 +18,8 @@ import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
-
+public class CategoryServiceImpl implements CategoryService{
+	
 	@Autowired
 	private CategoryRepository dao;
 
@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public <T> Iterable<T> getByProjection(Sort sort, Class<T> type) {
-		return dao.findAllBy(sort, type);
+		return dao.findAllBy(sort,type);
 	}
 
 	@Override
@@ -54,24 +54,24 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Optional<Category> getOne(Integer id) throws Exception {
-		if (id < 0) {
-			throw new Exception("ERROR. La id no puede ser menor a 0");
-		}
+	public Optional<Category> getOne(Integer id) {
 		return dao.findById(id);
 	}
 
 	@Override
 	public Category add(Category item) throws DuplicateKeyException, InvalidDataException {
-		if (item == null) {
+		if(item == null)
+		{
 			throw new InvalidDataException("[ERROR] El item no puede ser nulo");
 		}
-
-		if (item.isInvalid()) {
+		
+		if(item.isInvalid())
+		{
 			throw new InvalidDataException(item.getErrorsMessage());
 		}
-
-		if (dao.existsById(item.getCategoryId())) {
+		
+		if(dao.existsById(item.getCategoryId()))
+		{
 			throw new DuplicateKeyException(item.getErrorsMessage());
 		}
 		return dao.save(item);
@@ -79,15 +79,18 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Category modify(Category item) throws NotFoundException, InvalidDataException {
-		if (item == null) {
+		if(item == null)
+		{
 			throw new InvalidDataException("[ERROR] El item no puede ser nulo");
 		}
-
-		if (item.isInvalid()) {
+		
+		if(item.isInvalid())
+		{
 			throw new InvalidDataException(item.getErrorsMessage());
 		}
-
-		if (!dao.existsById(item.getCategoryId())) {
+		
+		if(!dao.existsById(item.getCategoryId()))
+		{
 			throw new NotFoundException();
 		}
 		return dao.save(item);
@@ -95,23 +98,17 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public void delete(Category item) throws InvalidDataException {
-		if (item == null) {
+		if(item == null)
+		{
 			throw new InvalidDataException("[ERROR] El item no puede ser nulo");
 		}
-
+		
 		deleteById(item.getCategoryId());
 	}
 
 	@Override
-	public void deleteById(Integer id) throws InvalidDataException {
-		try {
-			if (id < 0) {
-				throw new InvalidDataException("ERROR. La id no puede ser menor a 0");
-			}
-			dao.deleteById(id);
-		} catch (InvalidDataException e) {
-			throw new InvalidDataException(e.getMessage());
-		}
+	public void deleteById(Integer id) {
+		dao.deleteById(id);
 	}
 
 	@Override
@@ -120,4 +117,5 @@ public class CategoryServiceImpl implements CategoryService {
 
 	}
 
+	
 }

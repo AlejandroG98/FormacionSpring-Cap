@@ -8,5 +8,5 @@ import com.example.domains.entities.Actor;
 
 public interface ActorService extends ProjectionDomainService<Actor, Integer>{
 	List<Actor> novedades(Timestamp fecha);
-	
+	String updateActor(Integer id,String firstname,String lastname);
 }

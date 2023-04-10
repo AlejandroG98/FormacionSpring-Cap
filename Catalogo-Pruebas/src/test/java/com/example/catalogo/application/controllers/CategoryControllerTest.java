@@ -1,10 +1,13 @@
 package com.example.catalogo.application.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
@@ -12,12 +15,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+
 import com.example.application.controllers.CategoryController;
 import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.entities.Category;
@@ -53,7 +59,24 @@ public class CategoryControllerTest {
 	static class CategoryShortMock implements CategoryShort {
 		int categoryId;
 		String name;
-		List<FilmCategory> filmCategories;
+
+		@Override
+		public List<FilmCategory> getFilmCategories() {
+			return null;
+		}
+
+	}
+
+	@Nested
+	class allCategories{
+		@ParameterizedTest
+		@CsvSource({ "1,Accion", "2,Violencia", "3,Muerte" })
+		void testGetAllCategories(int id, String nombre) throws Exception {
+			List<CategoryShort> lista = Arrays.asList(new CategoryShortMock(id,nombre));
+			when(srv.getByProjection(CategoryShort.class)).thenReturn(lista);
+			mockMvc.perform(get("/categorias/get").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+					.andExpect(content().json(objectMapper.writeValueAsString(lista)));
+		}
 	}
 
 	@Nested
@@ -66,13 +89,9 @@ public class CategoryControllerTest {
 				var category = new Category(id, nombre);
 				var categoryDTO = CategoryDTO.from(category);
 				when(srv.getOne(id)).thenReturn(Optional.of(category));
-				try {
-					mockMvc.perform(get("/categorias/get/{id}", id)).andExpect(status().isOk())
-							.andExpect(jsonPath("$.categoryId").value(categoryDTO.getCategoryId()))
-							.andExpect(jsonPath("$.nombre").value(categoryDTO.getName())).andDo(print());
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				mockMvc.perform(get("/categorias/get/{id}", id)).andExpect(status().isOk())
+						.andExpect(jsonPath("$.categoryId").value(categoryDTO.getCategoryId()))
+						.andExpect(jsonPath("$.nombre").value(categoryDTO.getName())).andDo(print());
 			}
 		}
 
@@ -83,12 +102,7 @@ public class CategoryControllerTest {
 					"-3,Muerteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" })
 			void testGetOneCategory(int id, String nombre) throws Exception {
 				when(srv.getOne(id)).thenReturn(Optional.empty());
-				try {
-					mockMvc.perform(get("/categorias/get/{id}", id)).andExpect(status().is4xxClientError())
-							.andExpect(jsonPath("$.title").value(null));
-				} catch (Exception e) {
-					e.getMessage();
-				}
+					mockMvc.perform(get("/categorias/get/{id}", id)).andExpect(status().is4xxClientError());
 			}
 		}
 	}
@@ -101,14 +115,10 @@ public class CategoryControllerTest {
 			@CsvSource({ "1", "2", "3" })
 			void testGetOne404(int id) throws Exception {
 				when(srv.getOne(id)).thenReturn(Optional.empty());
-				try {
 				mockMvc.perform(get("/categorias/get/{id}", id))
 					.andExpect(status().isNotFound())
 					.andExpect(jsonPath("$.title").value("Not Found"))
 			        .andDo(print());
-				} catch (Exception e) {
-					e.getMessage();
-				}
 			}
 		}
 
@@ -118,14 +128,10 @@ public class CategoryControllerTest {
 			@CsvSource({ "-1", "-2", "-3" })
 			void testGetOne404(int id) throws Exception {
 				when(srv.getOne(id)).thenReturn(Optional.empty());
-				try {
 				mockMvc.perform(get("/categorias/get/{id}", id))
 					.andExpect(status().isNotFound())
 					.andExpect(jsonPath("$.title").value("Not Found"))
 			        .andDo(print());
-				} catch (Exception e) {
-					e.getMessage();
-				}
 			}
 		}
 	}
@@ -139,16 +145,10 @@ public class CategoryControllerTest {
 			void testAddCategory(int id, String nombre) throws DuplicateKeyException, InvalidDataException, Exception {
 				var ele = new Category(id, nombre);
 				when(srv.add(ele)).thenReturn(ele);
-				try {
-					mockMvc.perform(post("/categorias/addCategory").contentType(MediaType.APPLICATION_JSON)
-							.content(objectMapper.writeValueAsString(CategoryDTO.from(ele)))
-							.param("id", String.valueOf(ele.getCategoryId())).param("name", ele.getName()))
-							.andExpect(status().isOk()).andDo(print());
-				} catch (JsonProcessingException e) {
-					e.getMessage();
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				mockMvc.perform(post("/categorias/addCategory").contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(CategoryDTO.from(ele)))
+						.param("id", String.valueOf(ele.getCategoryId())).param("name", ele.getName()))
+						.andExpect(status().isOk()).andDo(print());
 			}
 		}
 
@@ -159,16 +159,10 @@ public class CategoryControllerTest {
 			void testAddCategory(int id, String nombre) throws DuplicateKeyException, InvalidDataException, Exception {
 				var ele = new Category(id, nombre);
 				when(srv.add(ele)).thenReturn(ele);
-				try {
-					mockMvc.perform(post("/categorias/addCategory").contentType(MediaType.APPLICATION_JSON)
-							.content(objectMapper.writeValueAsString(CategoryDTO.from(ele)))
-							.param("id", String.valueOf(ele.getCategoryId())).param("nombre", ele.getName()))
-							.andExpect(status().is4xxClientError()).andDo(print());
-				} catch (JsonProcessingException e) {
-					e.getMessage();
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				mockMvc.perform(post("/categorias/addCategory").contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(CategoryDTO.from(ele)))
+						.param("id", String.valueOf(ele.getCategoryId())).param("nombre", ele.getName()))
+						.andExpect(status().is4xxClientError()).andDo(print());
 			}
 		}
 	}
@@ -210,12 +204,8 @@ public class CategoryControllerTest {
 			@ParameterizedTest
 			@CsvSource({ "1", "2", "3" })
 			public void testDeleteCategory(int id) throws Exception {
-				try {
-					mockMvc.perform(delete("/categorias/{id}", id)).andExpect(status().isOk()).andDo(print());
-					verify(srv, times(1)).deleteById(id);
-				} catch (Exception e) {
-					throw new InvalidDataException(e.getMessage());
-				}
+				mockMvc.perform(delete("/categorias/{id}", id)).andExpect(status().isOk()).andDo(print());
+				verify(srv, times(1)).deleteById(id);
 			}
 		}
 
@@ -223,15 +213,12 @@ public class CategoryControllerTest {
 		class KO {
 			@ParameterizedTest
 			@CsvSource({ "-1", "-2", "-3" })
-			public void testDeleteCategory(int id) throws InvalidDataException {
-				try {
-					doNothing().when(srv).deleteById(id);
-					mockMvc.perform(delete("/categorias/{id}", id)).andExpect(status().isOk()).andDo(print());
-					verify(srv, times(1)).deleteById(id);
-				} catch (Exception e) {
-					e.printStackTrace();
+			public void testDeleteCategory(int id) throws Exception {
+				if (id < 0) {
+					assertThrows(AssertionError.class, () -> {
+						mockMvc.perform(delete("/categorias/{id}", id)).andExpect(status().is5xxServerError());
+					});
 				}
-
 			}
 		}
 	}

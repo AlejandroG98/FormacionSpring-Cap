@@ -2,8 +2,6 @@ package com.example.domains.entities.dtos;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.example.domains.entities.Category;
 import com.example.domains.entities.FilmCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -24,6 +24,7 @@ import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.validation.Valid;
 
@@ -43,21 +44,17 @@ public class ActorController {
 	// http://localhost:8001/actores/get
 	@GetMapping(path = "/get")
 	public @ResponseBody List<ActorShort> getActors(@RequestParam(required = false) String sort)
-			throws Exception {
+			throws JsonProcessingException {
 		if (sort != null)
 			return (List<ActorShort>) actService.getByProjection(Sort.by(sort), ActorShort.class);
-		if(sort == null)
-		{
-			throw new Exception();
-		}
 		return actService.getByProjection(ActorShort.class);
 	}
 
 	// http://localhost:8001/actores/get/2
 	@GetMapping(path = "/get/{id}")
-	public ActorDTO getOneActor(@PathVariable int id) throws Exception {
+	public ActorDTO getOneActor(@PathVariable int id) throws NotFoundException {
 		var item = actService.getOne(id);
-		if (item.isEmpty() || id <0) {
+		if (item.isEmpty()) {
 			throw new NotFoundException();
 		}
 		return ActorDTO.from(item.get());
@@ -65,11 +62,7 @@ public class ActorController {
 
 	// http://localhost:8001/actores/peliculasDelActor/2
 	@GetMapping(path = "/peliculasDelActor/{id}")
-	public List<ElementoDto<Integer, String>> getPeliculasFromActor(@PathVariable int id) throws Exception {
-		if(id < 0)
-		{
-			throw new Exception();
-		}
+	public List<ElementoDto<Integer, String>> getPeliculasFromActor(@PathVariable int id) throws NotFoundException {
 		return actService.getOne(id).get().getFilmActors().stream()
 				.map(f -> new ElementoDto<>(f.getFilm().getFilmId(), f.getFilm().getTitle())).toList();
 	}
@@ -79,10 +72,6 @@ public class ActorController {
 	public @ResponseBody Actor addNewActor(@RequestParam String firstname, @RequestParam String lastname)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
 
-		if(firstname == null | lastname == null)
-		{
-			throw new InvalidDataException();
-		}
 		var actorAux = new Actor();
 		actorAux.setActorId(0);
 		actorAux.setFirstName(firstname.toUpperCase());
@@ -95,26 +84,22 @@ public class ActorController {
 		}
 	}
 
-	// http://localhost:8001/actores/201
-	// {"id":201,"nombre":"KK","apellidos": "KKK"}
-	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) throws InvalidDataException {
-		if(id <0)
-		{
-			throw new InvalidDataException("ERROR. La id no puede ser menor a 0 (Controller)");
-		}
-		actService.deleteById(id);
-	}
-
 	// http://localhost:8001/actores/1
 	// CUIDADO: El nombre de las variables vienen predeterminadas por el DTO
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void modify(@PathVariable int id, @Valid @RequestBody ActorDTO item)
+	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item)
 			throws BadRequestException, NotFoundException, InvalidDataException {
 		if (id != item.getActorId())
 			throw new BadRequestException("Nooooooo coinciden los identificadores");
 		actService.modify(ActorDTO.from(item));
+	}
+
+	// http://localhost:8001/actores/201
+	// {"id":201,"nombre":"KK","apellidos": "KKK"}
+	@DeleteMapping(path = "/{id}")
+	public void delete(@PathVariable int id) {
+		actService.deleteById(id);
 	}
 
 }

@@ -44,7 +44,7 @@ public class ActorServiceImplTest {
 
     @Test
     @DisplayName("Test general")
-    void testGetAll() throws Exception {
+    void testGetAll() {
         List<Actor> actors = new ArrayList<>();
         actors.add(new Actor(1, "Mario", "Cansas"));
         actors.add(new Actor(2, "Angel", "Diablo"));
@@ -57,7 +57,7 @@ public class ActorServiceImplTest {
 
     @Test
     @DisplayName("Test getOne()")
-    void testGetOne() throws Exception {
+    void testGetOne() {
         Actor expectedActor = new Actor(1, "Mario", "Cansas");
         when(actorRepositoryMock.findById(1)).thenReturn(Optional.of(expectedActor));
         assertTrue(actorService.getOne(1).isPresent());

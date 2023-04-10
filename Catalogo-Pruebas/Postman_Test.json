@@ -110,7 +110,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":1,\r\n    \"firstName\":\"Accion\",\r\n    \"lastName\":\"ASEGURADA\"\r\n}",
+							"raw": "{\r\n    \"actorId\":217,\r\n    \"nombre\":\"Accion\",\r\n    \"apellidos\":\"ASEGURADA\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -118,7 +118,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/actores/1",
+							"raw": "http://localhost:8001/actores/217",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -126,7 +126,7 @@
 							"port": "8001",
 							"path": [
 								"actores",
-								"1"
+								"217"
 							]
 						}
 					},
@@ -168,7 +168,7 @@
 			"name": "Language",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Delete",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -564,7 +564,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"id\": 1, \"title\": \"ACADEMY DINOSAUR\", \"descripcion\":\r\n\t  \"A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies\"\r\n\t  , \"duracion\": 86, \"valoracion\": \"GENERAL_AUDIENCES\", \"release_year\": 2006,\r\n\t  \"rental_duration\": 6, \"rental_rate\": 0.99, \"replacement_cost\": 20.99,\r\n\t  \"language\": { \"id\": 1, \"nombre\": \"Ingles\" }, \"languageVO\": { \"id\": 5,\r\n\t  \"nombre\": \"French\" }, \"actors\": [ { \"id\":1, \"firstName\": \"John\", \"lastName\":\r\n\t  \"Doe\" } ], \"categories\": [ { \"id\":6, \"name\":\"Documentary\" } ] }",
+							"raw": "{\r\n    \"description\": \"Patooo\",\r\n    \"lastUpdate\": \"2023-04-10T09:06:10.000+00:00\",\r\n    \"length\": 86,\r\n    \"rating\": \"PARENTAL_GUIDANCE_SUGGESTED\",\r\n    \"releaseYear\": \"2006\",\r\n    \"rentalDuration\": 6,\r\n    \"rentalRate\": 0.99,\r\n    \"replacementCost\": 20.99,\r\n    \"title\": \"ACADEMY DINOSAUR\",\r\n    \"language\": {\r\n        \"id\": 1,\r\n        \"idioma\": \"Ingles\",\r\n        \"ultimaModificacion\": \"2023-04-06 08:38:49\"\r\n    },\r\n    \"languageVO\": {\r\n        \"id\": 5,\r\n        \"idioma\": \"French\",\r\n        \"ultimaModificacion\": \"2006-02-15 04:02:19\"\r\n    },\r\n    \"actors\": [\r\n        {\r\n            \"actorId\": 1,\r\n            \"firstName\": \"Accion\",\r\n            \"lastName\": \"ASEGURADA\",\r\n            \"lastUpdate\": \"2023-04-10T08:24:09.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 10,\r\n            \"firstName\": \"CHRISTIAN\",\r\n            \"lastName\": \"GABLE\",\r\n            \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 20,\r\n            \"firstName\": \"IVANKA\",\r\n            \"lastName\": \"TRUMP\",\r\n            \"lastUpdate\": \"2023-04-05T16:15:39.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 30,\r\n            \"firstName\": \"SANDRA\",\r\n            \"lastName\": \"PECK\",\r\n            \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 40,\r\n            \"firstName\": \"JOHNNY\",\r\n            \"lastName\": \"CAGE\",\r\n            \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 53,\r\n            \"firstName\": \"MENA\",\r\n            \"lastName\": \"TEMPLE\",\r\n            \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 108,\r\n            \"firstName\": \"WARREN\",\r\n            \"lastName\": \"NOLTE\",\r\n            \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 162,\r\n            \"firstName\": \"OPRAH\",\r\n            \"lastName\": \"KILMER\",\r\n            \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 188,\r\n            \"firstName\": \"ROCK\",\r\n            \"lastName\": \"DUKAKIS\",\r\n            \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\"\r\n        },\r\n        {\r\n            \"actorId\": 198,\r\n            \"firstName\": \"MARY\",\r\n            \"lastName\": \"KEITEL\",\r\n            \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\"\r\n        }\r\n    ],\r\n    \"categories\": [\r\n        {\r\n            \"categoryId\": 6,\r\n            \"name\": \"Documentary\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -572,7 +572,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/peliculas/1",
+							"raw": "http://localhost:8001/peliculas/13",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -580,7 +580,7 @@
 							"port": "8001",
 							"path": [
 								"peliculas",
-								"1"
+								"13"
 							]
 						}
 					},
@@ -593,7 +593,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"filmId\": 0, \"description\": \"Pato\", \"lastUpdate\":\r\n\t  \"2023-04-05T15:41:26.000+00:00\", \"length\": 81, \"rating\": \"GENERAL_AUDIENCES\",\r\n\t  \"releaseYear\": \"2006\", \"rentalDuration\": 7, \"rentalRate\": 4.99,\r\n\t  \"replacementCost\": 29.99, \"title\": \"ACADEMY DINOSAUR\", \"language\": { \"id\": 4,\r\n\t  \"idioma\": \"Mandarin\", \"ultimaModificacion\": \"2006-02-15 04:02:19\" },\r\n\t  \"languageVO\": { \"id\": 3, \"idioma\": \"Japanese\", \"ultimaModificacion\":\r\n\t  \"2006-02-15 04:02:19\" }, \"actors\": [ { \"actorId\": 77, \"firstName\": \"CARY\",\r\n\t  \"lastName\": \"MCCONAUGHEY\", \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\" }, {\r\n\t  \"actorId\": 117, \"firstName\": \"RENEE\", \"lastName\": \"TRACY\", \"lastUpdate\":\r\n\t  \"2006-02-15T03:34:33.000+00:00\" }, { \"actorId\": 137, \"firstName\": \"MORGAN\",\r\n\t  \"lastName\": \"WILLIAMS\", \"lastUpdate\": \"2006-02-15T03:34:33.000+00:00\" }, {\r\n\t  \"actorId\": 187, \"firstName\": \"RENEE\", \"lastName\": \"BALL\", \"lastUpdate\":\r\n\t  \"2006-02-15T03:34:33.000+00:00\" } ], \"categories\": [ { \"categoryId\": 16,\r\n\t  \"name\": \"Travel\" } ] }",
+							"raw": "{\r\n    \"filmId\": 1,\r\n    \"description\": \"Pato mareado\",\r\n    \"lastUpdate\": \"2023-04-10T09:15:17.000+00:00\",\r\n    \"length\": 86,\r\n    \"rating\": \"PARENTAL_GUIDANCE_SUGGESTED\",\r\n    \"releaseYear\": \"2006\",\r\n    \"rentalDuration\": 6,\r\n    \"rentalRate\": 0.99,\r\n    \"replacementCost\": 20.99,\r\n    \"title\": \"ACADEMY DINOSAUR\",\r\n    \"language\": {\r\n        \"id\": 1,\r\n        \"idioma\": \"Ingles\",\r\n        \"ultimaModificacion\": \"2023-04-06 08:38:49\"\r\n    },\r\n    \"languageVO\": {\r\n        \"id\": 5,\r\n        \"idioma\": \"French\",\r\n        \"ultimaModificacion\": \"2006-02-15 04:02:19\"\r\n    },\r\n    \"actors\": [\r\n        {\r\n            \"actorId\": 1,\r\n            \"firstName\": \"Accion\",\r\n            \"lastName\": \"ASEGURADA\"\r\n        },\r\n        {\r\n            \"actorId\": 10,\r\n            \"firstName\": \"CHRISTIAN\",\r\n            \"lastName\": \"GABLE\"\r\n        },\r\n        {\r\n            \"actorId\": 20,\r\n            \"firstName\": \"IVANKA\",\r\n            \"lastName\": \"TRUMP\"\r\n        },\r\n        {\r\n            \"actorId\": 30,\r\n            \"firstName\": \"SANDRA\",\r\n            \"lastName\": \"PECK\"\r\n        },\r\n        {\r\n            \"actorId\": 40,\r\n            \"firstName\": \"JOHNNY\",\r\n            \"lastName\": \"CAGE\"\r\n        },\r\n        {\r\n            \"actorId\": 53,\r\n            \"firstName\": \"MENA\",\r\n            \"lastName\": \"TEMPLE\"\r\n        },\r\n        {\r\n            \"actorId\": 108,\r\n            \"firstName\": \"WARREN\",\r\n            \"lastName\": \"NOLTE\"\r\n        },\r\n        {\r\n            \"actorId\": 162,\r\n            \"firstName\": \"OPRAH\",\r\n            \"lastName\": \"KILMER\"\r\n        },\r\n        {\r\n            \"actorId\": 188,\r\n            \"firstName\": \"ROCK\",\r\n            \"lastName\": \"DUKAKIS\"\r\n        },\r\n        {\r\n            \"actorId\": 198,\r\n            \"firstName\": \"MARY\",\r\n            \"lastName\": \"KEITEL\"\r\n        }\r\n    ],\r\n    \"categories\": [\r\n        {\r\n            \"categoryId\": 6,\r\n            \"name\": \"Documentary\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -641,15 +641,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8001/categorias/17",
+							"raw": "http://localhost:8001/peliculas/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8001",
 							"path": [
-								"categorias",
-								"17"
+								"peliculas",
+								"2"
 							]
 						}
 					},

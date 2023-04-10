@@ -20,8 +20,6 @@ import com.example.domains.entities.Actor;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
 import com.example.domains.entities.dtos.ElementoDto;
-import com.example.domains.entities.dtos.FilmDTO;
-import com.example.domains.entities.dtos.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
@@ -64,10 +62,7 @@ public class ActorController {
 
 	// http://localhost:8001/actores/peliculasDelActor/2
 	@GetMapping(path = "/peliculasDelActor/{id}")
-	public List<ElementoDto<Integer, String>> getPeliculasFromActor(@PathVariable int id) throws Exception {
-		if (id < 0) {
-			throw new Exception();
-		}
+	public List<ElementoDto<Integer, String>> getPeliculasFromActor(@PathVariable int id) throws NotFoundException {
 		return actService.getOne(id).get().getFilmActors().stream()
 				.map(f -> new ElementoDto<>(f.getFilm().getFilmId(), f.getFilm().getTitle())).toList();
 	}
@@ -77,9 +72,6 @@ public class ActorController {
 	public @ResponseBody Actor addNewActor(@RequestParam String firstname, @RequestParam String lastname)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
 
-		if (firstname == null | lastname == null) {
-			throw new InvalidDataException();
-		}
 		var actorAux = new Actor();
 		actorAux.setActorId(0);
 		actorAux.setFirstName(firstname.toUpperCase());
@@ -92,22 +84,22 @@ public class ActorController {
 		}
 	}
 
-	// http://localhost:8001/actores/201
-	// {"id":201,"nombre":"KK","apellidos": "KKK"}
-	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) throws InvalidDataException {
-		actService.deleteById(id);
-	}
-
 	// http://localhost:8001/actores/1
 	// CUIDADO: El nombre de las variables vienen predeterminadas por el DTO
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void modify(@PathVariable int id, @Valid @RequestBody ActorDTO item)
+	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item)
 			throws BadRequestException, NotFoundException, InvalidDataException {
 		if (id != item.getActorId())
 			throw new BadRequestException("Nooooooo coinciden los identificadores");
 		actService.modify(ActorDTO.from(item));
+	}
+
+	// http://localhost:8001/actores/201
+	// {"id":201,"nombre":"KK","apellidos": "KKK"}
+	@DeleteMapping(path = "/{id}")
+	public void delete(@PathVariable int id) {
+		actService.deleteById(id);
 	}
 
 }

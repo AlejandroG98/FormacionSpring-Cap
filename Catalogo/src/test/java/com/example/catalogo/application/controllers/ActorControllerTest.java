@@ -28,7 +28,6 @@ import com.example.domains.entities.Actor;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.ActorShort;
 import com.example.exceptions.InvalidDataException;
-import com.example.exceptions.NotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -69,12 +68,7 @@ public class ActorControllerTest {
 			void testGetAll(int id, String nombre, String apellido) throws Exception {
 				List<ActorShort> lista = new ArrayList<>(Arrays.asList(new ActorShortMock(id, nombre, apellido)));
 				when(srv.getByProjection(ActorShort.class)).thenReturn(lista);
-				try {
-					mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON))
-							.andExpectAll(status().isOk());
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON)).andExpectAll(status().isOk());
 
 			}
 		}
@@ -84,17 +78,11 @@ public class ActorControllerTest {
 			@ParameterizedTest
 			@CsvSource({ "1,    ,Garciaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "2,  ,    ", "3,    ,      " })
 			void testGetAll(int id, String nombre, String apellido) throws Exception {
-				if (id < 0 || nombre == null || apellido == null || nombre.trim().length() > 20
-						|| apellido.trim().length() > 20) {
+				if (id < 0 || nombre == null || apellido == null || nombre.trim().length() > 20) {
 					mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON))
 							.andExpect(status().is2xxSuccessful());
-				} else {
-					List<ActorShort> lista = new ArrayList<>(Arrays.asList(new ActorShortMock(id, nombre, apellido)));
-					when(srv.getByProjection(ActorShort.class)).thenReturn(lista);
-					mockMvc.perform(get("/actores/get").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 				}
 			}
-
 		}
 	}
 
@@ -108,14 +96,10 @@ public class ActorControllerTest {
 				var actor = new Actor(id, nombre, apellido);
 				var actorDTO = ActorDTO.from(actor);
 				when(srv.getOne(id)).thenReturn(Optional.of(actor));
-				try {
-					mockMvc.perform(get("/actores/get/{id}", id)).andExpect(status().isOk())
-							.andExpect(jsonPath("$.id").value(actorDTO.getActorId()))
-							.andExpect(jsonPath("$.nombre").value(actorDTO.getFirstName()))
-							.andExpect(jsonPath("$.apellidos").value(actorDTO.getLastName())).andDo(print());
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				mockMvc.perform(get("/actores/get/{id}", id)).andExpect(status().isOk())
+						.andExpect(jsonPath("$.actorId").value(actorDTO.getActorId()))
+						.andExpect(jsonPath("$.nombre").value(actorDTO.getFirstName()))
+						.andExpect(jsonPath("$.apellidos").value(actorDTO.getLastName())).andDo(print());
 			}
 		}
 
@@ -125,12 +109,8 @@ public class ActorControllerTest {
 			@CsvSource({ "-1", "-2", "-3" })
 			void testGetOneActor(int id) throws Exception {
 				when(srv.getOne(id)).thenReturn(Optional.empty());
-				try {
-					mockMvc.perform(get("/actores/get/{id}", id)).andExpect(status().is4xxClientError())
+				mockMvc.perform(get("/actores/get/{id}", id)).andExpect(status().is4xxClientError())
 							.andExpect(jsonPath("$.title").value("Not Found"));
-				} catch (Exception e) {
-					e.getMessage();
-				}
 			}
 		}
 	}
@@ -143,14 +123,10 @@ public class ActorControllerTest {
 			@CsvSource({ "-1", "-2", "-3" })
 			void testGetOne404(int id) throws Exception  {
 				when(srv.getOne(id)).thenReturn(Optional.empty());
-				try {
 					mockMvc.perform(get("/actores/get/{id}", id))
 						.andExpect(status().isNotFound())
 						.andExpect(jsonPath("$.title").value("Not Found"))
 					    .andDo(print());
-				} catch (Exception e) {
-					e.getMessage();
-				}
 			}
 		}
 
@@ -160,14 +136,10 @@ public class ActorControllerTest {
 			@CsvSource({ "-1", "-2", "-3" })
 			void testGetOne404(int id) throws Exception  {
 				when(srv.getOne(id)).thenReturn(Optional.empty());
-				try {
 					mockMvc.perform(get("/actores/get/{id}", id))
 						.andExpect(status().isNotFound())
 						.andExpect(jsonPath("$.title").value("Not Found"))
 					    .andDo(print());
-				} catch (Exception e) {
-					e.getMessage();
-				}
 			}
 		}
 	}
@@ -181,21 +153,11 @@ public class ActorControllerTest {
 			void testAddActor(int id, String nombre, String apellido)
 					throws DuplicateKeyException, InvalidDataException, Exception {
 				var ele = new Actor(id, nombre, apellido);
-				try {
-					when(srv.add(ele)).thenReturn(ele);
-				} catch (DuplicateKeyException | InvalidDataException e) {
-					e.getMessage();
-				}
-				try {
-					mockMvc.perform(post("/actores/addActor").contentType(MediaType.APPLICATION_JSON)
-							.content(objectMapper.writeValueAsString(ActorDTO.from(ele)))
-							.param("firstname", ele.getFirstName()).param("lastname", ele.getLastName()))
-							.andExpect(status().isOk()).andDo(print());
-				} catch (JsonProcessingException e) {
-					e.getMessage();
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				when(srv.add(ele)).thenReturn(ele);
+				mockMvc.perform(post("/actores/addActor").contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(ActorDTO.from(ele)))
+						.param("firstname", ele.getFirstName()).param("lastname", ele.getLastName()))
+						.andExpect(status().isOk()).andDo(print());
 			}
 		}
 
@@ -205,21 +167,11 @@ public class ActorControllerTest {
 			@CsvSource({ "-1,,", "-2,,b", "-3,a," })
 			void testAddActor(int id, String nombre, String apellido) throws Exception {
 				var ele = new Actor(id, nombre, apellido);
-				try {
-					when(srv.add(ele)).thenReturn(ele);
-				} catch (DuplicateKeyException e) {
-					e.getMessage();
-				} catch (InvalidDataException e) {
-					e.getMessage();
-				}
-				try {
-					mockMvc.perform(post("/actores/addActor").contentType(MediaType.APPLICATION_JSON)
-							.content(objectMapper.writeValueAsString(ActorDTO.from(ele)))
-							.param("firstname", ele.getFirstName()).param("lastname", ele.getLastName()))
-							.andExpect(status().isBadRequest()).andDo(print());
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				when(srv.add(ele)).thenReturn(ele);
+				mockMvc.perform(post("/actores/addActor").contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(ActorDTO.from(ele)))
+						.param("firstname", ele.getFirstName()).param("lastname", ele.getLastName()))
+						.andExpect(status().isBadRequest()).andDo(print());
 			}
 		}
 	}
@@ -230,16 +182,12 @@ public class ActorControllerTest {
 		class OK {
 			@ParameterizedTest
 			@CsvSource({ "1,Mar,Gar", "2,Pol,Vor", "3,Macar,Rones" })
-			void testUpdateActor(int actorId, String nombre, String apellido) {
+			void testUpdateActor(int actorId, String nombre, String apellido) throws Exception, Exception {
 				Actor actor = new Actor(actorId, nombre, apellido);
-				try {
-					mockMvc.perform(put("/actores/{id}", actorId).contentType(MediaType.APPLICATION_JSON)
-							.content(objectMapper.writeValueAsString(actor))).andExpect(status().is2xxSuccessful())
-							.andDo(print());
-					verify(srv, times(1)).modify(actor);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				mockMvc.perform(put("/actores/{id}", actorId).contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(actor))).andExpect(status().is2xxSuccessful())
+						.andDo(print());
+				verify(srv, times(1)).modify(actor);
 			}
 		}
 
@@ -248,22 +196,14 @@ public class ActorControllerTest {
 			@ParameterizedTest
 			@CsvSource({ "2,     ,123456789012345678901234567890", "3,123456789012345678901234567890,  ",
 					"4,  ,            " })
-			void testUpdateActor(int actorId, String nombre, String apellido) {
+			void testUpdateActor(int actorId, String nombre, String apellido) throws Exception, Exception {
 				ActorDTO actorDto = new ActorDTO(actorId, nombre, apellido);
 				Actor actor = ActorDTO.from(actorDto);
-				try {
-					when(srv.modify(actor)).thenReturn(actor);
-				} catch (NotFoundException | InvalidDataException e) {
-					e.getMessage();
-				}
-				try {
-					mockMvc.perform(put("/actores/{id}", actorId).contentType(MediaType.APPLICATION_JSON)
-							.content(objectMapper.writeValueAsString(actor))).andExpect(status().is2xxSuccessful())
-							.andDo(print());
-					verify(srv, times(1)).modify(actor);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				when(srv.modify(actor)).thenReturn(actor);
+				mockMvc.perform(put("/actores/{id}", actorId).contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(actor))).andExpect(status().is2xxSuccessful())
+						.andDo(print());
+				verify(srv, times(1)).modify(actor);
 			}
 		}
 	}
@@ -274,13 +214,9 @@ public class ActorControllerTest {
 		class OK {
 			@ParameterizedTest
 			@CsvSource({ "1", "2", "3" })
-			public void testDeleteActor(int id) throws InvalidDataException {
-				try {
-					mockMvc.perform(delete("/actores/{id}", id)).andExpect(status().isOk()).andDo(print());
-					verify(srv, times(1)).deleteById(id);
-				} catch (Exception e) {
-					throw new InvalidDataException(e.getMessage());
-				}
+			public void testDeleteActor(int id) throws Exception {
+				mockMvc.perform(delete("/actores/{id}", id)).andExpect(status().isOk()).andDo(print());
+				verify(srv, times(1)).deleteById(id);
 			}
 		}
 
@@ -293,9 +229,6 @@ public class ActorControllerTest {
 					assertThrows(AssertionError.class, () -> {
 						mockMvc.perform(delete("/actores/{id}", id)).andExpect(status().is5xxServerError());
 					});
-				} else {
-					mockMvc.perform(delete("/actores/{id}", id)).andExpect(status().isOk());
-					verify(srv, times(1)).deleteById(id);
 				}
 			}
 

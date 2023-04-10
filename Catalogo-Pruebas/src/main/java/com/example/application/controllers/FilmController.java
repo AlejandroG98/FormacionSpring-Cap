@@ -50,18 +50,28 @@ public class FilmController {
 		return filmRepository.findById(id).orElse(null);
 	}
 
-	// http://localhost:8001/peliculas/1
+	// http://localhost:8001/peliculas/225
 	/*
-	 * { "id": 1, "title": "ACADEMY DINOSAUR", "descripcion":
-	 * "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies"
-	 * , "duracion": 86, "valoracion": "GENERAL_AUDIENCES", "release_year": 2006,
-	 * "rental_duration": 6, "rental_rate": 0.99, "replacement_cost": 20.99,
-	 * "language": { "id": 1, "nombre": "Ingles" }, "languageVO": { "id": 5,
-	 * "nombre": "French" }, "actors": [ { "id":1, "firstName": "John", "lastName":
-	 * "Doe" } ], "categories": [ { "id":6, "name":"Documentary" } ] }
+	 * { "filmId": 1, "description": "Pato mareado", "lastUpdate":
+	 * "2023-04-10T09:15:17.000+00:00", "length": 86, "rating":
+	 * "PARENTAL_GUIDANCE_SUGGESTED", "releaseYear": "2006", "rentalDuration": 6,
+	 * "rentalRate": 0.99, "replacementCost": 20.99, "title": "ACADEMY DINOSAUR",
+	 * "language": { "id": 1, "idioma": "Ingles", "ultimaModificacion":
+	 * "2023-04-06 08:38:49" }, "languageVO": { "id": 5, "idioma": "French",
+	 * "ultimaModificacion": "2006-02-15 04:02:19" }, "actors": [ { "actorId": 1,
+	 * "firstName": "Accion", "lastName": "ASEGURADA" }, { "actorId": 10,
+	 * "firstName": "CHRISTIAN", "lastName": "GABLE" }, { "actorId": 20,
+	 * "firstName": "IVANKA", "lastName": "TRUMP" }, { "actorId": 30, "firstName":
+	 * "SANDRA", "lastName": "PECK" }, { "actorId": 40, "firstName": "JOHNNY",
+	 * "lastName": "CAGE" }, { "actorId": 53, "firstName": "MENA", "lastName":
+	 * "TEMPLE" }, { "actorId": 108, "firstName": "WARREN", "lastName": "NOLTE" }, {
+	 * "actorId": 162, "firstName": "OPRAH", "lastName": "KILMER" }, { "actorId":
+	 * 188, "firstName": "ROCK", "lastName": "DUKAKIS" }, { "actorId": 198,
+	 * "firstName": "MARY", "lastName": "KEITEL" } ], "categories": [ {
+	 * "categoryId": 6, "name": "Documentary" } ] }
 	 */
-	@PutMapping(path = "/{id}")
-	public @ResponseBody Film putFilm(@PathVariable Integer id, @Valid @RequestBody Film film)
+	@PostMapping(path = "/{id}")
+	public @ResponseBody Film postFilm(@PathVariable Integer id, @Valid @RequestBody Film film)
 			throws NotFoundException, InvalidDataException {
 		Film existingFilm = filmRepository.getById(id);
 		existingFilm.setTitle(film.getTitle());
@@ -71,25 +81,18 @@ public class FilmController {
 		return filmService.modify(existingFilm);
 	}
 
-	// http://localhost:8001/peliculas/225
+	// http://localhost:8001/peliculas/1
 	/*
-	  { "filmId": 0, "description": "Pato", "lastUpdate":
-	  "2023-04-05T15:41:26.000+00:00", "length": 81, "rating": "GENERAL_AUDIENCES",
-	  "releaseYear": "2006", "rentalDuration": 7, "rentalRate": 4.99,
-	  "replacementCost": 29.99, "title": "ACADEMY DINOSAUR", "language": { "id": 4,
-	  "idioma": "Mandarin", "ultimaModificacion": "2006-02-15 04:02:19" },
-	  "languageVO": { "id": 3, "idioma": "Japanese", "ultimaModificacion":
-	  "2006-02-15 04:02:19" }, "actors": [ { "actorId": 77, "firstName": "CARY",
-	  "lastName": "MCCONAUGHEY", "lastUpdate": "2006-02-15T03:34:33.000+00:00" }, {
-	  "actorId": 117, "firstName": "RENEE", "lastName": "TRACY", "lastUpdate":
-	  "2006-02-15T03:34:33.000+00:00" }, { "actorId": 137, "firstName": "MORGAN",
-	  "lastName": "WILLIAMS", "lastUpdate": "2006-02-15T03:34:33.000+00:00" }, {
-	  "actorId": 187, "firstName": "RENEE", "lastName": "BALL", "lastUpdate":
-	  "2006-02-15T03:34:33.000+00:00" } ], "categories": [ { "categoryId": 16,
-	  "name": "Travel" } ] }
+	  { "title": "ACADEMY DINOSAUR", "descripcion":
+	  "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies"
+	  , "duracion": 86, "valoracion": "GENERAL_AUDIENCES", "release_year": 2006,
+	  "rental_duration": 6, "rental_rate": 0.99, "replacement_cost": 20.99,
+	  "language": { "id": 1, "nombre": "Ingles" }, "languageVO": { "id": 5,
+	  "nombre": "French" }, "actors": [ { "id":1, "firstName": "John", "lastName":
+	  "Doe" } ], "categories": [ { "id":6, "name":"Documentary" } ] }
 	 */
-	@PostMapping(path = "/{id}")
-	public @ResponseBody Film postFilm(@PathVariable Integer id, @Valid @RequestBody Film film)
+	@PutMapping(path = "/{id}")
+	public @ResponseBody Film putFilm(@PathVariable Integer id, @Valid @RequestBody Film film)
 			throws NotFoundException, InvalidDataException {
 		Film existingFilm = filmRepository.getById(id);
 		existingFilm.setTitle(film.getTitle());
@@ -103,7 +106,7 @@ public class FilmController {
 	// http://localhost:8001/peliculas/1
 	// {"id":1,"name":"ACADEMY DINOSAUR"}
 	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) throws InvalidDataException {
+	public void delete(@PathVariable int id) {
 		filmService.deleteById(id);
 	}
 

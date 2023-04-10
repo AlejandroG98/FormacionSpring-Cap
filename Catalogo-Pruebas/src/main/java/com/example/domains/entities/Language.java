@@ -3,7 +3,6 @@ package com.example.domains.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import com.example.domains.core.entities.EntityBase;
@@ -29,8 +28,6 @@ public class Language extends EntityBase<Language> implements Serializable {
     public static class Partial {}
     public static class Complete extends Partial {}
 
-    @NotBlank
-    @NotNull
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="languageId")
