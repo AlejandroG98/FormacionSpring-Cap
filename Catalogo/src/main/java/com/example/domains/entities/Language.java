@@ -30,7 +30,7 @@ public class Language extends EntityBase<Language> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="language_id")
+	@Column(name="languageId")
 	@JsonProperty("id")
 	@JsonView(Language.Partial.class)
 	private int languageId;

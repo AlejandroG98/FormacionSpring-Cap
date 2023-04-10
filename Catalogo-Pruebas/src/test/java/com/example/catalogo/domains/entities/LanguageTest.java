@@ -41,10 +41,10 @@ class LanguageTest {
 			@DisplayName("El nombre no puede estar en blanco")
 			@ParameterizedTest(name = "Name: {0}, Error: {1}")
 			@CsvSource(value = { 
-				"'','ERRORES: name: must not be blank.'",
-				"' ','ERRORES: name: must not be blank.'",
-				"'   ','ERRORES: name: must not be blank.'", 
-				"12345678901234567890123456789012345678901234567890,'ERRORES: name: size must be between 0 and 20.'" 
+				"'','ERRORES: name: no debe estar vacío.'",
+				"' ','ERRORES: name: no debe estar vacío.'",
+				"'   ','ERRORES: name: no debe estar vacío.'", 
+				"12345678901234567890123456789012345678901234567890,'ERRORES: name: el tamaño debe estar entre 0 y 20.'" 
 				})
 			void testLanguage(String valor, String error) {
 				var fixture = new Language(0, valor);

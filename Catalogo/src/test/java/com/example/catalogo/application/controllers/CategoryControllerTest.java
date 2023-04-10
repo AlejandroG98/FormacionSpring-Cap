@@ -1,11 +1,13 @@
 package com.example.catalogo.application.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
@@ -13,12 +15,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+
 import com.example.application.controllers.CategoryController;
 import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.entities.Category;
@@ -54,7 +59,24 @@ public class CategoryControllerTest {
 	static class CategoryShortMock implements CategoryShort {
 		int categoryId;
 		String name;
-		List<FilmCategory> filmCategories;
+
+		@Override
+		public List<FilmCategory> getFilmCategories() {
+			return null;
+		}
+
+	}
+
+	@Nested
+	class allCategories{
+		@ParameterizedTest
+		@CsvSource({ "1,Accion", "2,Violencia", "3,Muerte" })
+		void testGetAllCategories(int id, String nombre) throws Exception {
+			List<CategoryShort> lista = Arrays.asList(new CategoryShortMock(id,nombre));
+			when(srv.getByProjection(CategoryShort.class)).thenReturn(lista);
+			mockMvc.perform(get("/categorias/get").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+					.andExpect(content().json(objectMapper.writeValueAsString(lista)));
+		}
 	}
 
 	@Nested
