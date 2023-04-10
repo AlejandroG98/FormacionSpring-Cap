@@ -25,7 +25,7 @@ import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
+import java.util.Optional;
 import jakarta.validation.Valid;
 
 // Ejemplo en: demo-web -> com.example.application.resources -> ActorResource
@@ -63,6 +63,10 @@ public class ActorController {
 	// http://localhost:8001/actores/peliculasDelActor/2
 	@GetMapping(path = "/peliculasDelActor/{id}")
 	public List<ElementoDto<Integer, String>> getPeliculasFromActor(@PathVariable int id) throws NotFoundException {
+		Optional<Actor> actor = actService.getOne(id);
+		if (!actor.isPresent()) {
+			throw new NotFoundException("Actor not found");
+		}
 		return actService.getOne(id).get().getFilmActors().stream()
 				.map(f -> new ElementoDto<>(f.getFilm().getFilmId(), f.getFilm().getTitle())).toList();
 	}
