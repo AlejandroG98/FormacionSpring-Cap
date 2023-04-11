@@ -38,6 +38,7 @@ import lombok.Value;
 
 @WebMvcTest(CategoryController.class)
 public class CategoryControllerTest {
+	
 	@Autowired
 	private MockMvc mockMvc;
 

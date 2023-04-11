@@ -13,7 +13,7 @@ import com.example.domains.entities.Language;
 // Repositorio de la entidad de dominio
 // Extiendo por todos los lados
 // Solo accede su servicio de dominio
-@Repository
+
 public interface LanguageRepository extends JpaRepository<Language, Integer>, JpaSpecificationExecutor<Language>, RepositoryWithProjections{
 	//<T> List<T> findAllBy(Class<T> type);
 	List<Language> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);

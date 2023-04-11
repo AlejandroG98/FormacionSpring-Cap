@@ -10,6 +10,8 @@ import com.example.domains.entities.Film.Rating;
 import com.example.domains.entities.FilmActor;
 import com.example.domains.entities.FilmCategory;
 import com.example.domains.entities.Language;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,12 +39,16 @@ public class FilmDTO {
 	@JsonProperty("replacement_cost")
 	private BigDecimal replacementCost;
 	@JsonProperty("lenguaje")
+	@JsonIgnore
 	private Language language;
 	@JsonProperty("vo")
+	@JsonIgnore
 	private Language languageVO;
 	@JsonProperty("actors")
+	@JsonIgnore
 	private List<String> actors;
 	@JsonProperty("categories")
+	@JsonIgnore
 	private List<String> categories;
 	
 	public static FilmDTO from(Film target) {

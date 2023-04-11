@@ -14,7 +14,6 @@ import com.example.domains.entities.Category;
 // Extiendo por todos los lados
 // Solo accede su servicio de dominio
 
-@Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer>, JpaSpecificationExecutor<Category>, RepositoryWithProjections{
 	List<Category> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
 }

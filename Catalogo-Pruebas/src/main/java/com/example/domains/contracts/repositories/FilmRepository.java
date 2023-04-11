@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.example.domains.core.repositories.contracts.RepositoryWithProjections;
 import com.example.domains.entities.Film;
 
-@Repository
+
 public interface FilmRepository extends JpaRepository<Film, Integer>,JpaSpecificationExecutor<Film> ,RepositoryWithProjections {
 	List<Film> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
 

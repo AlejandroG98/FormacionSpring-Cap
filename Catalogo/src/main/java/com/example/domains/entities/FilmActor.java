@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 
 /**
  * The persistent class for the film_actor database table.
@@ -33,6 +35,7 @@ public class FilmActor implements Serializable {
 	//bi-directional many-to-one association to Film
 	@ManyToOne
 	@JoinColumn(name="film_id", insertable=false, updatable=false)
+	@JsonAlias("filmId")
 	private Film film;
 
 	public FilmActor() {

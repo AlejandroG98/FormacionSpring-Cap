@@ -27,7 +27,7 @@ public class LanguageServiceImplTest {
 		when(languageRepositoryMock.existsById(0)).thenReturn(false);
 
 		assertThatThrownBy(() -> languageService.add(languageToAdd)).isInstanceOf(InvalidDataException.class)
-				.hasMessage("ERRORES: name: must not be blank.");
+				.hasMessage("ERRORES: name: no debe estar vacío.");
 	}
 	
     @Test
