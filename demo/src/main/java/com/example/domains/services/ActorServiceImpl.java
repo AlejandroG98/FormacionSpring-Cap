@@ -1,9 +1,12 @@
 package com.example.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,18 +15,21 @@ import org.springframework.stereotype.Service;
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.contracts.services.ActorService;
 import com.example.domains.entities.Actor;
-import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
+import jakarta.transaction.Transactional;
+import lombok.NonNull;
+
 @Service
-public class ActorServiceImpl implements ActorService {
+public class ActorServiceImpl implements ActorService{
+
 	@Autowired
 	ActorRepository dao;
 
 	@Override
 	public <T> List<T> getByProjection(Class<T> type) {
-		return dao.findAllBy(type);
+		return (List<T>) dao.findAllBy(type);
 	}
 
 	@Override
@@ -61,7 +67,7 @@ public class ActorServiceImpl implements ActorService {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
 		if(item.isInvalid())
-			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
+			throw new InvalidDataException(item.getErrorsMessage());
 		if(dao.existsById(item.getActorId()))
 			throw new DuplicateKeyException(item.getErrorsMessage());
 		
@@ -73,7 +79,7 @@ public class ActorServiceImpl implements ActorService {
 		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
 		if(item.isInvalid())
-			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
+			throw new InvalidDataException(item.getErrorsMessage());
 		if(!dao.existsById(item.getActorId()))
 			throw new NotFoundException();
 		
@@ -92,4 +98,22 @@ public class ActorServiceImpl implements ActorService {
 		dao.deleteById(id);
 	}
 
+	@Override
+	public List<Actor> novedades(@NonNull Timestamp fecha) {
+		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
+	}
+	
+	@Transactional
+	public String updateActor(Integer id,String firstname,String lastname){
+		Actor act=dao.getReferenceById(id);
+		if(dao.existsById(id)) {
+			act.setFirstName(firstname.toUpperCase());
+			act.setLastName(lastname.toUpperCase());
+			dao.save(act);
+			return "Actualización éxitosa";
+		}else {
+			return "Actualizacion sin éxito";
+		}
+	}
+	
 }

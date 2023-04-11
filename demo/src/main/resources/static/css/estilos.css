@@ -1,0 +1,30 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.footer-text {
+	text-align: center;
+}
+
+.footer-menu {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+}
+
+.footer-menu li {
+	margin-right: 20px;
+}
+
+.footer-menu li:last-child {
+	margin-right: 0;
+}

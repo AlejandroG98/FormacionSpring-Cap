@@ -52,6 +52,13 @@ import com.example.domains.entities.dtos.FilmEditDTO;
 import com.example.domains.entities.dtos.FilmShortDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Value;
 
 //@ComponentScan(basePackages = "com.example")
@@ -82,38 +89,26 @@ public class FilmControllerTest {
 
 	@Nested
 	class getAll {
-		@Nested
-		class OK {
-			@Test
-			public void testGetAllFilms() {
-				List<Film> films = Arrays.asList(new Film(0, "Este es el nombre", "Y esta es la descripción.",  (short) 1994, new Language(0),
-						new Language(1), (byte) 3, BigDecimal.valueOf(2.99), 142, BigDecimal.valueOf(20.99),
-						Rating.ADULTS_ONLY));
-				Mockito.when(filmService.getAll()).thenReturn(films);
-
-				List<Film> response = filmService.getAll();
-				assertIterableEquals(films, response);
-
-				
-				Mockito.verify(filmService, Mockito.times(1)).getAll();
-			}
-		}
-
-		@Nested
-		class KO {
-
+		@ParameterizedTest
+		@CsvSource({
+				"0,La película 1,Esta es la descripción de la película 1,1895,Inglés,Castellano,2,2.99,120,20.99,G",
+				"1,La película 2,Esta es la descripción de la película 2,2000,Castellano,Catalán,6,5.01,180,0.99,PG",
+				"3,La película 3,Esta es la descripción de la película 3,2020,Catalán,Italiano,4,3.01,121,1.99,R" })
+		public void testGetAllFilms(int filmId, String title, String description, @Min(1895) Short releaseYear,
+				String language, String languageVO, @Positive Byte rentalDuration,
+				@Positive @DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 2, fraction = 2) BigDecimal rentalRate,
+				@Positive Integer length,
+				@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) BigDecimal replacementCost,
+				String rating) {
+			Language languageAux = new Language(1, language);
+			Language languageAux2 = new Language(2, languageVO);
+			Film.Rating ratingAux = Film.Rating.getEnum(rating);
+			List<Film> films = Arrays.asList(new Film(filmId, title, description, releaseYear, languageAux,
+					languageAux2, rentalDuration, rentalRate, length, replacementCost, ratingAux));
+			Mockito.when(filmService.getAll()).thenReturn(films);
+			List<Film> response = filmService.getAll();
+			assertIterableEquals(films, response);
+			Mockito.verify(filmService, Mockito.times(1)).getAll();
 		}
 	}
-
-//	@Test
-//	public void testGetAllFilms() throws Exception {
-//		when(filmService.getAll()).thenReturn(filmList);
-//		mockMvc.perform(MockMvcRequestBuilders.get("/peliculas/get").accept(MediaType.APPLICATION_JSON))
-//				.andDo(MockMvcResultHandlers.print())
-//				.andExpect(MockMvcResultMatchers.status().isOk())
-//				.andExpect(MockMvcResultMatchers.jsonPath("$[0].filmId", is(1)))
-//				.andExpect(MockMvcResultMatchers.jsonPath("$[0].title", is("ACADEMY DINOSAUR")))
-//				.andExpect(MockMvcResultMatchers.jsonPath("$[0].description", is("description1")));
-//	}
-
 }

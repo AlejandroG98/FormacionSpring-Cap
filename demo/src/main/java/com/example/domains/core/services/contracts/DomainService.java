@@ -3,6 +3,7 @@ package com.example.domains.core.services.contracts;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.dao.DuplicateKeyException;
+
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
@@ -11,7 +12,7 @@ public interface DomainService<E, K> {
 	
 	Optional<E> getOne(K id);
 	
-	E add(E item) throws DuplicateKeyException, InvalidDataException;
+	E add(E item) throws InvalidDataException, DuplicateKeyException, com.example.exceptions.DuplicateKeyException;
 	
 	E modify(E item) throws NotFoundException, InvalidDataException;
 	

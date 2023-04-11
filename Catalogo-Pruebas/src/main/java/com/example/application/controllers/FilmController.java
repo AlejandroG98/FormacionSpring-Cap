@@ -58,8 +58,6 @@ public class FilmController {
 		return filmService.getOne(id).orElse(null);
 	}
 
-	// FALTA POR CORREGIR: POST Y PUT: ERROR SERIALIZE
-
 	// http://localhost:8001/peliculas/225
 	/*
 	 * { "filmId": 1, "description": "Pato mareado", "lastUpdate":
