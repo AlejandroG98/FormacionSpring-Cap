@@ -1,9 +1,7 @@
 package com.example.application.controllers;
 
-import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,21 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.example.domains.contracts.repositories.FilmRepository;
-import com.example.domains.contracts.repositories.LanguageRepository;
-import com.example.domains.contracts.services.ActorService;
 import com.example.domains.contracts.services.FilmService;
-import com.example.domains.entities.Actor;
 import com.example.domains.entities.Film;
-import com.example.domains.entities.dtos.ActorDTO;
-import com.example.domains.entities.dtos.FilmDTO;
-import com.example.exceptions.BadRequestException;
-import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
@@ -41,24 +29,17 @@ public class FilmController {
 	@Autowired
 	FilmRepository filmRepository;
 
-	@GetMapping("")
-	public String index() {
-		return "Hola esto es Film Controller";
-	}
-
 	// http://localhost:8001/peliculas/get
-	@GetMapping(path = "/get")
+	@GetMapping
 	public List<Film> getAllFilms() {
 		return filmService.getAll();
 	}
 
 	// http://localhost:8001/peliculas/get/1
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public Film getFilmById(@PathVariable int id) {
 		return filmService.getOne(id).orElse(null);
 	}
-
-	// FALTA POR CORREGIR: POST Y PUT: ERROR SERIALIZE
 
 	// http://localhost:8001/peliculas/225
 	/*
@@ -80,7 +61,7 @@ public class FilmController {
 	 * "firstName": "MARY", "lastName": "KEITEL" } ], "categories": [ {
 	 * "categoryId": 6, "name": "Documentary" } ] }
 	 */
-	@PostMapping(path = "/{id}")
+	@PostMapping
 	public @ResponseBody Film postFilm(@PathVariable Integer id, @Valid @RequestBody Film film)
 			throws NotFoundException, InvalidDataException {
 		Film existingFilm = filmRepository.getById(id);

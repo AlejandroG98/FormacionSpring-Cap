@@ -36,13 +36,8 @@ public class ActorController {
 	@Autowired
 	ActorService actService;
 
-	@GetMapping("")
-	public String index() {
-		return "Hola esto es Actor Controller";
-	}
-
 	// http://localhost:8001/actores/get
-	@GetMapping(path = "/get")
+	@GetMapping
 	public @ResponseBody List<ActorShort> getActors(@RequestParam(required = false) String sort)
 			throws JsonProcessingException {
 		if (sort != null)
@@ -51,7 +46,7 @@ public class ActorController {
 	}
 
 	// http://localhost:8001/actores/get/2
-	@GetMapping(path = "/get/{id}")
+	@GetMapping(path = "/{id}")
 	public ActorDTO getOneActor(@PathVariable int id) throws NotFoundException {
 		var item = actService.getOne(id);
 		if (item.isEmpty()) {
@@ -72,7 +67,7 @@ public class ActorController {
 	}
 
 	// http://localhost:8001/actores/addActor?firstname=Alex&lastname=Gar
-	@PostMapping(path = "/addActor")
+	@PostMapping
 	public @ResponseBody Actor addNewActor(@RequestParam String firstname, @RequestParam String lastname)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
 
@@ -91,7 +86,6 @@ public class ActorController {
 	// http://localhost:8001/actores/1
 	// CUIDADO: El nombre de las variables vienen predeterminadas por el DTO
 	@PutMapping(path = "/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item)
 			throws BadRequestException, NotFoundException, InvalidDataException {
 		if (id != item.getActorId())

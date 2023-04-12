@@ -36,19 +36,14 @@ public class LanguageController {
 	@Autowired
 	LanguageService langService;
 
-	@GetMapping("")
-	public String index() {
-		return "Hola esto es Language Controller";
-	}
-
 	// http://localhost:8001/idiomas/get
-	@GetMapping(path = "/get")
+	@GetMapping
 	public @ResponseBody List<LanguageShort> getLanguages() throws JsonProcessingException {
 		return langService.getByProjection(LanguageShort.class);
 	}
 
 	// http://localhost:8001/idiomas/get/2
-	@GetMapping(path = "/get/{id}")
+	@GetMapping(path = "/{id}")
 	public LanguageDTO getOneLanguageDTO(@PathVariable int id) throws NotFoundException {
 		var item = langService.getOne(id);
 		if (item.isEmpty()) {
@@ -72,7 +67,7 @@ public class LanguageController {
 	}
 
 	// http://localhost:8001/idiomas/addLanguage?name=Italiana
-	@PostMapping(path = "/addLanguage")
+	@PostMapping
 	public Language addNewLanguage(@RequestParam String name)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
 
@@ -87,13 +82,6 @@ public class LanguageController {
 		}
 	}
 
-	//  http://localhost:8001/idiomas/9
-	// {"id":9,"name":"Marronera"}
-	@DeleteMapping(path = "/{id}")
-	public void delete(@PathVariable int id) {
-		langService.deleteById(id);
-	}
-	
 	// http://localhost:8001/idiomas/1
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -102,6 +90,13 @@ public class LanguageController {
 		if (id != item.getLanguageId())
 			throw new BadRequestException("Nooooooo coinciden los identificadores");
 		langService.modify(LanguageDTO.from(item));
+	}
+
+	//  http://localhost:8001/idiomas/9
+	// {"id":9,"name":"Marronera"}
+	@DeleteMapping(path = "/{id}")
+	public void delete(@PathVariable int id) {
+		langService.deleteById(id);
 	}
 
 }

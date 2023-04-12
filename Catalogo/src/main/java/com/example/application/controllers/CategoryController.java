@@ -37,19 +37,14 @@ public class CategoryController {
 	@Autowired
 	CategoryService catService;
 
-	@GetMapping("")
-	public String index() {
-		return "Hola esto es Category Controller";
-	}
-
 	// http://localhost:8001/categorias/get
-	@GetMapping(path = "/get")
-	public @ResponseBody List<CategoryShort> getActors() throws JsonProcessingException {
+	@GetMapping
+	public @ResponseBody List<CategoryShort> getCategorias() throws JsonProcessingException {
 		return catService.getByProjection(CategoryShort.class);
 	}
 
 	// http://localhost:8001/categorias/get/2
-	@GetMapping(path = "/get/{id}")
+	@GetMapping(path = "/{id}")
 	public CategoryDTO getOneCategoryDTO(@PathVariable int id) throws NotFoundException {
 		var item = catService.getOne(id);
 		if (item.isEmpty()) {
@@ -66,7 +61,7 @@ public class CategoryController {
 	}
 
 	// http://localhost:8001/categorias/addCategory?name=Italiana
-	@PostMapping(path = "/addCategory")
+	@PostMapping
 	public @ResponseBody Category addNewCategory(@RequestParam String name)
 			throws InvalidDataException, org.springframework.dao.DuplicateKeyException, DuplicateKeyException {
 
@@ -84,7 +79,6 @@ public class CategoryController {
 	// http://localhost:8001/categorias/1
 	// CUIDADO: El nombre de las variables vienen predeterminadas por el DTO
 	@PutMapping(path = "/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable int id, @Valid @RequestBody CategoryDTO item)
 			throws BadRequestException, NotFoundException, InvalidDataException {
 		if (id != item.getCategoryId())
