@@ -1,3 +1,7 @@
 $(document).ready(function () {
-    $('.menuContainer').load('./cabeceras/footer.html');
-  });
+  $('.footerContainer').load('./cabeceras/footer.html');
+});
+
+$(document).ready(function () {
+  $('.menuContainer').load('./cabeceras/menu.html');
+});
