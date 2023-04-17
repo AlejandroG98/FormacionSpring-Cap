@@ -10,6 +10,7 @@ function inputDigit(digit) {
     shouldResetDisplay = false;
   }
   display.textContent = display.textContent === '0' ? digit : display.textContent + digit;
+  document.getElementById('decimal').disabled = false
 }
 
 function inputDecimal() {
@@ -20,6 +21,7 @@ function inputDecimal() {
   if (display.textContent.indexOf('.') === -1) {
     display.textContent += '.';
   }
+  document.getElementById('decimal').disabled = true
 }
 
 function clearDisplay() {
@@ -47,6 +49,13 @@ function setOperator(newOperator) {
   operator = newOperator;
   firstOperand = display.textContent;
   shouldResetDisplay = true;
+}
+
+function factorial (firstOperand) {
+  if (firstOperand==0)
+    return 1;
+  else
+    return firstOperand * factorial(firstOperand-1);
 }
 
 function calculateResult() {
@@ -84,6 +93,9 @@ function calculateResult() {
     case '√':
       result = (parseFloat(Math.sqrt(firstOperand)));
       break;
+    case 'n!':
+      result = factorial(firstOperand);
+      break;
     default:
       return;
   }
@@ -116,6 +128,8 @@ document.querySelectorAll('.operator').forEach(button => {
     button.addEventListener('click', () => setOperator('/2'));
   } else if(button.id === 'square-root') {
     button.addEventListener('click', () => setOperator('√'));
+  } else if(button.id === 'factorial') {
+    button.addEventListener('click', () => setOperator('n!'));
   } else {
     button.addEventListener('click', () => setOperator(button.textContent));
   }
