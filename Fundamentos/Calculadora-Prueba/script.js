@@ -17,7 +17,7 @@ function inputDecimal() {
     display.textContent = '';
     shouldResetDisplay = false;
   }
-  if (!display.textContent.includes('.')) {
+  if (display.textContent.indexOf('.') === -1) {
     display.textContent += '.';
   }
 }
@@ -75,10 +75,19 @@ function calculateResult() {
       }
       result = parseFloat(firstOperand) / parseFloat(secondOperand);
       break;
+    case '%':
+      result = (parseFloat(firstOperand) * parseFloat(secondOperand)) / 100;
+      break;
+    case '/2':
+      result = (parseFloat(firstOperand) / 2);
+      break;
+    case '√':
+      result = (parseFloat(Math.sqrt(firstOperand)));
+      break;
     default:
       return;
   }
-  display.textContent = result;
+  display.textContent = result.toPrecision(15);
   operator = '';
   firstOperand = '';
   secondOperand = '';
@@ -101,17 +110,15 @@ document.querySelectorAll('.operator').forEach(button => {
     button.addEventListener('click', () => setOperator('*'));
   } else if (button.id === 'divide') {
     button.addEventListener('click', () => setOperator('/'));
+  } else if (button.id === 'porcentatge') {
+    button.addEventListener('click', () => setOperator('%'));
+  } else if(button.id === 'half') {
+    button.addEventListener('click', () => setOperator('/2'));
+  } else if(button.id === 'square-root') {
+    button.addEventListener('click', () => setOperator('√'));
   } else {
     button.addEventListener('click', () => setOperator(button.textContent));
   }
 });
 
-
 document.querySelector('#equal').addEventListener('click', calculateResult);
-
-document.querySelector('#square').addEventListener('click', () => {
-  let number = parseFloat(display.textContent);
-  let result = Math.pow(number, 2);
-  display.textContent = result;
-  shouldResetDisplay = true;
-});
