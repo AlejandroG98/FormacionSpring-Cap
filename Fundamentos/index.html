@@ -26,6 +26,11 @@
             // En result guardo el valor del output, que se modificará (Resultado)
             // querySelect = getElementById
             let result = document.querySelector('output')
+            
+            if(localStorage && localStorage.result){
+                result.textContent = localStorage.result 
+            }
+
             // Busco el valor del input type button, de esta forma, en ese input me ahorro utilizar el onClick, ya que no es accesible.
             let btn = document.querySelector('input[type=button]')
             // Al boton le añado el evento click
@@ -36,6 +41,11 @@
                 result.innerHTML = `<strong>${+document.querySelector('#op1').value + +document.querySelector('#op2').value}</strong>`; 
                 // Quito el controlador de evento, para que solo salga la primera vez
                 btn.removeEventListener('click',suma).hidden = !document.querySelector('suma').hidden
+                
+                // Si existe lo cambio, sino lo creo
+                if(localStorage){
+                    localStorage.result = +document.querySelector('#op1').value + +document.querySelector('#op2').value
+                }
             };
 
             // Controlador para sumar
