@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejemplos del curso</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <script>
+        document.onload = ev=>{
+            console.log("Documento cargado")
+        }
+    </script>
 </head>
 <body>
     <h1 class="bg-danger"><b><i>Adiós</b> mundo</i></h1>
@@ -12,13 +17,13 @@
         <input type="number" id="op1" value="0">
         <span>+</span>
         <input type="number" id="op2" value="0">
-        <input type="button" value="=" onclick="">
+        <input type="button" value="=" >
         <output>0</output>
     </div>
     <script>
         // Función anónima
         (function(){
-            // En result guardo el valor del output
+            // En result guardo el valor del output, que se modificará (Resultado)
             // querySelect = getElementById
             let result = document.querySelector('output')
             // Busco el valor del input type button, de esta forma, en ese input me ahorro utilizar el onClick, ya que no es accesible.
@@ -26,7 +31,9 @@
             // Al boton le añado el evento click
             let suma = ev=>{
                 // Busco el contenido de result para el input id=op1 y lo sumo al otro input del id=op2
-                result.textContent = +document.querySelector('#op1').value + +document.querySelector('#op2').value
+                // result.textContent = +document.querySelector('#op1').value + +document.querySelector('#op2').value
+                // Este es igual que la línea anterior pero "mejor"
+                result.innerHTML = `<strong>${+document.querySelector('#op1').value + +document.querySelector('#op2').value}</strong>`; 
                 // Quito el controlador de evento, para que solo salga la primera vez
                 btn.removeEventListener('click',suma).hidden = !document.querySelector('suma').hidden
             };
