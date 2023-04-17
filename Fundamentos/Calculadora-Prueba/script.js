@@ -22,8 +22,6 @@ function inputDecimal() {
   }
 }
 
-
-
 function clearDisplay() {
   display.textContent = '0';
   operator = '';
@@ -110,3 +108,10 @@ document.querySelectorAll('.operator').forEach(button => {
 
 
 document.querySelector('#equal').addEventListener('click', calculateResult);
+
+document.querySelector('#square').addEventListener('click', () => {
+  let number = parseFloat(display.textContent);
+  let result = Math.pow(number, 2);
+  display.textContent = result;
+  shouldResetDisplay = true;
+});

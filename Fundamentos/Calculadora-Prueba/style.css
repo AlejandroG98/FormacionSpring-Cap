@@ -1,6 +1,7 @@
 * {
-    box-sizing: border-box;
-    font-family: Segoe UI, sans-serif;
+  box-sizing: border-box;
+  font-family: Segoe UI, sans-serif;
+  font-size: 12px;
 }
   
 body {
@@ -72,4 +73,5 @@ button:hover {
 
 .vacio{
   background-color: #000000;
+  color: white
 }
