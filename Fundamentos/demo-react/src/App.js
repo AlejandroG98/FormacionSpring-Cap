@@ -1,20 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
-
 import React, { Component } from 'react'
 
 export default class App extends Component {
   render() {
     return (
-      <Home />
+      <>
+        <Home />
+        <DemosJSX />
+      </>
+    )
+  }
+}
+
+class DemosJSX extends Component {
+  render() {
+    let mundo = 'mundo'
+    let saluda = <h1>Hola {mundo}</h1>
+    let estilo = 'App-link'
+    let dim = {width:100, height:50}
+    let errorStyle = {color:'white' , backgroundColor: 'red'}
+    return (
+      <>
+      <div style={errorStyle}>DemosJSX</div>
+      <h2 className={estilo}>Hola {saluda}</h2>
+      <img src={logo} className="App-logo" alt="logo" {...dim} hidden={false} />
+      </>
     )
   }
 }
 
 // Componente Home
 function Home() {
-  let url = process.env.REACT_APP_API_URL
-
+  let url = process.env.API_URL
+  url = "XXXXX"
   return (
     <div className="App">
       <header className="App-header">
