@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { Component } from 'react'
-import { Contador } from './Componentes';
+import { Card, Contador } from './Componentes';
 
 export default class App extends Component {
   render() {
@@ -10,7 +10,9 @@ export default class App extends Component {
       <main className='container-fluid'>
         {/* <Home/> */}
         {/* <DemosJSX /> */}
-        <Contador init={10} delta={2} />
+        <Card title="Ejemplo de componente" >
+          <Contador init={10} delta={2} />
+        </Card>
       </main>
       </>
     )
