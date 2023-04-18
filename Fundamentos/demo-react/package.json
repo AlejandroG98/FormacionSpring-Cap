@@ -19,8 +19,6 @@
   },
   "eslintConfig": {
     "extends": [
-      "standard",
-      "standard-jsx",
       "react-app",
       "react-app/jest"
     ]

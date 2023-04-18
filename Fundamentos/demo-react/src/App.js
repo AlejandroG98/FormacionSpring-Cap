@@ -1,8 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  let url = process.env.API_URL
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  render() {
+    return (
+      <Home />
+    )
+  }
+}
+
+// Componente Home
+function Home() {
+  let url = process.env.REACT_APP_API_URL
 
   return (
     <div className="App">
@@ -24,5 +35,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
