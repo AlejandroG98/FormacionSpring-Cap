@@ -16,13 +16,19 @@ export default class App extends Component {
 // No se renderizan los true, false, null y undefined
 class DemosJSX extends Component {
   render() {
-    let mundo, nombre = 'mundo'
+    let mundo = 'mundo'
     let saluda = <h1>Hola {mundo}</h1>
     let estilo = 'App-link'
     let dim = {width:100, height:50}
     let errorStyle = {color:'white' , backgroundColor: 'red'}
     let limpia = true
     let falsa
+    let lista = [
+      {id: 1, nombre:'Barcelona'},
+      {id: 2, nombre:'Madrid'},
+      {id: 3, nombre:'Sevilla'},
+      {id: 4, nombre:'Zaragoza'}
+    ]
     return (
       <>
       {limpia ? 'verdadero' : 'falso'}
@@ -37,8 +43,18 @@ class DemosJSX extends Component {
       {falsa ?? <b>No existe</b>}
       <br/>
       <div style={errorStyle}>DemosJSX</div>
-      <h2 className={estilo}>Hola {saluda}</h2>
+      
+      <h2 className={estilo}>Hola {saluda}
+      <span dangerouslySetInnerHTML={{__html: mundo}} /></h2>
       <img src={logo} className="App-logo" alt="logo" {...dim} hidden={false} />
+
+      {/* ARRAYS */}
+      <ul>
+        {[1,2,3,4,3,2,1].map((item,index) => <li key={index}>Elemento {item}</li>)}
+      </ul>
+      <ul>
+        {lista.map(item => <option key={item.id} value={item.id}> {item.nombre} </option> )}
+      </ul>
       </>
     )
   }
