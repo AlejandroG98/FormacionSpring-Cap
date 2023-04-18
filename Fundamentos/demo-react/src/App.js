@@ -1,13 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { Component } from 'react'
+import { Contador } from './Componentes';
 
 export default class App extends Component {
   render() {
     return (
       <>
-        <Home />
-        <DemosJSX />
+      <main className='container-fluid'>
+        <Contador init={10} />
+      </main>
       </>
     )
   }
