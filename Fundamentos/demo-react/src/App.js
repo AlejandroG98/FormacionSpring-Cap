@@ -16,7 +16,7 @@ export default class App extends Component {
 // No se renderizan los true, false, null y undefined
 class DemosJSX extends Component {
   render() {
-    let mundo = 'mundo'
+    let mundo, nombre = 'mundo'
     let saluda = <h1>Hola {mundo}</h1>
     let estilo = 'App-link'
     let dim = {width:100, height:50}
@@ -33,7 +33,7 @@ class DemosJSX extends Component {
       <br/>
       {/* SI SE DA LA CONDICIÓN DE limpia = true , IMPRIME EL H2 */}
       {limpia && <h2>Limpia</h2>}
-      {/* COMO EN FALSA NO TENGO NADA, VA A BUSCAR LO QUE HAY DETRAS */}
+      {/* VALOR ALTERNATIVO: SI FALTA ES NULO, HACE EL RESTO */}
       {falsa ?? <b>No existe</b>}
       <br/>
       <div style={errorStyle}>DemosJSX</div>
