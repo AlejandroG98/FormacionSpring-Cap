@@ -8,7 +8,9 @@ export default class App extends Component {
     return (
       <>
       <main className='container-fluid'>
-        <Contador init={10} />
+        {/* <Home/> */}
+        {/* <DemosJSX /> */}
+        <Contador init={10} delta={2} />
       </main>
       </>
     )
@@ -64,8 +66,8 @@ class DemosJSX extends Component {
 
 // Componente Home
 function Home() {
-  let url = process.env.API_URL
-  url = "XXXXX"
+  let url = process.env.REACT_APP_API_URL
+
   return (
     <div className="App">
       <header className="App-header">
