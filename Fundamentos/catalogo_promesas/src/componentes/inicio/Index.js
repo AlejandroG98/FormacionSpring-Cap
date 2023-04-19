@@ -38,7 +38,7 @@ export default class Index extends Component {
           {"    "}
         </pre>
         <div className="footerContainer"> 
-          <Footer /> 
+          <Footer menu={this.menu} cambiarComponente={this.cambiarComponente}  /> 
         </div>
       </>
     )
