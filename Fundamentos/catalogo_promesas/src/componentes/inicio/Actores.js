@@ -29,17 +29,17 @@ export default class Actores extends Component {
     const { showGetAll, showGetOne, showGetFilmsFromActor, showPost, showPut, showDelete } = this.state;
 
     if (showGetAll) {
-      return <GetAll />;
+      return <GetAll cambiarComponente={this.props.cambiarComponente} />;
     } else if (showGetOne) {
-      return <GetOne />;
+      return <GetOne cambiarComponente={this.props.cambiarComponente} />;
     } else if (showGetFilmsFromActor) {
-      return <GetFilmsFromActor />;
+      return <GetFilmsFromActor cambiarComponente={this.props.cambiarComponente} />;
     } else if (showPost) {
-      return <Post />;
+      return <Post cambiarComponente={this.props.cambiarComponente} />;
     } else if (showPut) {
-      return <Put />;
+      return <Put cambiarComponente={this.props.cambiarComponente} />;
     } else if (showDelete) {
-      return <Delete />;
+      return <Delete cambiarComponente={this.props.cambiarComponente} />;
     }
 
     return (
