@@ -19,9 +19,6 @@ export default class GetAll extends Component {
       <div>
         <h1>getAll Actors</h1>
         <ul>
-          {/* COMO SE SI ES actor.id O actor.nombre ? 
-          MUY FÁCIL: Miro el ActorShort Y DE AHI SACO EL QUE ES QUE
-           */}
           {this.state.actors.map(actor => (
             <li key={actor.id}>{actor.nombre}</li>
           ))}
