@@ -1,11 +1,15 @@
 import React, { Component, useState } from 'react';
 import Delete from './Delete';
+import GetFilmsFromActor from './GetFilmsFromActor';
 
 export default class GetAll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      actors: []
+      actors: [],
+      actorIdToDelete: null,
+      actorIdToConsult: null,
+      filmsToShow: null
     };
   }
 
@@ -14,9 +18,9 @@ export default class GetAll extends Component {
       .then(response => response.json())
       .then(data => {
         const actors = data.map(actor => {
-          // Separo el nomber completo en: Nombre y Apellido
+          // Separo el nombre completo en: Nombre y Apellido
           const [firstName, ...lastName] = actor.nombre.toLowerCase().split(' ');
-          // Hago que el primer caracter sea en mayusculas tanto del nombre como del apellido
+          // Hago que el primer caracter sea en mayúsculas tanto del nombre como del apellido
           const capitalizedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
           const capitalizedLastName = lastName.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
           // Devolver el nombre completo con el cambio
@@ -29,21 +33,34 @@ export default class GetAll extends Component {
       });
   }
 
-  handleDelete = (actorId) => {
-    fetch(`http://localhost:8001/actores/${actorId}`, {
-      method: 'DELETE'
-    })
-      .then(response => {
-        if (response.ok) {
-          const updatedActors = this.state.actors.filter(actor => actor.id !== actorId);
-          this.setState({ actors: updatedActors });
-        } else {
-          throw new Error('Error al eliminar actor');
-        }
+  handleDeleteClick = (actorId) => {
+    this.setState({ actorIdToDelete: actorId });
+  }
+
+  handleConsultClick = (actorId) => {
+    fetch(`http://localhost:8001/actores/peliculasDelActor/${actorId}`)
+      .then(response => response.json())
+      .then(data => {
+        const filmsToShow = data.map(film => ({
+          id: film.id,
+          title: film.nombre
+        }));
+        this.setState({
+          actorIdToConsult: actorId,
+          filmsToShow
+        });
       })
       .catch(error => {
         console.error(error);
+        alert(`Error al consultar las películas del actor ${actorId}`);
       });
+  }
+
+  handleConsultCloseClick = () => {
+    this.setState({
+      actorIdToConsult: null,
+      filmsToShow: null
+    });
   }
 
   render() {
@@ -53,20 +70,29 @@ export default class GetAll extends Component {
           <thead>
             <tr>
               <th scope="col">Actores</th>
+              <th scope="col">Películas del Actor</th>
+              <th scope="col">Actualizar</th>
               <th scope="col">Eliminar</th>
             </tr>
           </thead>
           <tbody>
+            {/* nombre y actorId -> Porque salen del ActorDTO ! */}
             {this.state.actors.map(actor => (
-              <tr key={actor.id}>
+              <tr key={actor.actorId}>
                 <td>{actor.nombre}</td>
-                <td>
-                  <Delete actorId={actor.id} handleDelete={this.handleDelete} />
-                </td>
+                <td><button className="btn btn-info" onClick={() => this.handleConsultClick(actor.actorId)}>Consultar</button></td>
+                <td>-</td>
+                <td><button className="btn btn-danger" onClick={() => this.handleDeleteClick(actor.actorId)}>Eliminar</button></td>
               </tr>
             ))}
           </tbody>
         </table>
+        {this.state.actorIdToDelete && <Delete actorId={this.state.actorIdToDelete} />}
+        {this.state.actorIdToConsult && <GetFilmsFromActor
+          actorId={this.state.actorIdToConsult}
+          films={this.state.filmsToShow}
+          onCloseClick={this.handleConsultCloseClick}
+        />}
       </div>
     );
   }
