@@ -39,7 +39,7 @@ public class ActorController {
 	ActorService actService;
 
 	// http://localhost:8001/actores/getAll
-	@GetMapping(path="/getAll")
+	@GetMapping
 	public @ResponseBody List<ActorShort> getActors(@RequestParam(required = false) String sort)
 			throws JsonProcessingException {
 		if (sort != null)

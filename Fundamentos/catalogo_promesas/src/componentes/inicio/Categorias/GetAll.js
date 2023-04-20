@@ -1,23 +1,23 @@
 import React, { Component, useState } from 'react';
 import Delete from './Delete';
-import GetFilmsFromActor from './GetFilmsFromActor';
+import GetFilmsFromCategory from './GetFilmsFromCategory';
 
 export default class GetAll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      actors: [],
-      actorIdToDelete: null,
-      actorIdToConsult: null,
+      categories: [],
+      categoryIdToDelete: null,
+      categoryIdToConsult: null,
       filmsToShow: null
     };
   }
 
   componentDidMount() {
-    fetch('http://localhost:8001/actores')
+    fetch('http://localhost:8001/categorias/getAll')
       .then(response => response.json())
       .then(data => {
-        const actors = data.map(actor => {
+        const categories = data.map(actor => {
           // Separo el nombre completo en: Nombre y Apellido
           const [firstName, ...lastName] = actor.nombre.toLowerCase().split(' ');
           // Hago que el primer caracter sea en mayúsculas tanto del nombre como del apellido
@@ -29,16 +29,16 @@ export default class GetAll extends Component {
             nombre: capitalizedFirstName + ' ' + capitalizedLastName
           };
         });
-        this.setState({ actors });
+        this.setState({ categories });
       });
   }
 
-  handleDeleteClick = (actorId) => {
-    this.setState({ actorIdToDelete: actorId });
+  handleDeleteClick = (categoryId) => {
+    this.setState({ categoryIdToDelete: categoryId });
   }
 
-  handleConsultClick = (actorId) => {
-    fetch(`http://localhost:8001/actores/peliculasDelActor/${actorId}`)
+  handleConsultClick = (categoryId) => {
+    fetch(`http://localhost:8001/categorias/peliculasDeLaCategoria/${categoryId}`)
       .then(response => response.json())
       .then(data => {
         const filmsToShow = data.map(film => ({
@@ -46,19 +46,19 @@ export default class GetAll extends Component {
           title: film.nombre
         }));
         this.setState({
-          actorIdToConsult: actorId,
+          categoryIdToConsult: categoryId,
           filmsToShow
         });
       })
       .catch(error => {
         console.error(error);
-        alert(`Error al consultar las películas del actor ${actorId}`);
+        alert(`Error al consultar las películas del actor ${categoryId}`);
       });
   }
 
   handleConsultCloseClick = () => {
     this.setState({
-      actorIdToConsult: null,
+      categoryIdToConsult: null,
       filmsToShow: null
     });
   }
@@ -76,20 +76,20 @@ export default class GetAll extends Component {
             </tr>
           </thead>
           <tbody>
-            {/* nombre y actorId -> Porque salen del ActorDTO ! */}
-            {this.state.actors.map(actor => (
-              <tr key={actor.actorId}>
+            {/* nombre y categoryId -> Porque salen del ActorDTO ! */}
+            {this.state.categories.map(actor => (
+              <tr key={actor.categoryId}>
                 <td>{actor.nombre}</td>
-                <td><button className="btn btn-info" onClick={() => this.handleConsultClick(actor.actorId)}>Consultar</button></td>
+                <td><button className="btn btn-info" onClick={() => this.handleConsultClick(actor.categoryId)}>Consultar</button></td>
                 <td>-</td>
-                <td><button className="btn btn-danger" onClick={() => this.handleDeleteClick(actor.actorId)}>Eliminar</button></td>
+                <td><button className="btn btn-danger" onClick={() => this.handleDeleteClick(actor.categoryId)}>Eliminar</button></td>
               </tr>
             ))}
           </tbody>
         </table>
-        {this.state.actorIdToDelete && <Delete actorId={this.state.actorIdToDelete} />}
-        {this.state.actorIdToConsult && <GetFilmsFromActor
-          actorId={this.state.actorIdToConsult}
+        {this.state.categoryIdToDelete && <Delete categoryId={this.state.categoryIdToDelete} />}
+        {this.state.categoryIdToConsult && <GetFilmsFromCategory
+          categoryId={this.state.categoryIdToConsult}
           films={this.state.filmsToShow}
           onCloseClick={this.handleConsultCloseClick}
         />}

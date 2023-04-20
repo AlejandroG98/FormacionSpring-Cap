@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Footer from './cabeceras/Footer'
 import Menu from './cabeceras/Menu'
 import Actores from './Actores.js'
+import Categorias from '../../Categorias'
 
 export default class Index extends Component {
   constructor(props) {
@@ -10,9 +11,9 @@ export default class Index extends Component {
       componenteActual: 'Inicio'
     }
     this.menu = [
-      { texto: 'Inicio', url: '/', componente: 'Inicio'},
+      { texto: 'Inicio', url: '/', componente: 'Inicio' },
       { texto: 'Actores', url: '/Actores', componente: 'Actores' },
-      { texto: 'Categorias', url: '/Categorias', componente: 'Category' },
+      { texto: 'Categorias', url: '/Categorias', componente: 'Categorias' },
       { texto: 'Peliculas', url: '/Peliculas', componente: 'Film' },
       { texto: 'Idiomas', url: '/Idiomas', componente: 'Language' }
     ]
@@ -28,6 +29,8 @@ export default class Index extends Component {
       componenteAMostrar = <h4 className='inicioCatalogo'>Esto es el inicio del Catalogo</h4>;
     } else if (this.state.componenteActual === 'Actores') {
       componenteAMostrar = <Actores />;
+    } else if (this.state.componenteActual === 'Categorias') {
+      componenteAMostrar = <Categorias />;
     }
 
     return (
@@ -40,8 +43,8 @@ export default class Index extends Component {
           {"\n"}
           {"    "}
         </pre>
-        <div className="footerContainer"> 
-          <Footer menu={this.menu} cambiarComponente={this.cambiarComponente}  /> 
+        <div className="footerContainer">
+          <Footer menu={this.menu} cambiarComponente={this.cambiarComponente} />
         </div>
       </>
     )
