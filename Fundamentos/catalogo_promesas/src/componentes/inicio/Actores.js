@@ -32,15 +32,9 @@ export default class Actores extends Component {
       return <GetAll cambiarComponente={this.props.cambiarComponente} />;
     } else if (showGetOne) {
       return <GetOne cambiarComponente={this.props.cambiarComponente} />;
-    } else if (showGetFilmsFromActor) {
-      return <GetFilmsFromActor cambiarComponente={this.props.cambiarComponente} />;
     } else if (showPost) {
       return <Post cambiarComponente={this.props.cambiarComponente} />;
-    } else if (showPut) {
-      return <Put cambiarComponente={this.props.cambiarComponente} />;
-    } else if (showDelete) {
-      return <Delete cambiarComponente={this.props.cambiarComponente} />;
-    }
+    } 
 
     return (
       <div className='inicioActores'>
@@ -50,10 +44,7 @@ export default class Actores extends Component {
         <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
           <button type="button" className="btn btn-secondary" name="showGetAll" onClick={this.handleClick}>Get All</button>
           <button type="button" className="btn btn-secondary" name="showGetOne" onClick={this.handleClick}>Get One Actor</button>
-          <button type="button" className="btn btn-secondary" name="showGetFilmsFromActor" onClick={this.handleClick}>Get Peliculas del Actor</button>
           <button type="button" className="btn btn-secondary" name="showPost" onClick={this.handleClick}>Post</button>
-          <button type="button" className="btn btn-secondary" name="showPut" onClick={this.handleClick}>Put</button>
-          <button type="button" className="btn btn-secondary" name="showDelete" onClick={this.handleClick}>Delete</button>
         </div>
       </div>
     );

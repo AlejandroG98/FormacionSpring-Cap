@@ -23,22 +23,19 @@ html{
 
 /* FIN */
 /* DELETE ACTOR */
-.deleteActor{
+.getOne{
 	margin-top: 2%;
 }
 
-.deleteActor > form > label > a{
+.getOne >  label > a{
 	margin-left: 2%;
 }
 
-.deleteActor > form > button{
+.getOne >  button{
 	margin-top: 1%;
 	margin-bottom: 1%;
 } 
 
-.deleteActor > div > button{
-	margin-left: 0.5%;
-}
 /* FIN DELETE ACTOR */
 
 /* FOOTER */

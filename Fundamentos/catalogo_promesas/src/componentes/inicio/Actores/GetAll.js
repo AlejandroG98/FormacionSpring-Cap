@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import Delete from './Delete';
 
 export default class GetAll extends Component {
   constructor(props) {
@@ -28,19 +29,40 @@ export default class GetAll extends Component {
       });
   }
 
+  handleDelete = (actorId) => {
+    fetch(`http://localhost:8001/actores/${actorId}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          const updatedActors = this.state.actors.filter(actor => actor.id !== actorId);
+          this.setState({ actors: updatedActors });
+        } else {
+          throw new Error('Error al eliminar actor');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   render() {
     return (
       <div>
-        <table class="table table-hover">
+        <table className="table table-hover">
           <thead>
             <tr>
               <th scope="col">Actores</th>
+              <th scope="col">Eliminar</th>
             </tr>
           </thead>
           <tbody>
             {this.state.actors.map(actor => (
               <tr key={actor.id}>
                 <td>{actor.nombre}</td>
+                <td>
+                  <Delete actorId={actor.id} handleDelete={this.handleDelete} />
+                </td>
               </tr>
             ))}
           </tbody>
