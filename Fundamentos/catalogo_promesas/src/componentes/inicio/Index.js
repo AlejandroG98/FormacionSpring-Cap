@@ -7,11 +7,14 @@ export default class Index extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      componenteActual: 'inicio'
+      componenteActual: 'Inicio'
     }
     this.menu = [
       { texto: 'Inicio', url: '/', componente: 'Inicio'},
       { texto: 'Actores', url: '/Actores', componente: 'Actores' },
+      { texto: 'Categorias', url: '/Categorias', componente: 'Category' },
+      { texto: 'Peliculas', url: '/Peliculas', componente: 'Film' },
+      { texto: 'Idiomas', url: '/Idiomas', componente: 'Language' }
     ]
   }
 
@@ -22,7 +25,7 @@ export default class Index extends Component {
   render() {
     let componenteAMostrar = null;
     if (this.state.componenteActual === 'Inicio') {
-      componenteAMostrar = <a>Inicio del Catalogo</a>;
+      componenteAMostrar = <h4 className='inicioCatalogo'>Esto es el inicio del Catalogo</h4>;
     } else if (this.state.componenteActual === 'Actores') {
       componenteAMostrar = <Actores />;
     }

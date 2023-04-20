@@ -38,7 +38,7 @@ public class ActorController {
 	@Autowired
 	ActorService actService;
 
-	// http://localhost:8001/actores/get
+	// http://localhost:8001/actores/getAll
 	@GetMapping(path="/getAll")
 	public @ResponseBody List<ActorShort> getActors(@RequestParam(required = false) String sort)
 			throws JsonProcessingException {
@@ -47,7 +47,7 @@ public class ActorController {
 		return actService.getByProjection(ActorShort.class);
 	}
 
-	// http://localhost:8001/actores/get/2
+	// http://localhost:8001/actores/2
 	@GetMapping(path = "/{id}")
 	public ActorDTO getOneActor(@PathVariable int id) throws NotFoundException {
 		var item = actService.getOne(id);

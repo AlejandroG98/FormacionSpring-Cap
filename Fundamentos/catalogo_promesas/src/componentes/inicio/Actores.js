@@ -43,9 +43,10 @@ export default class Actores extends Component {
     }
 
     return (
-      <div>
+      <div className='inicioActores'>
         <a> Hola, este es el Inicio de Actores</a>
         <br />
+        <br/>
         <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
           <button type="button" className="btn btn-secondary" name="showGetAll" onClick={this.handleClick}>Get All</button>
           <button type="button" className="btn btn-secondary" name="showGetOne" onClick={this.handleClick}>Get One Actor</button>

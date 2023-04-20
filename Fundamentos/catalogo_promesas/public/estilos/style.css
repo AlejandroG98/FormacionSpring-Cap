@@ -7,18 +7,64 @@ html{
     margin: 0;
 }
 
+/* INICIO DEL CATALOGO */
+.inicioCatalogo{
+	margin-top: 2%;
+	font-style: italic;
+}
+
+/* FIN */
+/* INICIO DEL INICIO DE ACTORES */
+.inicioActores{
+	margin-top: 2%;
+	text-align: center;
+	font-style: italic;
+}
+
+/* FIN */
+/* DELETE ACTOR */
+.deleteActor{
+	margin-top: 2%;
+}
+
+.deleteActor > form > label > a{
+	margin-left: 2%;
+}
+
+.deleteActor > form > button{
+	margin-top: 1%;
+	margin-bottom: 1%;
+} 
+
+.deleteActor > div > button{
+	margin-left: 0.5%;
+}
+/* FIN DELETE ACTOR */
+
 /* FOOTER */
 .no-underline a{
     text-decoration: none;
 } 
 
+/* FIN FOOTER */
+
 /* MENU */
-.menu{
+ 
+.menu {
+	width: 100%;
 	z-index: 1;
+	display: flex;
+	flex-direction: row;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 
 .menu a{
     color: white;
+	position: relative;
+    display: block;
+    padding: 5px;
 }
 
 .menu a:hover{
@@ -26,12 +72,6 @@ html{
 }
  
 /* Efectos del Menu */
-
-.menu a {
-    position: relative;
-    display: block;
-    padding: 5px;
-}
 
 .menu a::before {
     content: '';
@@ -71,14 +111,6 @@ html{
 	color: #fff;
 	height: 50px;
 	padding: 1em;
-}
-
-.menu {
-	display: flex;
-	flex-direction: row;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
 }
 
 .menu > li {
@@ -176,3 +208,5 @@ html{
 		border-bottom: 1px solid #444;
 	}
 }
+/* FIN */
+/* */

@@ -13,7 +13,7 @@ export default class Footer extends Component {
                 <h6 className="text-uppercase fw-bold mb-4">
                   <i className="fas fa-gem me-3">Hola</i>
                 </h6>
-                <p>Esto es una prueba Front para Catalogo</p>
+                <p>Esto es el FrontEnd para el Catalogo</p>
               </div>
               <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">
