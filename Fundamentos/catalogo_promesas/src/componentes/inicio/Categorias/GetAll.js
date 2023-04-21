@@ -14,7 +14,7 @@ export default class GetAll extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8001/categorias/getAll')
+    fetch('http://localhost:8080/categorias/getAll')
       .then(response => response.json())
       .then(data => {
         const categories = data.map(actor => {
@@ -35,25 +35,6 @@ export default class GetAll extends Component {
 
   handleDeleteClick = (categoryId) => {
     this.setState({ categoryIdToDelete: categoryId });
-  }
-
-  handleConsultClick = (categoryId) => {
-    fetch(`http://localhost:8001/categorias/peliculasDeLaCategoria/${categoryId}`)
-      .then(response => response.json())
-      .then(data => {
-        const filmsToShow = data.map(film => ({
-          id: film.id,
-          title: film.nombre
-        }));
-        this.setState({
-          categoryIdToConsult: categoryId,
-          filmsToShow
-        });
-      })
-      .catch(error => {
-        console.error(error);
-        alert(`Error al consultar las películas del actor ${categoryId}`);
-      });
   }
 
   handleConsultCloseClick = () => {

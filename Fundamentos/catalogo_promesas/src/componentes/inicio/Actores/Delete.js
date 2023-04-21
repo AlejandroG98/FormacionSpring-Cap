@@ -19,7 +19,9 @@ export default class Delete extends Component {
               .then(response => {
                 if (response.status === 204) {
                   console.log('Actor eliminado.');
+                  alert("Actor eliminado!");
                 } else {
+                  alert("No se ha podido eliminar el Actor porque esta asignado a una Película");
                   throw new Error('Network response no es OK');
                 }
               })
@@ -35,9 +37,7 @@ export default class Delete extends Component {
 
   render() {
     return (
-      <div>
-        <p>Se ha eliminado el Actor</p>
-      </div>
+      <></>
     );
   }
 }
