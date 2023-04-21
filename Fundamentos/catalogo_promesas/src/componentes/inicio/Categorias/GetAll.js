@@ -37,8 +37,6 @@ function CategoryList() {
         <thead>
           <tr>
             <th scope="col">Categoría</th>
-            <th scope="col">Películas de la Categoría</th>
-            <th scope="col">Actualizar</th>
             <th scope="col">Eliminar</th>
           </tr>
         </thead>
@@ -46,8 +44,6 @@ function CategoryList() {
           {categorias.map(categoria => (
             <tr key={categoria.categoryId}>
               <td>{categoria.name}</td>
-              <td>-</td>
-              <td>-</td>
               <td>-</td>
             </tr>
           ))}

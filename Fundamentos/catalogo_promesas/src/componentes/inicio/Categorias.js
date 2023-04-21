@@ -32,6 +32,10 @@ export default class Categorias extends Component {
             return <GetAll cambiarComponente={this.props.cambiarComponente} />;
         } else if (showGetOne) {
             return <GetOne cambiarComponente={this.props.cambiarComponente} />;
+        } else if (showGetFilmsFromCategory) {
+            return <GetFilmsFromCategory cambiarComponente={this.props.cambiarComponente} />;
+        } else if (showPut) {
+            return <Put cambiarComponente={this.props.cambiarComponente} />;
         } else if (showPost) {
             return <Post cambiarComponente={this.props.cambiarComponente} />;
         }
@@ -44,7 +48,9 @@ export default class Categorias extends Component {
                 <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
                     <button type="button" className="btn btn-secondary" name="showGetAll" onClick={this.handleClick}>Get All</button>
                     <button type="button" className="btn btn-secondary" name="showGetOne" onClick={this.handleClick}>Get One Category</button>
+                    <button type="button" className="btn btn-secondary" name="showGetFilmsFromCategory" onClick={this.handleClick}>Get Films from Category</button>
                     <button type="button" className="btn btn-secondary" name="showPost" onClick={this.handleClick}>Post</button>
+                    <button type="button" className="btn btn-secondary" name="showPut" onClick={this.handleClick}>Put</button>
                 </div>
             </div>
         );

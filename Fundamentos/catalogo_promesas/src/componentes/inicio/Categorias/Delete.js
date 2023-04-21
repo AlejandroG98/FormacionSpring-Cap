@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class Delete extends Component {
   componentDidMount() {
     const { actorId } = this.props;
-    fetch(`http://localhost:8001/actores/${actorId}`)
+    fetch(`http://localhost:8001/categorias/${actorId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -13,13 +13,15 @@ export default class Delete extends Component {
       .then(data => {
         try {
           if (data) {
-            fetch(`http://localhost:8001/actores/${actorId}`, {
+            fetch(`http://localhost:8001/categorias/${actorId}`, {
               method: 'DELETE'
             })
               .then(response => {
                 if (response.status === 204) {
                   console.log('Actor eliminado.');
+                  alert("Actor eliminado!");
                 } else {
+                  alert("No se ha podido eliminar el Actor porque esta asignado a una Película");
                   throw new Error('Network response no es OK');
                 }
               })
@@ -35,9 +37,7 @@ export default class Delete extends Component {
 
   render() {
     return (
-      <div>
-        <p>Se ha eliminado el Actor</p>
-      </div>
+      <></>
     );
   }
 }

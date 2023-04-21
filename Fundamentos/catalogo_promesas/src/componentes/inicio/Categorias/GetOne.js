@@ -33,7 +33,7 @@ const CategorySearch = () => {
     <div className='getOne'>
       <label>
         <a>Ingrese el ID de la Categoria:</a>
-        <input type="number" value={categoryId} onChange={handleActorIdChange} />
+        <input type="number" value={categoryId} onChange={handleActorIdChange} min={0} />
       </label><br />
       <button className="btn btn-info" onClick={handleSearch}>Buscar</button>
       {error && <p>{error}</p>}

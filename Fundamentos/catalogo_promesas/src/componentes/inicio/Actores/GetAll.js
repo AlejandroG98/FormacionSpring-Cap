@@ -44,7 +44,6 @@ export default class GetAll extends Component {
           <thead>
             <tr>
               <th scope="col">Actores</th>
-              <th scope="col">Actualizar</th>
               <th scope="col">Eliminar</th>
             </tr>
           </thead>
@@ -53,7 +52,6 @@ export default class GetAll extends Component {
             {this.state.actors.map(actor => (
               <tr key={actor.actorId}>
                 <td>{actor.nombre}</td>
-                <td>-</td>
                 <td><button className="btn btn-danger" onClick={() => this.handleDeleteClick(actor.actorId)}>Eliminar</button></td>
               </tr>
             ))}
