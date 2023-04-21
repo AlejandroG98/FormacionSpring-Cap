@@ -44,7 +44,7 @@ export default class Put extends Component {
   render() {
     const { actorId, nombre, apellidos } = this.state;
     return (
-      <div>
+      <div className='PutActor'>
         <h2>Actualizar actor:</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
