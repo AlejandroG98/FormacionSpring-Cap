@@ -23,6 +23,7 @@ html{
 
 /* FIN */
 /* DELETE ACTOR */
+
 .getOne{
 	margin-top: 2%;
 }
@@ -32,6 +33,19 @@ html{
 }
 
 .getOne >  button{
+	margin-top: 1%;
+	margin-bottom: 1%;
+} 
+
+.getFilmsFromActor{
+	margin-top: 2%;
+}
+
+.getFilmsFromActor > form >  label > a{
+	margin-left: 2%;
+}
+
+.getFilmsFromActor > form > button{
 	margin-top: 1%;
 	margin-bottom: 1%;
 } 

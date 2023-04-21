@@ -35,7 +35,7 @@ const ActorSearch = () => {
     <div className='getOne'>
       <label>
         <a>Ingrese el ID del actor:</a>
-        <input type="number" value={actorId} onChange={handleActorIdChange} />
+        <input type="number" value={actorId} onChange={handleActorIdChange} min={0} />
       </label><br />
       <button className="btn btn-info" onClick={handleSearch}>Buscar</button>
       {error && <p>{error}</p>}

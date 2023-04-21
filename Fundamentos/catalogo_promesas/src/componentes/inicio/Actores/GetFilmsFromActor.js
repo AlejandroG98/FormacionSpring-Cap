@@ -4,12 +4,18 @@ export default class GetFilmsFromActor extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      actorId: '',
       films: []
     };
   }
 
-  componentDidMount() {
-    const { actorId } = this.props;
+  handleInputChange = (event) => {
+    this.setState({ actorId: event.target.value });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { actorId } = this.state;
     fetch(`http://localhost:8001/actores/peliculasDelActor/${actorId}`)
       .then(response => response.json())
       .then(data => {
@@ -23,32 +29,35 @@ export default class GetFilmsFromActor extends Component {
   }
 
   render() {
+    const { films } = this.state;
     return (
-      <div className="modal" tabIndex={-1} role="dialog">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Películas del actor:</h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                onClick={this.props.onCloseClick}
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <ul>
-                {this.state.films.map(film => (
-                  <li key={film.filmId}>{film.titulo}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className='getFilmsFromActor'>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            <a>Introduce la ID del actor:</a>
+            <input type="number" value={this.state.actorId} onChange={this.handleInputChange} min={0} />
+          </label><br />
+          <button className="btn btn-info" type="submit">Buscar películas</button>
+        </form>
+        <h2>Películas del actor:</h2>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Películas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* nombre y actorId -> Porque salen del ActorDTO ! */}
+            {films.map(film => (
+              <tr>
+                <td key={film.filmId}>{film.titulo}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+
+      </div >
     );
   }
 }
