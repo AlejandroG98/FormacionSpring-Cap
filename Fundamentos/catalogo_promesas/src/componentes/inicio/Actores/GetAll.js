@@ -80,7 +80,7 @@ export default class GetAll extends Component {
             {this.state.actors.map(actor => (
               <tr key={actor.actorId}>
                 <td>{actor.nombre}</td>
-                <td><button className="btn btn-info" onClick={() => this.handleConsultClick(actor.actorId)}>Consultar</button></td>
+                <td><button className="btn btn-info" data-toggle="modal" data-target="#exampleModal" onClick={() => this.handleConsultClick(actor.actorId)}>Consultar</button></td>
                 <td>-</td>
                 <td><button className="btn btn-danger" onClick={() => this.handleDeleteClick(actor.actorId)}>Eliminar</button></td>
               </tr>

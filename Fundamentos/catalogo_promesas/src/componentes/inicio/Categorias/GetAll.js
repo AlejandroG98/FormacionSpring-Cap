@@ -1,80 +1,60 @@
-import React, { Component, useState } from 'react';
-import Delete from './Delete';
-import GetFilmsFromCategory from './GetFilmsFromCategory';
+import React, { useState, useEffect } from 'react';
 
-export default class GetAll extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: [],
-      categoryIdToDelete: null,
-      categoryIdToConsult: null,
-      filmsToShow: null
-    };
-  }
+function CategoryList() {
+  const [categorias, setCategorias] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  componentDidMount() {
-    fetch('http://localhost:8080/categorias/getAll')
-      .then(response => response.json())
-      .then(data => {
-        const categories = data.map(actor => {
-          // Separo el nombre completo en: Nombre y Apellido
-          const [firstName, ...lastName] = actor.nombre.toLowerCase().split(' ');
-          // Hago que el primer caracter sea en mayúsculas tanto del nombre como del apellido
-          const capitalizedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-          const capitalizedLastName = lastName.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-          // Devolver el nombre completo con el cambio
-          return {
-            ...actor,
-            nombre: capitalizedFirstName + ' ' + capitalizedLastName
-          };
-        });
-        this.setState({ categories });
+  useEffect(() => {
+    fetch('http://localhost:8001/categorias')
+      .then(resp => {
+        if (resp.ok) {
+          resp.json().then(data => {
+            setCategorias(data);
+            setLoading(false);
+          });
+        } else {
+          console.error(`${resp.status} - ${resp.statusText}`);
+          setLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
       });
+  }, []);
+
+  if (loading) {
+    return <div>Cargando categorías...</div>;
   }
 
-  handleDeleteClick = (categoryId) => {
-    this.setState({ categoryIdToDelete: categoryId });
+  if (categorias.length === 0) {
+    return <div>No se encontraron categorías.</div>;
   }
 
-  handleConsultCloseClick = () => {
-    this.setState({
-      categoryIdToConsult: null,
-      filmsToShow: null
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Actores</th>
-              <th scope="col">Películas del Actor</th>
-              <th scope="col">Actualizar</th>
-              <th scope="col">Eliminar</th>
+  return (
+    <div>
+      <table className="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Categoría</th>
+            <th scope="col">Películas de la Categoría</th>
+            <th scope="col">Actualizar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categorias.map(categoria => (
+            <tr key={categoria.categoryId}>
+              <td>{categoria.name}</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
             </tr>
-          </thead>
-          <tbody>
-            {/* nombre y categoryId -> Porque salen del ActorDTO ! */}
-            {this.state.categories.map(actor => (
-              <tr key={actor.categoryId}>
-                <td>{actor.nombre}</td>
-                <td><button className="btn btn-info" onClick={() => this.handleConsultClick(actor.categoryId)}>Consultar</button></td>
-                <td>-</td>
-                <td><button className="btn btn-danger" onClick={() => this.handleDeleteClick(actor.categoryId)}>Eliminar</button></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {this.state.categoryIdToDelete && <Delete categoryId={this.state.categoryIdToDelete} />}
-        {this.state.categoryIdToConsult && <GetFilmsFromCategory
-          categoryId={this.state.categoryIdToConsult}
-          films={this.state.filmsToShow}
-          onCloseClick={this.handleConsultCloseClick}
-        />}
-      </div>
-    );
-  }
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
+
+export default CategoryList;

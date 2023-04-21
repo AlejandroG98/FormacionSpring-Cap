@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Footer from './cabeceras/Footer'
 import Menu from './cabeceras/Menu'
 import Actores from './Actores.js'
-import Categorias from '../../Categorias'
+import Categorias from './Categorias'
 
 export default class Index extends Component {
   constructor(props) {

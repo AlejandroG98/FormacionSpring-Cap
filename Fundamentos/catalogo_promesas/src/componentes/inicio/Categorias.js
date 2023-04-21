@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import GetAll from './componentes/inicio/Categorias/GetAll'
-import GetOne from './componentes/inicio/Categorias/GetOne'
-import GetFilmsFromCategory from './componentes/inicio/Categorias/GetFilmsFromCategory'
-import Post from './componentes/inicio/Categorias/Post'
-import Put from './componentes/inicio/Categorias/Put'
-import Delete from './componentes/inicio/Categorias/Delete'
+import GetAll from './Categorias/GetAll'
+import GetOne from './Categorias/GetOne'
+import GetFilmsFromCategory from './Categorias/GetFilmsFromCategory'
+import Post from './Categorias/Post'
+import Put from './Categorias/Put'
+import Delete from './Categorias/Delete'
 
 export default class Categorias extends Component {
     constructor(props) {

@@ -1,51 +1,49 @@
 import React, { useState } from 'react';
 
-const ActorSearch = () => {
-  const [actorId, setActorId] = useState('');
-  const [actorData, setActorData] = useState(null);
+const CategorySearch = () => {
+  const [categoryId, setCategoryId] = useState('');
+  const [categoryData, setCategoryData] = useState(null);
   const [error, setError] = useState(null);
 
   const handleActorIdChange = (event) => {
-    setActorId(event.target.value);
+    setCategoryId(event.target.value);
   };
 
   const handleSearch = () => {
-    fetch(`http://localhost:8001/actores/${actorId}`)
+    fetch(`http://localhost:8001/categorias/${categoryId}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('ERROR: No existe ningún actor con esa ID ...');
+          throw new Error('ERROR: No existe ninguna Categoria con esa ID ...');
         }
       })
       .then((data) => {
         // Convertir el primer carácter del nombre y apellidos a mayúsculas y el resto a minúsculas
-        data.nombre = data.nombre.charAt(0).toUpperCase() + data.nombre.slice(1).toLowerCase();
-        data.apellidos = data.apellidos.charAt(0).toUpperCase() + data.apellidos.slice(1).toLowerCase();
-        setActorData(data);
+        setCategoryData(data);
         setError(null);
       })
       .catch((error) => {
         setError(error.message);
-        setActorData(null);
+        setCategoryData(null);
       });
   };
 
   return (
     <div className='getOne'>
       <label>
-        <a>Ingrese el ID del actor:</a>
-        <input type="number" value={actorId} onChange={handleActorIdChange} />
+        <a>Ingrese el ID de la Categoria:</a>
+        <input type="number" value={categoryId} onChange={handleActorIdChange} />
       </label><br />
       <button className="btn btn-info" onClick={handleSearch}>Buscar</button>
       {error && <p>{error}</p>}
-      {actorData && (
+      {categoryData && (
         <div>
-          <p>{actorData.nombre} {actorData.apellidos}</p>
+          <p>{categoryData.nombre}</p>
         </div>
       )}
     </div>
   );
 };
 
-export default ActorSearch;
+export default CategorySearch;
