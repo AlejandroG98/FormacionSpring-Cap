@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import Delete from './Delete';
 
 function CategoryList() {
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:8001/categorias')
@@ -22,6 +24,10 @@ function CategoryList() {
         setLoading(false);
       });
   }, []);
+
+  const handleDeleteClick = (categoryId) => {
+    setCategoryIdToDelete(categoryId);
+  }
 
   if (loading) {
     return <div>Cargando categorías...</div>;
@@ -43,12 +49,13 @@ function CategoryList() {
         <tbody>
           {categorias.map(categoria => (
             <tr key={categoria.categoryId}>
-              <td>{categoria.name}</td>
-              <td>-</td>
+              <td>{categoria.name}-{ }</td>
+              <td><button className="btn btn-danger" onClick={() => handleDeleteClick(categoria.categoryId)}>Eliminar</button></td>
             </tr>
           ))}
         </tbody>
       </table>
+      {categoryIdToDelete && <Delete categoryId={categoryIdToDelete} />}
     </div>
   );
 }

@@ -4,8 +4,7 @@ export default class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: ''
+      name: ''
     };
   }
 
@@ -16,13 +15,13 @@ export default class Post extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { firstName, lastName } = this.state;
-    fetch(`http://localhost:8001/actores?firstname=${firstName}&lastname=${lastName}`, {
+    const { name } = this.state;
+    fetch(`http://localhost:8001/categorias?name=${name}`, {
       method: 'POST'
     })
       .then(response => {
         if (response.ok) {
-          alert('Actor añadido');
+          alert('Categoria añadida');
         }
         return response.json();
       })
@@ -31,18 +30,14 @@ export default class Post extends Component {
   };
 
   render() {
-    const { firstName, lastName } = this.state;
+    const { name, } = this.state;
     return (
       <div>
-        <h2>Agregar actor</h2>
+        <h2>Agregar categoría</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
-            <label htmlFor="firstName">Nombre:</label>
-            <input type="text" name="firstName" value={firstName} onChange={this.handleInputChange} />
-          </div>
-          <div>
-            <label htmlFor="lastName">Apellido:</label>
-            <input type="text" name="lastName" value={lastName} onChange={this.handleInputChange} />
+            <label htmlFor="name">Nombre:</label>
+            <input type="text" name="name" value={name} onChange={this.handleInputChange} />
           </div>
           <button type="submit">Agregar</button>
         </form>
