@@ -4,6 +4,7 @@ import Menu from './cabeceras/Menu'
 import Actores from './Actores.js'
 import Categorias from './Categorias'
 import Idiomas from './Idiomas'
+import Peliculas from './Peliculas'
 
 export default class Index extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class Index extends Component {
       { texto: 'Inicio', url: '/', componente: 'Inicio' },
       { texto: 'Actores', url: '/Actores', componente: 'Actores' },
       { texto: 'Categorias', url: '/Categorias', componente: 'Categorias' },
-      { texto: 'Peliculas', url: '/Peliculas', componente: 'Film' },
+      { texto: 'Peliculas', url: '/Peliculas', componente: 'Peliculas' },
       { texto: 'Idiomas', url: '/Idiomas', componente: 'Idiomas' }
     ]
   }
@@ -34,6 +35,8 @@ export default class Index extends Component {
       componenteAMostrar = <Categorias />;
     } else if (this.state.componenteActual === 'Idiomas') {
       componenteAMostrar = <Idiomas />;
+    } else if (this.state.componenteActual === 'Peliculas') {
+      componenteAMostrar = <Peliculas />;
     }
 
     return (
