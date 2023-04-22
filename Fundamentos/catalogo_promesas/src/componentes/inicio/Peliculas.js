@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import GetAll from './Peliculas/GetAll'
 import GetOne from './Peliculas/GetOne'
-import Post from './Peliculas/Post'
-import Put from './Peliculas/Put'
 import Delete from './Peliculas/Delete'
 
 export default class Peliculas extends Component {
@@ -30,10 +28,6 @@ export default class Peliculas extends Component {
       return <GetAll cambiarComponente={this.props.cambiarComponente} />;
     } else if (showGetOne) {
       return <GetOne cambiarComponente={this.props.cambiarComponente} />;
-    } else if (showPut) {
-      return <Put cambiarComponente={this.props.cambiarComponente} />;
-    } else if (showPost) {
-      return <Post cambiarComponente={this.props.cambiarComponente} />;
     }
 
     return (
@@ -44,8 +38,7 @@ export default class Peliculas extends Component {
         <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
           <button type="button" className="btn btn-secondary" name="showGetAll" onClick={this.handleClick}>Get All</button>
           <button type="button" className="btn btn-secondary" name="showGetOne" onClick={this.handleClick}>Get One Film</button>
-          <button type="button" className="btn btn-secondary" name="showPost" onClick={this.handleClick}>Post</button>
-          <button type="button" className="btn btn-secondary" name="showPut" onClick={this.handleClick}>Put</button>
+
         </div>
       </div>
     );

@@ -50,12 +50,12 @@ export default function LanguageList() {
           {peliculas.map(pelicula => (
             <tr key={pelicula.filmId}>
               <td>{pelicula.title}</td>
-              <td><button className="btn btn-danger" onClick={() => handleDeleteClick(pelicula.filmId)}>Eliminar</button></td>
+              <td><button className="btn btn-danger" onClick={() => handleDeleteClick(pelicula.filmId)} disabled={true}>Eliminar</button></td>
             </tr>
           ))}
         </tbody>
       </table>
-      {filmIdToDelete && <Delete languageId={filmIdToDelete} />}
+      {filmIdToDelete && <Delete filmId={filmIdToDelete} />}
     </div>
   );
 }
