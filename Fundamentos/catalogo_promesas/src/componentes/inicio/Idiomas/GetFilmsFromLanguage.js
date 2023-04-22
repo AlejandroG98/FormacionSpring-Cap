@@ -16,7 +16,7 @@ export default class GetFilmsFromLanguage extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { categoryId } = this.state;
-    fetch(`http://localhost:8001/categorias/peliculasDeLaCategoria/${categoryId}`)
+    fetch(`http://localhost:8001/idiomas/peliculasDelIdioma/${categoryId}`)
       .then(response => response.json())
       .then(data => {
         const films = data.map(film => ({
