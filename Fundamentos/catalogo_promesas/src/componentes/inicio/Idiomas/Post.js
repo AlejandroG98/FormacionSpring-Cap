@@ -16,12 +16,12 @@ export default class Post extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { name } = this.state;
-    fetch(`http://localhost:8001/categorias?name=${name}`, {
+    fetch(`http://localhost:8001/idiomas?name=${name}`, {
       method: 'POST'
     })
       .then(response => {
         if (response.ok) {
-          alert('Categoria añadida');
+          alert('Idioma añadido');
         }
         return response.json();
       })
@@ -33,7 +33,7 @@ export default class Post extends Component {
     const { name, } = this.state;
     return (
       <div>
-        <h2>Agregar categoría</h2>
+        <h2>Agregar idioma</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label htmlFor="name">Nombre:</label>
