@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CategorySearch = () => {
+const LanguageSearch = () => {
   const [languageId, setLanguageId] = useState('');
   const [languageData, setLanguageData] = useState(null);
   const [error, setError] = useState(null);
@@ -31,7 +31,7 @@ const CategorySearch = () => {
   return (
     <div className='getOne'>
       <label>
-        <a>Ingrese el ID de la Categoria:</a>
+        <a>Ingrese el ID del Idioma:</a>
         <input type="number" value={languageId} onChange={handleActorIdChange} min={0} />
       </label><br />
       <button className="btn btn-info" onClick={handleSearch}>Buscar</button>
@@ -45,4 +45,4 @@ const CategorySearch = () => {
   );
 };
 
-export default CategorySearch;
+export default LanguageSearch;
