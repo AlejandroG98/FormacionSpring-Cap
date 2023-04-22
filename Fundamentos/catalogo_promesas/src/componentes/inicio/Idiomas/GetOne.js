@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
 
 const CategorySearch = () => {
-  const [categoryId, setCategoryId] = useState('');
-  const [categoryData, setCategoryData] = useState(null);
+  const [languageId, setLanguageId] = useState('');
+  const [languageData, setLanguageData] = useState(null);
   const [error, setError] = useState(null);
 
   const handleActorIdChange = (event) => {
-    setCategoryId(event.target.value);
+    setLanguageId(event.target.value);
   };
 
   const handleSearch = () => {
-    fetch(`http://localhost:8001/categorias/${categoryId}`)
+    fetch(`http://localhost:8001/idiomas/${languageId}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('ERROR: No existe ninguna Categoria con esa ID ...');
+          throw new Error('ERROR: No existe ningun Idioma con esa ID ...');
         }
       })
       .then((data) => {
-        // Convertir el primer carácter del nombre y apellidos a mayúsculas y el resto a minúsculas
-        setCategoryData(data);
+        setLanguageData(data);
         setError(null);
       })
       .catch((error) => {
         setError(error.message);
-        setCategoryData(null);
+        setLanguageData(null);
       });
   };
 
@@ -33,13 +32,13 @@ const CategorySearch = () => {
     <div className='getOne'>
       <label>
         <a>Ingrese el ID de la Categoria:</a>
-        <input type="number" value={categoryId} onChange={handleActorIdChange} min={0} />
+        <input type="number" value={languageId} onChange={handleActorIdChange} min={0} />
       </label><br />
       <button className="btn btn-info" onClick={handleSearch}>Buscar</button>
       {error && <p>{error}</p>}
-      {categoryData && (
+      {languageData && (
         <div>
-          <p>{categoryData.nombre}</p>
+          <p>{languageData.name}</p>
         </div>
       )}
     </div>
