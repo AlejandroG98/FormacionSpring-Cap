@@ -4,8 +4,8 @@ export default class Put extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryId: '',
-      nombre: ''
+      languageId: '',
+      name: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,39 +18,39 @@ export default class Put extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { categoryId, nombre } = this.state;
-    fetch(`http://localhost:8001/categorias/${categoryId}`, {
+    const { languageId, name } = this.state;
+    fetch(`http://localhost:8001/idiomas/${languageId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        categoryId,
-        nombre
+        languageId,
+        name
       })
     })
       .then(response => {
         if (response.ok) {
-          alert('Categoría actualizado');
+          alert('Idioma actualizado');
         } else {
-          throw new Error('Error al actualizar la categoría');
+          throw new Error('Error al actualizar el idioma');
         }
       })
       .catch(error => console.error(error));
   }
 
   render() {
-    const { categoryId, nombre } = this.state;
+    const { languageId, name } = this.state;
     return (
       <div className='PutActor'>
-        <h2>Actualizar categoría:</h2>
+        <h2>Actualizar idioma:</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>ID:</label>
             <input
               type="text"
-              name="categoryId"
-              value={categoryId}
+              name="languageId"
+              value={languageId}
               onChange={this.handleChange}
             />
           </div>
@@ -58,8 +58,8 @@ export default class Put extends Component {
             <label>Nombre:</label>
             <input
               type="text"
-              name="nombre"
-              value={nombre}
+              name="name"
+              value={name}
               onChange={this.handleChange}
             />
           </div>
