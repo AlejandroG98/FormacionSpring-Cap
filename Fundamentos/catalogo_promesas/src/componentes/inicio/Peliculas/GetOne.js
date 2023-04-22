@@ -1,48 +1,48 @@
 import React, { useState } from 'react';
 
-const LanguageSearch = () => {
-  const [languageId, setLanguageId] = useState('');
-  const [languageData, setLanguageData] = useState(null);
+const FilmSearch = () => {
+  const [filmId, setFilmId] = useState('');
+  const [filmData, setFilmData] = useState(null);
   const [error, setError] = useState(null);
 
   const handleActorIdChange = (event) => {
-    setLanguageId(event.target.value);
+    setFilmId(event.target.value);
   };
 
   const handleSearch = () => {
-    fetch(`http://localhost:8001/idiomas/${languageId}`)
+    fetch(`http://localhost:8001/peliculas/${filmId}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('ERROR: No existe ningun Idioma con esa ID ...');
+          throw new Error('ERROR: No existe ninguna Película con esa ID ...');
         }
       })
       .then((data) => {
-        setLanguageData(data);
+        setFilmData(data);
         setError(null);
       })
       .catch((error) => {
         setError(error.message);
-        setLanguageData(null);
+        setFilmData(null);
       });
   };
 
   return (
     <div className='getOne'>
       <label>
-        <a>Ingrese el ID del Idioma:</a>
-        <input type="number" value={languageId} onChange={handleActorIdChange} min={0} />
+        <a>Ingrese el ID de la Película:</a>
+        <input type="number" value={filmId} onChange={handleActorIdChange} min={0} />
       </label><br />
       <button className="btn btn-info" onClick={handleSearch}>Buscar</button>
       {error && <p>{error}</p>}
-      {languageData && (
+      {filmData && (
         <div>
-          <p>{languageData.name}</p>
+          <p>{filmData.title}</p>
         </div>
       )}
     </div>
   );
 };
 
-export default LanguageSearch;
+export default FilmSearch;

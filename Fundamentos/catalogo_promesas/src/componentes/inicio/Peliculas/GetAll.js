@@ -30,7 +30,7 @@ export default function LanguageList() {
   }
 
   if (loading) {
-    return <div>Cargando peliculas...</div>;
+    return <div>Cargando películas...</div>;
   }
 
   if (peliculas.length === 0) {
