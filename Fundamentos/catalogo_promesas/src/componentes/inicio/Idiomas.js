@@ -26,13 +26,13 @@ export default class Idiomas extends Component {
     }
 
     render() {
-        const { showGetAll, showGetOne, showGetFilmsFromCategory, showPost, showPut, showDelete } = this.state;
+        const { showGetAll, showGetOne, showGetFilmsFromLanguage, showPost, showPut, showDelete } = this.state;
 
         if (showGetAll) {
             return <GetAll cambiarComponente={this.props.cambiarComponente} />;
         } else if (showGetOne) {
             return <GetOne cambiarComponente={this.props.cambiarComponente} />;
-        } else if (showGetFilmsFromCategory) {
+        } else if (showGetFilmsFromLanguage) {
             return <GetFilmsFromLanguage cambiarComponente={this.props.cambiarComponente} />;
         } else if (showPut) {
             return <Put cambiarComponente={this.props.cambiarComponente} />;

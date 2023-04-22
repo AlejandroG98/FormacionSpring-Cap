@@ -4,23 +4,23 @@ export default class GetFilmsFromLanguage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryId: '',
+      languageId: '',
       films: []
     };
   }
 
   handleInputChange = (event) => {
-    this.setState({ categoryId: event.target.value });
+    this.setState({ languageId: event.target.value });
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { categoryId } = this.state;
-    fetch(`http://localhost:8001/idiomas/peliculasDelIdioma/${categoryId}`)
+    const { languageId } = this.state;
+    fetch(`http://localhost:8001/idiomas/peliculasDelIdioma/${languageId}`)
       .then(response => response.json())
       .then(data => {
         const films = data.map(film => ({
-          filmId: film.key,
+          languageId: film.key,
           titulo: film.value
         }));
         this.setState({ films });
@@ -34,12 +34,12 @@ export default class GetFilmsFromLanguage extends Component {
       <div className='getFilmsFromActor'>
         <form onSubmit={this.handleSubmit}>
           <label>
-            <a>Introduce la ID de la Categoría:</a>
-            <input type="number" value={this.state.categoryId} onChange={this.handleInputChange} min={0} />
+            <a>Introduce la ID del Idioma:</a>
+            <input type="number" value={this.state.languageId} onChange={this.handleInputChange} min={0} />
           </label><br />
           <button className="btn btn-info" type="submit">Buscar películas</button>
         </form>
-        <h2>Películas de la Categoría:</h2>
+        <h2>Películas del Idioma:</h2>
         <table className="table table-hover">
           <thead>
             <tr>
@@ -47,10 +47,10 @@ export default class GetFilmsFromLanguage extends Component {
             </tr>
           </thead>
           <tbody>
-            {/* nombre y categoryId -> Porque salen del ActorDTO ! */}
+            {/* nombre y languageId -> Porque salen del ActorDTO ! */}
             {films.map(film => (
               <tr>
-                <td key={film.filmId}>{film.titulo}</td>
+                <td key={film.languageId}>{film.titulo}</td>
               </tr>
             ))}
           </tbody>
