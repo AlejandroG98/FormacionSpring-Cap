@@ -74,7 +74,7 @@ export default class Put extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <button type="submit">Actualizar</button>
+          <button className="btn btn-info" type="submit">Actualizar</button>
         </form>
       </div>
     );

@@ -39,7 +39,7 @@ export default class Post extends Component {
             <label htmlFor="name">Nombre:</label>
             <input type="text" name="name" value={name} onChange={this.handleInputChange} />
           </div>
-          <button type="submit">Agregar</button>
+          <button className="btn btn-info" type="submit">Agregar</button>
         </form>
       </div>
     );
